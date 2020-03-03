@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "487146135126",
+    "firebase_url": "https://meshwary-645d2.firebaseio.com",
+    "project_id": "meshwary-645d2",
+    "storage_bucket": "meshwary-645d2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487146135126:android:c686c6bea45b9985fca5f7",
+        "android_client_info": {
+          "package_name": "com.example.mishwary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "487146135126-bbv440cn5cpfc7imj0f7te3u89o7krqm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mishwary",
+            "certificate_hash": "2635efa87ebd26731aa3d989178f09ffae39c126"
+          }
+        },
+        {
+          "client_id": "487146135126-slnc778j8a1casqe7n9loqsp2gv55dim.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mishwary",
+            "certificate_hash": "4fbe58923dc2f372d981271b4c3eeda86d484337"
+          }
+        },
+        {
+          "client_id": "487146135126-dl6sg3eo4h26jskarm063jtp71ta90s0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtiueiAwXRyOLZAMQqLLcTu4nTJ36iLOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "487146135126-dl6sg3eo4h26jskarm063jtp71ta90s0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

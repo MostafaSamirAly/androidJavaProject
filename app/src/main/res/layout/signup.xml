@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg1"
+    android:fitsSystemWindows="true">
+
+
+    <!-- Name Label -->
+
+
+    <EditText
+        android:id="@+id/input_name"
+        android:layout_width="302dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="48dp"
+        android:drawableLeft="@mipmap/ic_action_person"
+        android:hint="@string/User_name"
+        android:inputType="textPersonName"
+        android:textColor="#ffff"
+        android:textColorHint="#ffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!--  Email Label -->
+
+    <EditText
+        android:id="@+id/input_email"
+        android:layout_width="304dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:drawableLeft="@mipmap/ic_action_email"
+        android:hint="@string/Email"
+        android:inputType="textEmailAddress"
+        android:textColor="#ffff"
+        android:textColorHint="#ffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_name" />
+
+
+    <!-- mobile number -->
+
+
+    <!-- Password Label -->
+
+
+    <EditText
+        android:id="@+id/input_password"
+        android:layout_width="305dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@mipmap/ic_action_accounts"
+        android:hint="@string/Password"
+        android:inputType="textPassword"
+        android:textColor="#ffff"
+        android:textColorHint="#ffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_email" />
+
+    <!-- Password Re-enter Label -->
+    <EditText
+        android:id="@+id/input_password2"
+        android:layout_width="305dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="68dp"
+        android:drawableLeft="@mipmap/ic_action_accounts"
+        android:hint="@string/Password2"
+        android:inputType="textPassword"
+        android:textColor="#ffff"
+        android:textColorHint="#ffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_password" />
+
+
+
+    <!-- Signup Button -->
+    <Button
+        android:id="@+id/btn_signup"
+        android:layout_width="339dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/line"
+        android:padding="12dp"
+        android:text="@string/Resister"
+        android:textColor="#ff2600"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.609"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="331dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="104dp"
+        android:background="@drawable/line"
+        android:padding="12dp"
+        android:text="Already have an account ?"
+        android:textColor="#ff2600"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.609"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
