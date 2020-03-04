@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class signup extends AppCompatActivity implements View.OnClickListener{
 
     EditText _nameText,_emailText,_passwordText, _reEnterPasswordText;
-    String  Tooken, user_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +44,8 @@ public class signup extends AppCompatActivity implements View.OnClickListener{
     }
 
     private void UserSignUp(){
-        final String name = _nameText.getText().toString().trim();
-        final String email = _emailText.getText().toString().trim();
+        String name = _nameText.getText().toString().trim();
+        String email = _emailText.getText().toString().trim();
         String password = _passwordText.getText().toString().trim();
         String reEnterPassword = _reEnterPasswordText.getText().toString().trim();
 
@@ -60,11 +60,6 @@ public class signup extends AppCompatActivity implements View.OnClickListener{
             return;
         }
 
-
-
-
-
-
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
             _passwordText.setError("between 4 and 10 alphanumeric characters");
             _passwordText.requestFocus();
@@ -73,10 +68,15 @@ public class signup extends AppCompatActivity implements View.OnClickListener{
         if (reEnterPassword.isEmpty() || reEnterPassword.length() < 4 || reEnterPassword.length() > 10 || !(reEnterPassword.equals(password))) {
             _reEnterPasswordText.setError("Password Do not match");
             _reEnterPasswordText.requestFocus();
-
-
+            return;
         }
 
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase.setPersistenceEnabled(true);
+        DatabaseReference reference = firebaseDatabase.getReference("user");
+        String id = reference.push().getKey();
+        User addedUser = new User(id,name,email,password);
+        reference.child(id).setValue(addedUser);
     }
 
 
