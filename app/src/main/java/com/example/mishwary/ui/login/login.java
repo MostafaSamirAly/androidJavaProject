@@ -4,9 +4,13 @@ package com.example.mishwary.ui.login;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.example.mishwary.MainActivity;
 import com.example.mishwary.R;
@@ -21,6 +25,13 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +44,10 @@ public class login extends Activity {
     EditText _emailText, _passwordText;
     Button _loginButton, _signupLink, _forgetPass;
     LoginButton FBloginbtn;
-    String Token;
+    String Token,TAG ="login" ;
+    private FirebaseAuth mAuth;
+
+
     CallbackManager  callbackManager;
 
 
@@ -55,22 +69,22 @@ public class login extends Activity {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        // App code
+                        handleFacebookAccessToken(loginResult.getAccessToken());
                     }
 
                     @Override
                     public void onCancel() {
-                        // App code
+                        Log.d(TAG, "facebook:onCancel");
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
-                        // App code
+                        Log.d(TAG, "facebook:onError",exception);
                     }
                 });
 
 
-
+             mAuth = FirebaseAuth.getInstance();
 
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +113,14 @@ public class login extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        accessTokenTracker.startTracking();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser!=null)
+        {
+            Intent intentp = new Intent(this, MainActivity.class);
+            startActivity(intentp );
+        }
+
+        //accessTokenTracker.startTracking();
         // if the user is already login
        /* if (SharedPrefManger.getInstance(this).isLoggedIn()) {
             Intent intentp = new Intent(this, MainActivity.class);
@@ -110,10 +131,10 @@ public class login extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
-
     }
-    AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
+   /* AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
         @Override
         protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
             if(currentAccessToken == null)
@@ -126,8 +147,8 @@ public class login extends Activity {
             }
 
         }
-    };
-    private void getUserProfile(AccessToken accessToken)
+    };*/
+   /* private void getUserProfile(AccessToken accessToken)
     {
         GraphRequest graphRequest = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
             @Override
@@ -151,7 +172,7 @@ public class login extends Activity {
         graphRequest.setParameters(parameters);
         graphRequest.executeAsync();
 
-    }
+    }*/
    // AccessToken accessToken = AccessToken.getCurrentAccessToken();
    // boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
@@ -181,6 +202,36 @@ public class login extends Activity {
 
 
     }
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookAccessToken:" + token);
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Toast.makeText(login.this, "user id"+user.getUid(),
+                                    Toast.LENGTH_SHORT).show();
+                            Intent intentp = new Intent(login.this, MainActivity.class);
+                            startActivity(intentp );
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(login.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
 
 }
 
