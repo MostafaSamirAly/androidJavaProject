@@ -1,6 +1,8 @@
 package com.example.mishwary.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +37,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UpcomingViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull UpcomingViewHolder holder, final int position) {
         holder.tripTitle.setText(upcomingTrips.get(position).getTripName());
         holder.tripDate.setText(upcomingTrips.get(position).getDate());
         holder.tripTime.setText(upcomingTrips.get(position).getTime());
@@ -46,6 +48,9 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
             @Override
             public void onClick(View v) {
                 // open google maps with start and destination provided with the path
+
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+upcomingTrips.get(position).getStartPoint()+"&daddr="+upcomingTrips.get(position).getDestination()));
+                context.startActivity(intent);
             }
         });
 
