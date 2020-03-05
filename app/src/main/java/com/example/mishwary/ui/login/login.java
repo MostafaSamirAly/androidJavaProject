@@ -16,12 +16,9 @@ import com.example.mishwary.MainActivity;
 import com.example.mishwary.R;
 import com.example.mishwary.ui.signup.signup;
 import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -33,21 +30,17 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Arrays;
 
 
-public class login extends Activity {
+public class login extends Activity implements LoginContract.LoginView {
 
     EditText _emailText, _passwordText;
     Button _loginButton, _signupLink, _forgetPass;
     LoginButton FBloginbtn;
-    String Token,TAG ="login" ;
+    String TAG ="login" ;
     private FirebaseAuth mAuth;
-
-
+    LoginPresenter loginPresenter;
     CallbackManager  callbackManager;
 
 
@@ -108,6 +101,13 @@ public class login extends Activity {
                // startActivity(new Intent(login.this, forgetPassword.class));
             }
         });
+
+        Intent intent = getIntent();
+        if(intent != null){
+            _emailText.setText(intent.getStringExtra("email"));
+            _passwordText.setText(intent.getStringExtra("pass"));
+            login();
+        }
 
     }
     @Override
@@ -192,15 +192,8 @@ public class login extends Activity {
             return;
         }
 
-
-        Intent intentp = new Intent(this, MainActivity.class);
-
-        startActivity(intentp );
-
-
-
-
-
+        loginPresenter = new LoginPresenter(this);
+        loginPresenter.validateAccount(email,password);
     }
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
@@ -233,5 +226,16 @@ public class login extends Activity {
     }
 
 
+    @Override
+    public void goToHome() {
+        Intent intentp = new Intent(this, MainActivity.class);
+        startActivity(intentp );
+        finish();
+    }
+
+    @Override
+    public void showError() {
+        Toast.makeText(this,"Invalid UserName or Password",Toast.LENGTH_LONG).show();
+    }
 }
 
