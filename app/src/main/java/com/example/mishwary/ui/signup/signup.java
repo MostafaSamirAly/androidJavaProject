@@ -4,26 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mishwary.R;
 import com.example.mishwary.Models.User;
 import com.example.mishwary.ui.login.login;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
-public class signup extends AppCompatActivity implements View.OnClickListener{
+
+public class signup extends AppCompatActivity implements View.OnClickListener,SignUpContract.SignupView{
 
     EditText _nameText,_emailText,_passwordText, _reEnterPasswordText;
-
+    SignUpContract.SignupPresenter signupPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
-
         _nameText = findViewById(R.id.input_name);
         _emailText = findViewById(R.id.input_email);
         _passwordText = findViewById(R.id.input_password);
@@ -70,13 +68,10 @@ public class signup extends AppCompatActivity implements View.OnClickListener{
             _reEnterPasswordText.requestFocus();
             return;
         }
-
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseDatabase.setPersistenceEnabled(true);
-        DatabaseReference reference = firebaseDatabase.getReference("user");
-        String id = reference.push().getKey();
-        User addedUser = new User(id,name,email,password);
-        reference.child(id).setValue(addedUser);
+        signupPresenter = new SignupPresenter(this);
+        User addedUser = new User(null,name,email,password);
+        signupPresenter.addUser(addedUser);
+        Toast.makeText(this,"User Registered Successfully",Toast.LENGTH_LONG);
     }
 
 
@@ -90,10 +85,19 @@ public class signup extends AppCompatActivity implements View.OnClickListener{
 
             case R.id.btn_login :
                 // Finish the registration screen and return to the Login activity
-                Intent intent = new Intent(getApplicationContext(), login.class);
-                startActivity(intent);
-                finish();
+                goToLogin(null);
                 break;
         }
+    }
+
+    @Override
+    public void goToLogin(User user) {
+        Intent intent = new Intent(getApplicationContext(), login.class);
+        if(user != null){
+            intent.putExtra("email",user.getEmail());
+            intent.putExtra("pass",user.getPassword());
+        }
+        startActivity(intent);
+        finish();
     }
 }
