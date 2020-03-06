@@ -22,13 +22,21 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Arrays;
 
@@ -38,12 +46,15 @@ public class login extends Activity implements LoginContract.LoginView {
     EditText _emailText, _passwordText;
     Button _loginButton, _signupLink, _forgetPass;
     LoginButton FBloginbtn;
+
     String TAG ="login" ;
     private FirebaseAuth mAuth;
     LoginPresenter loginPresenter;
     CallbackManager  callbackManager;
     public static final int SIGNUP_ACTIVITY_REQUEST_CODE=2;
+    public static final int RC_SIGN_IN = 1;
     boolean flag = true;
+    public static  GoogleSignInClient mGoogleSignInClient;
 
 
     @Override
@@ -57,9 +68,25 @@ public class login extends Activity implements LoginContract.LoginView {
         _signupLink = findViewById(R.id.link_signup);
         _forgetPass = findViewById(R.id.forgot_password);
         FBloginbtn = findViewById(R.id.login_button);
+        SignInButton signInButton = findViewById(R.id.sign_in_button);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                signIn();
+            }
+        });
+
 
         FBloginbtn.setReadPermissions(Arrays.asList("email","public_profile"));
         callbackManager = CallbackManager.Factory.create();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
@@ -112,12 +139,15 @@ public class login extends Activity implements LoginContract.LoginView {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if(currentUser!=null)
         {
-            Intent intentp = new Intent(this, MainActivity.class);
-            startActivity(intentp );
-            finish();
+            goToHome();
 
+        }
+        if(account!=null)
+        {
+            goToHome();
         }
 
         //accessTokenTracker.startTracking();
@@ -139,8 +169,54 @@ public class login extends Activity implements LoginContract.LoginView {
             _passwordText.setText(data.getStringExtra("pass"));
 
         }
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
     }
-   /* AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            firebaseAuthWithGoogle(account);
+
+            // Signed in successfully, show authenticated UI.
+
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+
+        }
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                           goToHome();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(login.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
+    /* AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
         @Override
         protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
             if(currentAccessToken == null)
@@ -181,6 +257,10 @@ public class login extends Activity implements LoginContract.LoginView {
     }*/
    // AccessToken accessToken = AccessToken.getCurrentAccessToken();
    // boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+   private void signIn() {
+       Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+       startActivityForResult(signInIntent, RC_SIGN_IN);
+   }
 
     public void login() {
 
