@@ -42,6 +42,7 @@ public class login extends Activity implements LoginContract.LoginView {
     private FirebaseAuth mAuth;
     LoginPresenter loginPresenter;
     CallbackManager  callbackManager;
+    boolean flag = true;
 
 
     @Override
@@ -118,6 +119,7 @@ public class login extends Activity implements LoginContract.LoginView {
         {
             Intent intentp = new Intent(this, MainActivity.class);
             startActivity(intentp );
+
         }
 
         //accessTokenTracker.startTracking();
@@ -209,8 +211,15 @@ public class login extends Activity implements LoginContract.LoginView {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(login.this, "user id"+user.getUid(),
                                     Toast.LENGTH_SHORT).show();
-                            Intent intentp = new Intent(login.this, MainActivity.class);
-                            startActivity(intentp );
+                            if(flag)
+                            {
+                                Intent intentp = new Intent(login.this, MainActivity.class);
+                                flag = false;
+                                startActivity(intentp );
+                                finish();
+
+                            }
+
 
                         } else {
                             // If sign in fails, display a message to the user.
