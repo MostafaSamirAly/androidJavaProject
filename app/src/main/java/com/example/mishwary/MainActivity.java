@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.example.mishwary.ui.gallery.GalleryFragment;
 import com.example.mishwary.ui.home.HomeFragment;
 import com.example.mishwary.ui.login.login;
+import com.facebook.login.LoginManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private void logout() {
         //SharedPrefManger.getInstance(this).clear();
         FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut();
         Intent intent = new Intent(this, login.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

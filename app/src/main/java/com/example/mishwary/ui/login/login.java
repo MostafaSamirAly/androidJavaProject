@@ -42,6 +42,7 @@ public class login extends Activity implements LoginContract.LoginView {
     private FirebaseAuth mAuth;
     LoginPresenter loginPresenter;
     CallbackManager  callbackManager;
+    public static final int SIGNUP_ACTIVITY_REQUEST_CODE=2;
     boolean flag = true;
 
 
@@ -56,6 +57,7 @@ public class login extends Activity implements LoginContract.LoginView {
         _signupLink = findViewById(R.id.link_signup);
         _forgetPass = findViewById(R.id.forgot_password);
         FBloginbtn = findViewById(R.id.login_button);
+
         FBloginbtn.setReadPermissions(Arrays.asList("email","public_profile"));
         callbackManager = CallbackManager.Factory.create();
 
@@ -93,7 +95,8 @@ public class login extends Activity implements LoginContract.LoginView {
         _signupLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(login.this, signup.class));
+                Intent intent = new Intent(login.this,signup.class);
+                startActivityForResult(intent,SIGNUP_ACTIVITY_REQUEST_CODE);
             }
         });
         _forgetPass.setOnClickListener(new View.OnClickListener() {
@@ -103,12 +106,6 @@ public class login extends Activity implements LoginContract.LoginView {
             }
         });
 
-        Intent intent = getIntent();
-        if(intent != null){
-            _emailText.setText(intent.getStringExtra("email"));
-            _passwordText.setText(intent.getStringExtra("pass"));
-            login();
-        }
 
     }
     @Override
@@ -119,6 +116,7 @@ public class login extends Activity implements LoginContract.LoginView {
         {
             Intent intentp = new Intent(this, MainActivity.class);
             startActivity(intentp );
+            finish();
 
         }
 
@@ -135,6 +133,12 @@ public class login extends Activity implements LoginContract.LoginView {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode== SIGNUP_ACTIVITY_REQUEST_CODE&& resultCode==RESULT_OK)
+        {
+            _emailText.setText(data.getStringExtra("email"));
+            _passwordText.setText(data.getStringExtra("pass"));
+
+        }
     }
    /* AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
         @Override

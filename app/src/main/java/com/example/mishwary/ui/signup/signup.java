@@ -92,12 +92,12 @@ public class signup extends AppCompatActivity implements View.OnClickListener,Si
 
     @Override
     public void goToLogin(User user) {
-        Intent intent = new Intent(getApplicationContext(), login.class);
-        if(user != null){
-            intent.putExtra("email",user.getEmail());
-            intent.putExtra("pass",user.getPassword());
-        }
-        startActivity(intent);
+
+        Intent replyIntent = new Intent();
+        replyIntent.putExtra("email",user.getEmail());
+        replyIntent.putExtra("pass",user.getPassword());
+        setResult(-1, replyIntent);
         finish();
+
     }
 }
