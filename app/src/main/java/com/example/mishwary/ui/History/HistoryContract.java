@@ -1,4 +1,4 @@
-package com.example.mishwary.ui.gallery;
+package com.example.mishwary.ui.History;
 
 import com.example.mishwary.Models.Trip;
 

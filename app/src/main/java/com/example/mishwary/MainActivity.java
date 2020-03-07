@@ -3,28 +3,19 @@ package com.example.mishwary;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.mishwary.ui.gallery.GalleryFragment;
+import com.example.mishwary.ui.History.HistoryFragment;
 import com.example.mishwary.ui.home.HomeFragment;
 import com.example.mishwary.ui.login.login;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -64,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Fragment selectedFregment=null;
                 switch (menuItem.getItemId()) {
-                    case R.id.nav_send:
+                    case R.id.nav_logout:
                         logout();
                         Toast.makeText(MainActivity.this,"Log Out",Toast.LENGTH_LONG).show();
                         break;
@@ -72,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
                         selectedFregment=new HomeFragment();
                         getSupportFragmentManager().beginTransaction().replace( R.id.nav_host_fragment,selectedFregment).commit();
                         break;
-                    case R.id.nav_gallery:
-                        selectedFregment=new GalleryFragment() ;
+                    case R.id.nav_history:
+                        selectedFregment=new HistoryFragment() ;
                         getSupportFragmentManager().beginTransaction().replace( R.id.nav_host_fragment,selectedFregment).commit();
                         break;
                 }

@@ -1,4 +1,4 @@
-package com.example.mishwary.ui.gallery;
+package com.example.mishwary.ui.History;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mishwary.Models.Trip;
 import com.example.mishwary.R;
-import com.example.mishwary.ui.home.UpcomingTripsAdapter;
 
 import java.util.List;
 
