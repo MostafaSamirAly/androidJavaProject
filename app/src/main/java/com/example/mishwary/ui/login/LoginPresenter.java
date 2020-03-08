@@ -4,8 +4,10 @@ import android.app.DownloadManager;
 
 import androidx.annotation.NonNull;
 
+import com.example.mishwary.Models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -25,7 +27,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getChildrenCount() > 0){
-                    ref.goToHome();
+                    ref.goToHome(null);
                 }else {
                     ref.showError();
                 }
@@ -38,4 +40,6 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
         });
 
     }
+
+
 }
