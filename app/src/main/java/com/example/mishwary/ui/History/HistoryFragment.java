@@ -26,6 +26,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_history, container, false);
+        historyPresenter = new HistoryPresenter(this);
         historyTrips_recyclerView = root.findViewById(R.id.historyTrips_recyclerview);
         noTrips_layout = root.findViewById(R.id.no_history_trips_layout);
         historyTrips_recyclerView.setVisibility(View.INVISIBLE);
@@ -35,7 +36,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
     @Override
     public void onStart() {
         super.onStart();
-        historyPresenter = new HistoryPresenter(this);
+
         historyPresenter.getHistoryTrips();
     }
 

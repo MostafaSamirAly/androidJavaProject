@@ -1,10 +1,12 @@
 package com.example.mishwary.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,12 +25,21 @@ public class HomeFragment extends Fragment implements HomeContract.HomeView {
     private LinearLayout noTrips_layout;
     private HomePresenter homePresenter;
     private UpcomingTripsAdapter adapter;
+    String id,name,email;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        homePresenter = new HomePresenter(this);
         upcomingTrips_recyclerView = root.findViewById(R.id.upcomingTrips_recyclerview);
         noTrips_layout = root.findViewById(R.id.no_upcoming_trips_layout);
+        if (getArguments() != null) {
+            Bundle bundle= getArguments();
+           id = bundle.getString("id");
+           name = bundle.getString("name");
+           email= bundle.getString("email");
+            Toast.makeText(this.getActivity(), " id "+id +" name  "+name+" email "+email, Toast.LENGTH_LONG).show();
+        }
         FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +56,7 @@ public class HomeFragment extends Fragment implements HomeContract.HomeView {
     @Override
     public void onStart() {
         super.onStart();
+
         homePresenter = new HomePresenter(this);
         homePresenter.getUpcomingTrips();
     }

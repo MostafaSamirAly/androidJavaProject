@@ -29,7 +29,7 @@ import android.view.Menu;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    GoogleApiClient mGoogleApiClient;
+    String id ,name,email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +46,18 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        Intent intent = getIntent();
+         id = intent.getStringExtra("id");
+         name= intent.getStringExtra("name");
+         email= intent.getStringExtra("email");
 
+
+        Bundle bundle=new Bundle();
+        bundle.putString("id",id);
+        bundle.putString("name",name);
+        bundle.putString("email",email);
         HomeFragment home=new HomeFragment();
+        home.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace( R.id.nav_host_fragment,home).commit();
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -60,7 +70,12 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this,"Log Out",Toast.LENGTH_LONG).show();
                         break;
                     case  R.id.nav_home:
+                        Bundle bundle=new Bundle();
+                        bundle.putString("id",id);
+                        bundle.putString("name",name);
+                        bundle.putString("email",email);
                         selectedFregment=new HomeFragment();
+                        selectedFregment.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace( R.id.nav_host_fragment,selectedFregment).commit();
                         break;
                     case R.id.nav_history:
