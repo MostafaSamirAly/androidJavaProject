@@ -27,7 +27,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_history, container, false);
         historyTrips_recyclerView = root.findViewById(R.id.historyTrips_recyclerview);
-        noTrips_layout = root.findViewById(R.id.no_upcoming_trips_layout);
+        noTrips_layout = root.findViewById(R.id.no_history_trips_layout);
         historyTrips_recyclerView.setVisibility(View.INVISIBLE);
         return root;
     }

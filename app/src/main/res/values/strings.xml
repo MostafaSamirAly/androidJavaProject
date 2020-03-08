@@ -36,6 +36,7 @@
     <string name="starthint">Trip start</string>
     <string name="destinationhint">Trip Destination</string>
     <string name="start">Start</string>
+    <string name="nohistory">No History Trips</string>
 
 
 </resources>

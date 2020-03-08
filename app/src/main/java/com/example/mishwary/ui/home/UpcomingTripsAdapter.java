@@ -9,13 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.mishwary.Models.Trip;
 import com.example.mishwary.R;
-
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 
 public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdapter.UpcomingViewHolder>{
@@ -47,14 +46,15 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         holder.startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                removeFromUpcoming(upcomingTrips.get(position).getId());
+                addToHistory(upcomingTrips.get(position));
                 // open google maps with start and destination provided with the path
-
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+upcomingTrips.get(position).getStartPoint()+"&daddr="+upcomingTrips.get(position).getDestination()));
                 context.startActivity(intent);
             }
         });
 
-        holder.notesImg.setOnClickListener(new View.OnClickListener() {
+        holder.menuImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //open drop down menu wirh the options
@@ -69,12 +69,21 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         });
 
     }
+    private void addToHistory(Trip trip) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("history_trips");
+        String id = databaseReference.push().getKey();
+        trip.setId(id);
+        databaseReference.child(id).setValue(trip);
+    }
+    private void removeFromUpcoming(String id) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("upcoming_trips").child(id);
+        databaseReference.removeValue();
+    }
 
     @Override
     public int getItemCount() {
         return upcomingTrips.size();
     }
-
     public class UpcomingViewHolder extends RecyclerView.ViewHolder{
         private TextView tripTitle;
         private TextView tripDate;
@@ -97,6 +106,4 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
             startBtn = itemView.findViewById(R.id.startBtn);
         }
     }
-
-
 }
