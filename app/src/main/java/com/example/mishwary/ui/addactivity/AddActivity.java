@@ -10,37 +10,45 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mishwary.Models.Trip;
 import com.example.mishwary.R;
 
 import java.util.Calendar;
 
-public class AddActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddActivity extends AppCompatActivity implements View.OnClickListener,AddContract.AddView {
     Button btnDatePicker, btnTimePicker, btnAdd ;
     TextView txtDate, txtTime;
+    EditText titleTxt,startTxt,endTxt;
     final Calendar c = Calendar.getInstance();
     private int mYear, mMonth, mDay, mHour, mMinute;
+    private AddPresenter addPresenter;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-
+        Intent intent = getIntent();
+        id = intent.getStringExtra("id");
         btnDatePicker=(Button) findViewById(R.id.btn_date);
         btnTimePicker=(Button) findViewById(R.id.btn_time);
         btnAdd = (Button) findViewById(R.id.btn_add);
-
         txtDate=(TextView)findViewById(R.id.in_date);
         txtTime=(TextView)findViewById(R.id.in_time);
-
         btnDatePicker.setOnClickListener(this);
         btnTimePicker.setOnClickListener(this);
+        titleTxt = findViewById(R.id.trip_title);
+        startTxt = findViewById(R.id.trip_start_point);
+        endTxt = findViewById(R.id.trip_end_point);
         btnAdd.setOnClickListener(this);
+        addPresenter = new AddPresenter(this);
     }
 
     @Override
@@ -87,7 +95,13 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         }
 
         if(v == btnAdd) {
-            startAlarm(c);
+            Trip trip = new Trip();
+            trip.setUserId(id);
+            trip.setTripName(titleTxt.getText().toString());
+            trip.setStartPoint(startTxt.getText().toString());
+            trip.setDestination(endTxt.getText().toString());
+            addPresenter.addTrip(trip);
+            //startAlarm(c);
         }
     }
 
@@ -109,5 +123,10 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
         alarmManager.cancel(pendingIntent);
         Toast.makeText(this, "Alarm canceled", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void gotoHome() {
+        finish();
     }
 }

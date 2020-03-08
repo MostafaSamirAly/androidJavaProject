@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import com.example.mishwary.Models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -20,16 +19,21 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
     }
 
     @Override
-    public void validateAccount(String email, String password) {
+    public void validateAccount(String email, final String password) {
         Query query = FirebaseDatabase.getInstance().getReference("user")
-                        .orderByChild("email").equalTo(email).orderByChild("password").equalTo(password);
+                        .orderByChild("email").equalTo(email);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getChildrenCount() > 0){
-                    ref.goToHome(null);
-                }else {
-                    ref.showError();
+                for (DataSnapshot userData : dataSnapshot.getChildren()){
+                    User user = userData.getValue(User.class);
+                    if(user.getPassword().equals(password)) {
+                        ref.goToHome(user);
+
+                    }else {
+                        ref.showError();
+                    }
                 }
             }
 

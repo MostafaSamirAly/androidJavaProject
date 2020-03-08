@@ -13,7 +13,6 @@ public class Trip {
     private String time;
     private String date;
     private String userId;
-    private String status;
     private ArrayList<String> notes;
 
 
@@ -89,13 +88,7 @@ public class Trip {
         this.userId = userId;
     }
 
-    public String getStatus() {
-        return status;
-    }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public ArrayList<String> getNotes() {
         return notes;

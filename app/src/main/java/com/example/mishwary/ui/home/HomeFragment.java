@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mishwary.Models.Trip;
 import com.example.mishwary.R;
+import com.example.mishwary.ui.addactivity.AddActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -27,7 +28,7 @@ public class HomeFragment extends Fragment implements HomeContract.HomeView {
     private UpcomingTripsAdapter adapter;
     String id,name,email;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
+    public View onCreateView(@NonNull final LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         homePresenter = new HomePresenter(this);
@@ -44,9 +45,9 @@ public class HomeFragment extends Fragment implements HomeContract.HomeView {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
+                Intent intent = new Intent(getActivity().getApplicationContext(), AddActivity.class);
+                intent.putExtra("id",id);
+                startActivity(intent);
             }
         });
         upcomingTrips_recyclerView.setVisibility(View.INVISIBLE);
