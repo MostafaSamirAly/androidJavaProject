@@ -26,6 +26,7 @@
         </activity>
         <activity android:name=".ui.login.login"></activity>
         <activity android:name=".ui.signup.signup"></activity>
+        <activity android:name=".ui.addactivity.AddActivity"></activity>
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             tools:replace="android:value"
@@ -45,6 +46,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <receiver android:name=".ui.addactivity.AlertReceiver" android:process=":remote"/>
 
     </application>
 
