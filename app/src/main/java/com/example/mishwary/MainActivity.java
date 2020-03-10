@@ -84,7 +84,10 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace( R.id.nav_host_fragment,selectedFregment).commit();
                         break;
                     case R.id.nav_history:
+                        Bundle bundle2=new Bundle();
+                        bundle2.putString("id",id);
                         selectedFregment=new HistoryFragment() ;
+                        selectedFregment.setArguments(bundle2);
                         getSupportFragmentManager().beginTransaction().replace( R.id.nav_host_fragment,selectedFregment).commit();
                         break;
                 }
