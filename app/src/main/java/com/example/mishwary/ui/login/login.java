@@ -3,6 +3,7 @@ package com.example.mishwary.ui.login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -54,8 +55,10 @@ public class login extends Activity implements LoginContract.LoginView {
     CallbackManager  callbackManager;
     public static final int SIGNUP_ACTIVITY_REQUEST_CODE=2;
     public static final int RC_SIGN_IN = 1;
-    boolean flag = true;
     public static  GoogleSignInClient mGoogleSignInClient;
+    String id , e_mail,name;
+    SharedPreferences pref ; // 0 - for private mode
+    SharedPreferences.Editor editor ;
 
 
     @Override
@@ -69,6 +72,8 @@ public class login extends Activity implements LoginContract.LoginView {
         _signupLink = findViewById(R.id.link_signup);
         _forgetPass = findViewById(R.id.forgot_password);
         FBloginbtn = findViewById(R.id.login_button);
+        pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+        editor = pref.edit();
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +144,7 @@ public class login extends Activity implements LoginContract.LoginView {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+       // GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if(currentUser!=null)
         {
             Log.i("login",currentUser.getEmail()+" 1 "+currentUser.getUid()+" 2"+currentUser.getDisplayName()+" 3 "+currentUser.getPhoneNumber());
@@ -147,6 +152,13 @@ public class login extends Activity implements LoginContract.LoginView {
             goToHome(FacebookUser);
 
         }
+        if( pref.getString("id", null) != null)
+        {
+            User loginUser = new User(pref.getString("id",null),pref.getString("name",null),pref.getString("email",null),null);
+            goToHome(loginUser);
+        }
+
+
 
     }
 
@@ -158,7 +170,8 @@ public class login extends Activity implements LoginContract.LoginView {
 
         if(requestCode== SIGNUP_ACTIVITY_REQUEST_CODE&& resultCode==RESULT_OK)
         {
-            _emailText.setText(data.getStringExtra("email"));
+
+            _emailText.setText(e_mail);
             _passwordText.setText(data.getStringExtra("pass"));
 
         }
@@ -232,7 +245,17 @@ public class login extends Activity implements LoginContract.LoginView {
 
         loginPresenter = new LoginPresenter(this);
         loginPresenter.validateAccount(email,password);
+
+
+
     }
+     public void SaveUser(User user)
+     {
+         editor.putString("id", user.getId());
+         editor.putString("name",user.getName());
+         editor.putString("email",user.getEmail());
+         editor.commit();
+     }
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
 

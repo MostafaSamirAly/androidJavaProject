@@ -96,6 +96,7 @@ public class signup extends AppCompatActivity implements View.OnClickListener,Si
         Intent replyIntent = new Intent();
         replyIntent.putExtra("email",user.getEmail());
         replyIntent.putExtra("pass",user.getPassword());
+
         setResult(-1, replyIntent);
         finish();
 
