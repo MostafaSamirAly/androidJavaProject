@@ -61,8 +61,8 @@ public class HomeFragment extends Fragment implements HomeContract.HomeView {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
         homePresenter.stop();
     }
 

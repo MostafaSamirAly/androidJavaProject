@@ -37,6 +37,10 @@
     <string name="destinationhint">Trip Destination</string>
     <string name="start">Start</string>
     <string name="nohistory">No History Trips</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="shownotes">Show Notes</string>
+    <string name="edit">Edit</string>
 
 
 </resources>

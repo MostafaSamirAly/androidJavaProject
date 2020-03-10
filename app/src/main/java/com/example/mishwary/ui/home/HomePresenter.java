@@ -34,7 +34,7 @@ public class HomePresenter implements  HomeContract.HomePresenter {
                     Trip upcoming = trip.getValue(Trip.class);
                     upcomingTrips.add(upcoming);
                 }
-                if (upcomingTrips.size()> 0){
+                if (upcomingTrips!=null && upcomingTrips.size()> 0){
                     homeFragment.displayTrips(upcomingTrips);
                 }else{
                     homeFragment.displayNoTrips();
@@ -49,7 +49,5 @@ public class HomePresenter implements  HomeContract.HomePresenter {
     }
 
     @Override
-    public void stop() {
-        homeFragment = null;
-    }
+    public void stop() { homeFragment = null; }
 }
