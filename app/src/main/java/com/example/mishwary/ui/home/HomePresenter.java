@@ -15,15 +15,17 @@ import java.util.List;
 public class HomePresenter implements  HomeContract.HomePresenter {
     private HomeContract.HomeView homeFragment;
     private DatabaseReference firebaseReference;
-    public HomePresenter(HomeContract.HomeView ref) {
+    private String id;
+    public HomePresenter(HomeContract.HomeView ref, String id) {
         homeFragment = ref;
+        this.id = id;
     }
 
     @Override
     public void getUpcomingTrips() {
         System.out.println("getUpcomingTrips");
         final List<Trip> upcomingTrips = new ArrayList<>();
-        firebaseReference = FirebaseDatabase.getInstance().getReference("upcoming_trips");
+        firebaseReference = FirebaseDatabase.getInstance().getReference("upcoming_trip").child(id);
         firebaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -32,7 +34,7 @@ public class HomePresenter implements  HomeContract.HomePresenter {
                     Trip upcoming = trip.getValue(Trip.class);
                     upcomingTrips.add(upcoming);
                 }
-                if (upcomingTrips.size()>0){
+                if (upcomingTrips.size()> 0){
                     homeFragment.displayTrips(upcomingTrips);
                 }else{
                     homeFragment.displayNoTrips();
