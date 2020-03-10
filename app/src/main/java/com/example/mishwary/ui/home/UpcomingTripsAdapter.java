@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.mishwary.Models.Trip;
 import com.example.mishwary.R;
+import com.example.mishwary.ui.notes.AddNote;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
@@ -84,6 +85,9 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
                                 addToHistory(upcomingTrips.get(position));
                                 return true;
                             case R.id.showNotes_item:
+                                Intent Noteintent = new Intent(context, AddNote.class);
+                                Noteintent.putExtra("tripId",upcomingTrips.get(position).getId());
+                                context.startActivity(Noteintent);
                                 Toast.makeText(context, "showNotes_item", Toast.LENGTH_SHORT).show();
                                 return true;
                             default:
@@ -98,7 +102,10 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         holder.notesImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // open new activity to add notes to the trip
+               Intent Noteintent = new Intent(context, AddNote.class);
+                Noteintent.putExtra("tripId",upcomingTrips.get(position).getId());
+                context.startActivity(Noteintent);
+
             }
         });
 
