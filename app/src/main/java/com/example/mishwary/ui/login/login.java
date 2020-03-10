@@ -56,8 +56,7 @@ public class login extends Activity implements LoginContract.LoginView {
     public static final int SIGNUP_ACTIVITY_REQUEST_CODE=2;
     public static final int RC_SIGN_IN = 1;
     public static  GoogleSignInClient mGoogleSignInClient;
-    String id , e_mail,name;
-    SharedPreferences pref ; // 0 - for private mode
+    SharedPreferences pref ;
     SharedPreferences.Editor editor ;
 
 
@@ -171,7 +170,7 @@ public class login extends Activity implements LoginContract.LoginView {
         if(requestCode== SIGNUP_ACTIVITY_REQUEST_CODE&& resultCode==RESULT_OK)
         {
 
-            _emailText.setText(e_mail);
+            _emailText.setText(data.getStringExtra("email"));
             _passwordText.setText(data.getStringExtra("pass"));
 
         }
