@@ -1,6 +1,7 @@
 package com.example.mishwary;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.mishwary.ui.History.HistoryFragment;
@@ -30,12 +31,16 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     String id ,name,email;
+    SharedPreferences pref ; // 0 - for private mode
+    SharedPreferences.Editor editor ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+        editor = pref.edit();
         setSupportActionBar(toolbar);
 
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -101,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+        editor.clear();
+        editor.commit();
         Intent intent = new Intent(this, login.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -108,12 +115,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+
 
 
 

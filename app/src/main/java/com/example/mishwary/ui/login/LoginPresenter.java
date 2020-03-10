@@ -29,6 +29,8 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
                 for (DataSnapshot userData : dataSnapshot.getChildren()){
                     User user = userData.getValue(User.class);
                     if(user.getPassword().equals(password)) {
+
+                        ref.SaveUser(user);
                         ref.goToHome(user);
 
                     }else {
@@ -42,6 +44,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
 
             }
         });
+
 
     }
 
