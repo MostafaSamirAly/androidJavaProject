@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -79,7 +80,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                         @Override
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
-
+                            c.set(Calendar.YEAR, year);
+                            c.set(Calendar.MONTH, monthOfYear);
+                            c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                             txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
                         }
@@ -99,7 +102,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
                                               int minute) {
-
+                            c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                            c.set(Calendar.MINUTE, minute);
+                            c.set(Calendar.SECOND, 0);
                             txtTime.setText(hourOfDay + ":" + minute);
                         }
                     }, mHour, mMinute, false);
@@ -107,10 +112,10 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         }
 
         if(v == btnAdd) {
-            if(validateInputs()) {
+           if(validateInputs()) {
                 addTriptoFireBase();
             }
-            //startAlarm(c);
+            startAlarm(c);
         }
     }
 

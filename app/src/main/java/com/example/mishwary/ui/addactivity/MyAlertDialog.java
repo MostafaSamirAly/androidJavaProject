@@ -1,6 +1,7 @@
 package com.example.mishwary.ui.addactivity;
 
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.annotation.RequiresFeature;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -96,8 +98,11 @@ public class MyAlertDialog extends Activity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
         alarmManager.cancel(pendingIntent);
     }
+    @TargetApi(Build.VERSION_CODES.O)
+    @RequiresApi(api=Build.VERSION_CODES.JELLY_BEAN)
 
     public void showNotification(Context context) {
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_HIGH);
             NotificationManager mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
