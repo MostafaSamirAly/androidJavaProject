@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,7 +31,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     }
     public class NoteViewHolder extends RecyclerView.ViewHolder {
         private TextView NoteDesc;
-        private Button deleteBtn;
+        private ImageButton deleteBtn;
 
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -41,7 +42,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     @NonNull
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = inflater.inflate(R.layout.note_item,parent,false);
+        return new NoteViewHolder(view);
     }
 
     @Override
@@ -56,7 +58,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     }
     private void removeFromNotes(Note note) {
-
+        DatabaseReference removeReference = FirebaseDatabase.getInstance().getReference("notes").child(note.getTripId());
+        removeReference.child(note.getId()).removeValue();
     }
 
     @Override

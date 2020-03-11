@@ -95,14 +95,50 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         }
 
         if(v == btnAdd) {
-            /*Trip trip = new Trip();
-            trip.setUserId(id);
-            trip.setTripName(titleTxt.getText().toString());
-            trip.setStartPoint(startTxt.getText().toString());
-            trip.setDestination(endTxt.getText().toString());
-            addPresenter.addTrip(trip);*/
-            startAlarm(c);
+            if(validateInputs()) {
+                addTriptoFireBase();
+            }
+            //startAlarm(c);
         }
+    }
+
+    private boolean validateInputs() {
+        boolean flag = true;
+        if(titleTxt.getText().toString().trim().isEmpty()){
+            flag = false;
+            titleTxt.setError("Enter Title");
+            titleTxt.requestFocus();
+        }
+        if(startTxt.getText().toString().trim().isEmpty()){
+            flag = false;
+            startTxt.setError("Enter Start Point");
+            startTxt.requestFocus();
+        }
+        if(endTxt.getText().toString().trim().isEmpty()){
+            flag = false;
+            endTxt.setError("Enter Destination");
+            endTxt.requestFocus();
+        }
+        if(txtDate.getText().toString().trim().isEmpty()){
+            flag = false;
+            Toast.makeText(this,"Please Select Date",Toast.LENGTH_LONG).show();
+        }
+        if(txtTime.getText().toString().trim().isEmpty()){
+            flag = false;
+            Toast.makeText(this,"Please Select Time",Toast.LENGTH_LONG).show();
+        }
+        return flag;
+    }
+
+    private void addTriptoFireBase() {
+        Trip trip = new Trip();
+        trip.setUserId(id);
+        trip.setTripName(titleTxt.getText().toString());
+        trip.setStartPoint(startTxt.getText().toString());
+        trip.setDestination(endTxt.getText().toString());
+        trip.setTime(txtTime.getText().toString());
+        trip.setDate(txtDate.getText().toString());
+        addPresenter.addTrip(trip);
     }
 
     private void startAlarm(Calendar c) {

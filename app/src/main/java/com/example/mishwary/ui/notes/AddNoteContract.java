@@ -7,6 +7,7 @@ import java.util.List;
 public interface AddNoteContract  {
     public interface AddNoteView{
         void displayNotes(List<Note> Notes);
+        void displayNoNotes();
 
     }
     public interface AddNotePresenter{

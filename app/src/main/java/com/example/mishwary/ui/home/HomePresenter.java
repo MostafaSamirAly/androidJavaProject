@@ -30,9 +30,11 @@ public class HomePresenter implements  HomeContract.HomePresenter {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 upcomingTrips.clear();
-                for (DataSnapshot trip : dataSnapshot.getChildren()){
-                    Trip upcoming = trip.getValue(Trip.class);
-                    upcomingTrips.add(upcoming);
+                if (dataSnapshot.getChildren() != null) {
+                    for (DataSnapshot trip : dataSnapshot.getChildren()) {
+                        Trip upcoming = trip.getValue(Trip.class);
+                        upcomingTrips.add(upcoming);
+                    }
                 }
                 if (upcomingTrips!=null && upcomingTrips.size()> 0){
                     homeFragment.displayTrips(upcomingTrips);

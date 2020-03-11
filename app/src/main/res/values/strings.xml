@@ -42,6 +42,7 @@
     <string name="shownotes">Show Notes</string>
     <string name="edit">Edit</string>
     <string name="Add_Note">Add</string>
+    <string name="no_notes">No Notes To Show</string>
 
 
 </resources>

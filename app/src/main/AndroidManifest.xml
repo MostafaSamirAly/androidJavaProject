@@ -28,6 +28,7 @@
         <activity android:name=".ui.signup.signup"></activity>
         <activity android:name=".ui.addactivity.AddActivity"></activity>
         <activity android:name=".ui.addactivity.AlertReceiver"></activity>
+        <activity android:name=".ui.notes.AddNote"></activity>
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             tools:replace="android:value"

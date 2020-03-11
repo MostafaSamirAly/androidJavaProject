@@ -5,6 +5,9 @@ public class Note {
     private String description;
     private String TripId;
 
+    public Note() {
+    }
+
     public Note(String id, String description, String tripId) {
         this.id = id;
         this.description = description;
