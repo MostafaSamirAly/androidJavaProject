@@ -8,9 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -30,6 +32,8 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     private int mYear, mMonth, mDay, mHour, mMinute;
     private AddPresenter addPresenter;
     private String id;
+    private Spinner repeatSpinner,descSpinner;
+    private ArrayAdapter<CharSequence> repeatAdapter,descAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,15 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         titleTxt = findViewById(R.id.trip_title);
         startTxt = findViewById(R.id.trip_start_point);
         endTxt = findViewById(R.id.trip_end_point);
+        repeatSpinner = findViewById(R.id.spinner_repeat);
+        descSpinner = findViewById(R.id.spinner_desc);
         btnAdd.setOnClickListener(this);
+        repeatAdapter = ArrayAdapter.createFromResource(this,R.array.repeatSpinner,R.layout.support_simple_spinner_dropdown_item);
+        repeatAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        repeatSpinner.setAdapter(repeatAdapter);
+        descAdapter = ArrayAdapter.createFromResource(this,R.array.descSpinner,R.layout.support_simple_spinner_dropdown_item);
+        descAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        descSpinner.setAdapter(descAdapter);
         addPresenter = new AddPresenter(this);
     }
 
@@ -138,6 +150,8 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         trip.setDestination(endTxt.getText().toString());
         trip.setTime(txtTime.getText().toString());
         trip.setDate(txtDate.getText().toString());
+        trip.setRepeat(repeatSpinner.getSelectedItem().toString());
+        trip.setDescription(descSpinner.getSelectedItem().toString());
         addPresenter.addTrip(trip);
     }
 

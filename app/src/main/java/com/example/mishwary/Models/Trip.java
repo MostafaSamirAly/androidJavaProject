@@ -13,8 +13,6 @@ public class Trip {
     private String time;
     private String date;
     private String userId;
-   // private ArrayList<String> notes;
-
 
     public String getTripName() {
         return tripName;

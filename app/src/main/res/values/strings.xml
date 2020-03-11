@@ -43,6 +43,16 @@
     <string name="edit">Edit</string>
     <string name="Add_Note">Add</string>
     <string name="no_notes">No Notes To Show</string>
+    <string-array name="descSpinner">
+        <item>One Way Trip</item>
+        <item>Round Trip</item>
+    </string-array>
+    <string-array name="repeatSpinner">
+        <item>No Repeat</item>
+        <item>daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+    </string-array>
 
 
 </resources>
