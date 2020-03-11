@@ -13,7 +13,7 @@ public class Trip {
     private String time;
     private String date;
     private String userId;
-    private ArrayList<String> notes;
+   // private ArrayList<String> notes;
 
 
     public String getTripName() {
@@ -90,11 +90,11 @@ public class Trip {
 
 
 
-    public ArrayList<String> getNotes() {
+   /* public ArrayList<String> getNotes() {
         return notes;
-    }
+    }*/
 
-    public void setNotes(ArrayList<String> notes) {
+   /* public void setNotes(ArrayList<String> notes) {
         this.notes = notes;
-    }
+    }*/
 }
