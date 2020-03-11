@@ -7,6 +7,8 @@ import android.content.Intent;
 class AlertReceiver extends BroadcastReceiver  {
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        Intent toMyAlertDialog = new Intent(context, MyAlertDialog.class);
+        toMyAlertDialog.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(toMyAlertDialog);
     }
 }

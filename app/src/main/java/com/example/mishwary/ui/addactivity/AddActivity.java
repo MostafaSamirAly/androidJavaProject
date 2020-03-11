@@ -95,13 +95,13 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         }
 
         if(v == btnAdd) {
-            Trip trip = new Trip();
+            /*Trip trip = new Trip();
             trip.setUserId(id);
             trip.setTripName(titleTxt.getText().toString());
             trip.setStartPoint(startTxt.getText().toString());
             trip.setDestination(endTxt.getText().toString());
-            addPresenter.addTrip(trip);
-            //startAlarm(c);
+            addPresenter.addTrip(trip);*/
+            startAlarm(c);
         }
     }
 
