@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,15 +22,22 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
     private LinearLayout noTrips_layout;
     private HistoryPresenter historyPresenter;
     private HistoryTripsAdapter adapter;
+    String id;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_history, container, false);
-        historyPresenter = new HistoryPresenter(this);
+
         historyTrips_recyclerView = root.findViewById(R.id.historyTrips_recyclerview);
         noTrips_layout = root.findViewById(R.id.no_history_trips_layout);
         historyTrips_recyclerView.setVisibility(View.INVISIBLE);
+        if (getArguments() != null) {
+            Bundle bundle= getArguments();
+            id = bundle.getString("id");
+            Toast.makeText(this.getActivity(), " id "+id , Toast.LENGTH_LONG).show();
+        }
+        historyPresenter = new HistoryPresenter(this,id);
         return root;
     }
 

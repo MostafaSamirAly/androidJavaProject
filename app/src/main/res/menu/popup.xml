@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/showNotes_item"
+        android:orderInCategory="100"
+        android:title="@string/shownotes"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/edit_item"
+        android:orderInCategory="100"
+        android:title="@string/edit"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/delete_item"
+        android:orderInCategory="100"
+        android:title="@string/delete"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/cancel_item"
+        android:orderInCategory="100"
+        android:title="@string/cancel"
+        app:showAsAction="never" />
+</menu>

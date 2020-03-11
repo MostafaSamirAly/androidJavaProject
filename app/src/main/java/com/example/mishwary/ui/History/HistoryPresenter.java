@@ -15,15 +15,17 @@ import java.util.List;
 public class HistoryPresenter implements HistoryContract.HistoryPresenter {
     private HistoryContract.HistoryView historyFragment;
     private DatabaseReference firebaseReference;
+    private String id;
 
-    public HistoryPresenter(HistoryContract.HistoryView historyFragment) {
+    public HistoryPresenter(HistoryContract.HistoryView historyFragment, String id) {
         this.historyFragment = historyFragment;
+        this.id = id;
     }
 
     @Override
     public void getHistoryTrips() {
         final List<Trip> upcomingTrips = new ArrayList<>();
-        firebaseReference = FirebaseDatabase.getInstance().getReference("history_trips");
+        firebaseReference = FirebaseDatabase.getInstance().getReference("history_trip").child(id);
         firebaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

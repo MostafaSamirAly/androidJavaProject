@@ -31,7 +31,6 @@ public class HomeFragment extends Fragment implements HomeContract.HomeView {
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        homePresenter = new HomePresenter(this);
         upcomingTrips_recyclerView = root.findViewById(R.id.upcomingTrips_recyclerview);
         noTrips_layout = root.findViewById(R.id.no_upcoming_trips_layout);
         if (getArguments() != null) {
@@ -41,6 +40,7 @@ public class HomeFragment extends Fragment implements HomeContract.HomeView {
            email= bundle.getString("email");
             Toast.makeText(this.getActivity(), " id "+id +" name  "+name+" email "+email, Toast.LENGTH_LONG).show();
         }
+        homePresenter = new HomePresenter(this,id);
         FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,14 +57,12 @@ public class HomeFragment extends Fragment implements HomeContract.HomeView {
     @Override
     public void onStart() {
         super.onStart();
-
-        homePresenter = new HomePresenter(this);
         homePresenter.getUpcomingTrips();
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
         homePresenter.stop();
     }
 

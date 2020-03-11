@@ -71,7 +71,7 @@ public class signup extends AppCompatActivity implements View.OnClickListener,Si
         signupPresenter = new SignupPresenter(this);
         User addedUser = new User(null,name,email,password);
         signupPresenter.addUser(addedUser);
-        Toast.makeText(this,"User Registered Successfully",Toast.LENGTH_LONG);
+        Toast.makeText(this,"User Registered Successfully",Toast.LENGTH_LONG).show();
     }
 
 
@@ -96,6 +96,7 @@ public class signup extends AppCompatActivity implements View.OnClickListener,Si
         Intent replyIntent = new Intent();
         replyIntent.putExtra("email",user.getEmail());
         replyIntent.putExtra("pass",user.getPassword());
+
         setResult(-1, replyIntent);
         finish();
 

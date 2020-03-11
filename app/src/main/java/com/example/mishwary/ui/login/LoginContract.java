@@ -6,9 +6,10 @@ public interface LoginContract {
     public interface LoginView{
         void goToHome(User user);
         void showError();
+        void SaveUser(User user);
     }
     public interface LoginPresenter{
-        void validateAccount(String email ,String password);
+       void validateAccount(String email ,String password);
 
     }
 }
