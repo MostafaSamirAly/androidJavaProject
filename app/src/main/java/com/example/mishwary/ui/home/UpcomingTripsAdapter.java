@@ -68,18 +68,12 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.delete_item:
-//                                DatabaseReference deleteRef = FirebaseDatabase.getInstance().getReference("upcoming_trip").child(upcomingTrips.get(position).getUserId());
-//                                deleteRef.child(upcomingTrips.get(position).getId()).removeValue();
                                 removeFromUpcoming(upcomingTrips.get(position));
                                 return true;
                             case R.id.edit_item:
                                 Toast.makeText(context, "edit_item", Toast.LENGTH_SHORT).show();
                                 return true;
                             case R.id.cancel_item:
-//                                DatabaseReference cancelRef = FirebaseDatabase.getInstance().getReference("upcoming_trip").child(upcomingTrips.get(position).getId());
-//                                cancelRef.removeValue();
-//                                DatabaseReference addToHistory = FirebaseDatabase.getInstance().getReference("history_trip");
-//                                addToHistory.child(upcomingTrips.get(position).getUserId()).setValue(upcomingTrips.get(position));
                                 removeFromUpcoming(upcomingTrips.get(position));
                                 addToHistory(upcomingTrips.get(position));
                                 return true;
