@@ -34,11 +34,14 @@ public class HistoryPresenter implements HistoryContract.HistoryPresenter {
                     Trip upcoming = trip.getValue(Trip.class);
                     upcomingTrips.add(upcoming);
                 }
-                if (upcomingTrips.size() > 0) {
-                    historyFragment.displayTrips(upcomingTrips);
-                } else {
-                    historyFragment.displayNoTrips();
+                if (historyFragment!=null){
+                    if (upcomingTrips.size() > 0) {
+                        historyFragment.displayTrips(upcomingTrips);
+                    } else {
+                        historyFragment.displayNoTrips();
+                    }
                 }
+
             }
 
             @Override
