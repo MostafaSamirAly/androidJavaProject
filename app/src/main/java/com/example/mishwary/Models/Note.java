@@ -4,6 +4,7 @@ public class Note {
     private String id;
     private String description;
     private String TripId;
+    private boolean isChecked;
 
     public Note() {
     }
@@ -12,6 +13,7 @@ public class Note {
         this.id = id;
         this.description = description;
         TripId = tripId;
+        isChecked = false;
     }
 
     public String getId() {
@@ -36,5 +38,13 @@ public class Note {
 
     public void setTripId(String tripId) {
         TripId = tripId;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }
