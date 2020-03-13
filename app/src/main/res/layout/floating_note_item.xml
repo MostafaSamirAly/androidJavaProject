@@ -24,8 +24,8 @@
             android:padding="10dp"
             android:text="@string/start" />
 
-        <RadioButton
-            android:id="@+id/radioBtn"
+        <CheckBox
+            android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />

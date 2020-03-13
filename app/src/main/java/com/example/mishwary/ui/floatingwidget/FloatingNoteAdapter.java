@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -30,12 +31,12 @@ public class FloatingNoteAdapter extends RecyclerView.Adapter<FloatingNoteAdapte
     }
     public class NoteViewHolder extends RecyclerView.ViewHolder {
         private TextView NoteDesc;
-        private RadioButton radioButton;
+        private CheckBox checkBox;
 
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
             NoteDesc = itemView.findViewById(R.id.NoteDesc);
-            radioButton = itemView.findViewById(R.id.radioBtn);
+            checkBox = itemView.findViewById(R.id.checkbox);
         }
     }
     @NonNull
@@ -48,18 +49,23 @@ public class FloatingNoteAdapter extends RecyclerView.Adapter<FloatingNoteAdapte
     @Override
     public void onBindViewHolder(@NonNull final NoteViewHolder holder, final int position) {
         holder.NoteDesc.setText(Notes.get(position).getDescription());
-        holder.radioButton.setOnClickListener(new View.OnClickListener() {
+        if(Notes.get(position).isChecked()){
+            holder.checkBox.setChecked(true);
+        }else{
+            holder.checkBox.setChecked(false);
+        }
+
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (holder.radioButton.isSelected()){
-                    updateNotes(Notes.get(position),false);
-                    holder.radioButton.setSelected(false);
-                }else{
+                if (holder.checkBox.isChecked()){
+                    holder.checkBox.setChecked(true);
                     updateNotes(Notes.get(position),true);
-                    holder.radioButton.setSelected(true);
-                }
-                System.out.println(holder.radioButton.isSelected());
+                }else{
+                    updateNotes(Notes.get(position),false);
+                    holder.checkBox.setChecked(false);
 
+                }
             }
         });
 

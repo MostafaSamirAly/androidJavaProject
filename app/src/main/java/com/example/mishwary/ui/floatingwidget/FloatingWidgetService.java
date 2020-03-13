@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,6 +44,7 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
     private View removeFloatingWidgetView;
     private String tripId;
     private RecyclerView floatingNotesRecycler;
+    private TextView title;
 
     private int x_init_cord, y_init_cord, x_init_margin, y_init_margin;
 
@@ -77,6 +79,7 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
         addFloatingWidgetView(inflater);
         implementClickListeners();
         implementTouchListenerToFloatingWidgetView();
+        title.setText((String) intent.getExtras().get("tripTitle"));
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -135,6 +138,7 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
         //find id of the expanded view layout
         expandedView = mFloatingWidgetView.findViewById(R.id.expanded_container);
         floatingNotesRecycler = expandedView.findViewById(R.id.floating_widget_recycler);
+        title = expandedView.findViewById(R.id.floating_widget_title_label);
         getNotes();
 
     }

@@ -45,61 +45,46 @@
             android:id="@+id/expanded_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:background="@android:color/white"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            android:visibility="gone"
-            >
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="8dp"
-                >
+                android:weightSum="5">
 
                 <ImageView
                     android:id="@+id/floating_widget_image_view"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:src="@mipmap/ic_launcher" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:orientation="vertical">
+                <TextView
+                    android:id="@+id/floating_widget_title_label"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="@string/titlehint"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/floating_widget_title_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="@string/floating_widget_label"
-                        android:textColor="@android:color/black"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/floating_widget_detail_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="@string/floating_widget_details"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="11sp" />
-
-                </LinearLayout>
                 <ImageView
                     android:id="@+id/close_expanded_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="10dp"
                     android:src="@drawable/ic_close_black_24dp" />
 
                 <ImageView
                     android:id="@+id/open_activity_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="10dp"
                     android:src="@drawable/ic_aspect_ratio_black_24dp" />
@@ -113,8 +98,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/floating_widget_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>
