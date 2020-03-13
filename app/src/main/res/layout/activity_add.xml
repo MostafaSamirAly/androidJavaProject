@@ -28,7 +28,7 @@
         android:layout_marginTop="18dp"
         android:gravity="center"/>
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/trip_start_point"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -40,7 +40,7 @@
         android:text="@string/End_Point"
         android:gravity="center"/>
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/trip_end_point"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

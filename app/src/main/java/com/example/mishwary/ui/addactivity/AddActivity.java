@@ -7,9 +7,14 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -21,14 +26,18 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mishwary.Models.Trip;
+import com.example.mishwary.PlaceAutoSuggestAdapter;
 import com.example.mishwary.R;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class AddActivity extends AppCompatActivity implements View.OnClickListener,AddContract.AddView {
     Button btnDatePicker, btnTimePicker, btnAdd ;
     TextView txtDate, txtTime;
-    EditText titleTxt,startTxt,endTxt;
+    EditText titleTxt;
+    AutoCompleteTextView startTxt,endTxt;
     final Calendar c = Calendar.getInstance();
     private int mYear, mMonth, mDay, mHour, mMinute;
     private AddPresenter addPresenter;
@@ -51,7 +60,65 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         btnTimePicker.setOnClickListener(this);
         titleTxt = findViewById(R.id.trip_title);
         startTxt = findViewById(R.id.trip_start_point);
+        startTxt.setAdapter(new PlaceAutoSuggestAdapter(AddActivity.this,android.R.layout.simple_list_item_1));
+
+        startTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("Address : ",startTxt.getText().toString());
+                LatLng latLng=getLatLngFromAddress(startTxt.getText().toString());
+                if(latLng!=null) {
+                    Log.d("Lat Lng : ", " " + latLng.latitude + " " + latLng.longitude);
+                    Address address=getAddressFromLatLng(latLng);
+                    if(address!=null) {
+                        Log.d("Address : ", "" + address.toString());
+                        Log.d("Address Line : ",""+address.getAddressLine(0));
+                        Log.d("Phone : ",""+address.getPhone());
+                        Log.d("Pin Code : ",""+address.getPostalCode());
+                        Log.d("Feature : ",""+address.getFeatureName());
+                        Log.d("More : ",""+address.getLocality());
+                    }
+                    else {
+                        Log.d("Adddress","Address Not Found");
+                    }
+                }
+                else {
+                    Log.d("Lat Lng","Lat Lng Not Found");
+                }
+
+            }
+        });
+
         endTxt = findViewById(R.id.trip_end_point);
+        endTxt.setAdapter(new PlaceAutoSuggestAdapter(AddActivity.this,android.R.layout.simple_list_item_1));
+
+        endTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("Address : ", endTxt.getText().toString());
+                LatLng latLng=getLatLngFromAddress( endTxt.getText().toString());
+                if(latLng!=null) {
+                    Log.d("Lat Lng : ", " " + latLng.latitude + " " + latLng.longitude);
+                    Address address=getAddressFromLatLng(latLng);
+                    if(address!=null) {
+                        Log.d("Address : ", "" + address.toString());
+                        Log.d("Address Line : ",""+address.getAddressLine(0));
+                        Log.d("Phone : ",""+address.getPhone());
+                        Log.d("Pin Code : ",""+address.getPostalCode());
+                        Log.d("Feature : ",""+address.getFeatureName());
+                        Log.d("More : ",""+address.getLocality());
+                    }
+                    else {
+                        Log.d("Adddress","Address Not Found");
+                    }
+                }
+                else {
+                    Log.d("Lat Lng","Lat Lng Not Found");
+                }
+
+            }
+        });
+
         repeatSpinner = findViewById(R.id.spinner_repeat);
         descSpinner = findViewById(R.id.spinner_desc);
         btnAdd.setOnClickListener(this);
@@ -62,6 +129,48 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         descAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         descSpinner.setAdapter(descAdapter);
         addPresenter = new AddPresenter(this);
+    }
+    private LatLng getLatLngFromAddress(String address){
+
+        Geocoder geocoder=new Geocoder(AddActivity.this);
+        List<Address> addressList;
+
+        try {
+            addressList = geocoder.getFromLocationName(address, 1);
+            if(addressList!=null){
+                Address singleaddress=addressList.get(0);
+                LatLng latLng=new LatLng(singleaddress.getLatitude(),singleaddress.getLongitude());
+                return latLng;
+            }
+            else{
+                return null;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    private Address getAddressFromLatLng(LatLng latLng){
+        Geocoder geocoder=new Geocoder(AddActivity.this);
+        List<Address> addresses;
+        try {
+            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 5);
+            if(addresses!=null){
+                Address address=addresses.get(0);
+                return address;
+            }
+            else{
+                return null;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     @Override
