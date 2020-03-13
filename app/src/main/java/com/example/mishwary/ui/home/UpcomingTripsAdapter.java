@@ -1,8 +1,11 @@
 package com.example.mishwary.ui.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +18,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mishwary.MainActivity;
 import com.example.mishwary.Models.Trip;
 import com.example.mishwary.R;
+import com.example.mishwary.ui.floatingwidget.FloatingWidgetService;
 import com.example.mishwary.ui.notes.AddNote;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,6 +32,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
     LayoutInflater inflater;
     Context context;
     List<Trip> upcomingTrips;
+    private static final int DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE = 1222;
 
     public UpcomingTripsAdapter(Context context, List upcomingTrips) {
         this.context = context;
@@ -53,6 +60,16 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
             public void onClick(View v) {
                 removeFromUpcoming(upcomingTrips.get(position));
                 addToHistory(upcomingTrips.get(position));
+                //floating icon
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays((context))) {
+                    //If the draw over permission is not available open the settings screen
+                    //to grant the permission.
+                    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                            Uri.parse("package:" + (context).getPackageName()));
+                    ((MainActivity) context).startActivityForResult(intent,DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE);
+                } else
+                    //If permission is granted start floating widget service
+                    startFloatingWidgetService(position);
                 // open google maps with start and destination provided with the path
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+upcomingTrips.get(position).getStartPoint()+"&daddr="+upcomingTrips.get(position).getDestination()));
                 context.startActivity(intent);
@@ -99,11 +116,17 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
                Intent Noteintent = new Intent(context, AddNote.class);
                 Noteintent.putExtra("tripId",upcomingTrips.get(position).getId());
                 context.startActivity(Noteintent);
-
             }
         });
 
     }
+
+    private void startFloatingWidgetService(int position) {
+        Intent intent = new Intent(context, FloatingWidgetService.class);
+        intent.putExtra("tripId",upcomingTrips.get(position).getId());
+        context.startService(intent);
+    }
+
     private void addToHistory(Trip trip) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("history_trip").child(trip.getUserId());
         String id = databaseReference.push().getKey();

@@ -36,10 +36,12 @@ public class HomePresenter implements  HomeContract.HomePresenter {
                         upcomingTrips.add(upcoming);
                     }
                 }
-                if (upcomingTrips!=null && upcomingTrips.size()> 0){
-                    homeFragment.displayTrips(upcomingTrips);
-                }else{
-                    homeFragment.displayNoTrips();
+                if (homeFragment!=null) {
+                    if (upcomingTrips != null && upcomingTrips.size() > 0) {
+                        homeFragment.displayTrips(upcomingTrips);
+                    } else {
+                        homeFragment.displayNoTrips();
+                    }
                 }
             }
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
     private LinearLayout noTrips_layout;
     private HistoryPresenter historyPresenter;
     private HistoryTripsAdapter adapter;
+    private ProgressBar progressBar;
     String id;
 
 
@@ -31,20 +33,21 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
 
         historyTrips_recyclerView = root.findViewById(R.id.historyTrips_recyclerview);
         noTrips_layout = root.findViewById(R.id.no_history_trips_layout);
+        progressBar = root.findViewById(R.id.progress_bar);
         historyTrips_recyclerView.setVisibility(View.INVISIBLE);
         if (getArguments() != null) {
             Bundle bundle= getArguments();
             id = bundle.getString("id");
-            Toast.makeText(this.getActivity(), " id "+id , Toast.LENGTH_LONG).show();
         }
-        historyPresenter = new HistoryPresenter(this,id);
         return root;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
+        progressBar.setVisibility(View.VISIBLE);
+        noTrips_layout.setVisibility(View.INVISIBLE);
+        historyPresenter = new HistoryPresenter(this,id);
         historyPresenter.getHistoryTrips();
     }
 
@@ -60,12 +63,12 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
         System.out.println("inside  display trips");
         historyTrips_recyclerView.setVisibility(View.VISIBLE);
         noTrips_layout.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
         adapter = new HistoryTripsAdapter(getActivity(),historyTrips);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         historyTrips_recyclerView.setLayoutManager(layoutManager);
         historyTrips_recyclerView.setHasFixedSize(true);
         historyTrips_recyclerView.setAdapter(adapter);
-
     }
 
     @Override
@@ -73,5 +76,6 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
         System.out.println("inside  display no trips");
         historyTrips_recyclerView.setVisibility(View.INVISIBLE);
         noTrips_layout.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }

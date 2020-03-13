@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.mishwary.ui.History.HistoryFragment;
+import com.example.mishwary.ui.floatingwidget.FloatingWidgetService;
 import com.example.mishwary.ui.home.HomeFragment;
 import com.example.mishwary.ui.login.login;
 import com.facebook.login.LoginManager;
@@ -15,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.fragment.app.Fragment;
 
@@ -28,6 +30,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.widget.Toast;
+
+import static com.example.mishwary.ui.home.HomeFragment.DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE;
 
 public class MainActivity extends AppCompatActivity {
     String id ,name,email;
@@ -96,6 +100,28 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE) {
+            //Check if the permission is granted or not.
+            if (resultCode == RESULT_OK)
+                //If permission granted start floating widget service
+                startFloatingWidgetService();
+            else
+                //Permission is not available then display toast
+                Toast.makeText(this,
+                        getResources().getString(R.string.draw_other_app_permission_denied),
+                        Toast.LENGTH_LONG).show();
+
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+    private void startFloatingWidgetService() {
+        startService(new Intent(MainActivity.this, FloatingWidgetService.class));
+        finish();
     }
 
     private void logout() {
