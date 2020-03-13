@@ -3,21 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/showNotes_item"
+        android:icon="@android:drawable/ic_menu_agenda"
         android:orderInCategory="100"
         android:title="@string/shownotes"
         app:showAsAction="never" />
     <item
         android:id="@+id/edit_item"
+        android:icon="@android:drawable/ic_menu_edit"
         android:orderInCategory="100"
         android:title="@string/edit"
         app:showAsAction="never" />
     <item
         android:id="@+id/delete_item"
+        android:icon="@android:drawable/ic_menu_delete"
         android:orderInCategory="100"
         android:title="@string/delete"
         app:showAsAction="never" />
     <item
         android:id="@+id/cancel_item"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
         android:orderInCategory="100"
         android:title="@string/cancel"
         app:showAsAction="never" />
