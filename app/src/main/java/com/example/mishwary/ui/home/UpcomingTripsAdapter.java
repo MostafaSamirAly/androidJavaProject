@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mishwary.MainActivity;
 import com.example.mishwary.Models.Trip;
 import com.example.mishwary.R;
+import com.example.mishwary.ui.edittrip.EditTrip;
 import com.example.mishwary.ui.floatingwidget.FloatingWidgetService;
 import com.example.mishwary.ui.notes.AddNote;
 import com.google.firebase.database.DatabaseReference;
@@ -89,7 +90,17 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
                                 removeFromUpcoming(upcomingTrips.get(position));
                                 return true;
                             case R.id.edit_item:
-                                Toast.makeText(context, "edit_item", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(context, EditTrip.class);
+                                intent.putExtra("id",upcomingTrips.get(position).getUserId());
+                                intent.putExtra("title",upcomingTrips.get(position).getTripName());
+                                intent.putExtra("date",upcomingTrips.get(position).getDate());
+                                intent.putExtra("desc",upcomingTrips.get(position).getDescription());
+                                intent.putExtra("start",upcomingTrips.get(position).getStartPoint());
+                                intent.putExtra("dest",upcomingTrips.get(position).getDestination());
+                                intent.putExtra("tripId",upcomingTrips.get(position).getId());
+                                intent.putExtra("repeat",upcomingTrips.get(position).getRepeat());
+                                intent.putExtra("time",upcomingTrips.get(position).getTime());
+                                context.startActivity(intent);
                                 return true;
                             case R.id.cancel_item:
                                 removeFromUpcoming(upcomingTrips.get(position));

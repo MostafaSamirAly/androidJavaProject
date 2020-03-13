@@ -15,9 +15,16 @@ public class AddPresenter implements AddContract.AddPresenter
     @Override
     public void addTrip(Trip trip) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        //firebaseDatabase.setPersistenceEnabled(true);
         DatabaseReference databaseReference = firebaseDatabase.getReference("upcoming_trip").child(trip.getUserId());
         trip.setId(databaseReference.push().getKey());
+        databaseReference.child(trip.getId()).setValue(trip);
+        addView.gotoHome();
+    }
+
+    @Override
+    public void editTrip(Trip trip) {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("upcoming_trip").child(trip.getUserId());
         databaseReference.child(trip.getId()).setValue(trip);
         addView.gotoHome();
     }
