@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-class AlertReceiver extends BroadcastReceiver  {
+public class AlertReceiver extends BroadcastReceiver  {
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent toMyAlertDialog = new Intent(context, MyAlertDialog.class);

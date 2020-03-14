@@ -8,6 +8,7 @@ public interface AddContract {
     }
     public interface AddPresenter{
         void addTrip(Trip trip);
+        void editTrip(Trip trip);
         void stop();
     }
 }
