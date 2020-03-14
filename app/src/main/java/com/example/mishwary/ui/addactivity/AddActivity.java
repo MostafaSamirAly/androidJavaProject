@@ -28,8 +28,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mishwary.Models.Trip;
 import com.example.mishwary.PlaceAutoSuggestAdapter;
 import com.example.mishwary.R;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -44,6 +51,8 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     private String id;
     private Spinner repeatSpinner,descSpinner;
     private ArrayAdapter<CharSequence> repeatAdapter,descAdapter;
+    PlacesClient placesClient;
+    String TAG = "AddActivity",startPoint=" ",endPoint=" ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +68,54 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         btnDatePicker.setOnClickListener(this);
         btnTimePicker.setOnClickListener(this);
         titleTxt = findViewById(R.id.trip_title);
-        startTxt = findViewById(R.id.trip_start_point);
-        startTxt.setAdapter(new PlaceAutoSuggestAdapter(AddActivity.this,android.R.layout.simple_list_item_1));
+        //startTxt = findViewById(R.id.trip_start_point);
+        //endTxt = findViewById(R.id.trip_end_point);
+        String apiKey = "AIzaSyA6iKHcXcfCYH8jXglkFDdKxxdjElaKK2U";
+        if(!Places.isInitialized())
+        {
+            Places.initialize(getApplicationContext(), apiKey);
+        }
+        placesClient = Places.createClient(this);
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                startPoint = place.getName();
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+            }
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: " + status);
+            }
+        });
+        AutocompleteSupportFragment autocompleteFragment2 = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment2);
+
+        autocompleteFragment2.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+
+        autocompleteFragment2.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                endPoint = place.getName();
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+            }
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: " + status);
+            }
+        });
+
+
+
+        /*startTxt.setAdapter(new PlaceAutoSuggestAdapter(AddActivity.this,android.R.layout.simple_list_item_1));
 
         startTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -87,9 +142,11 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 }
 
             }
-        });
+        });*/
 
-        endTxt = findViewById(R.id.trip_end_point);
+
+
+       /*
         endTxt.setAdapter(new PlaceAutoSuggestAdapter(AddActivity.this,android.R.layout.simple_list_item_1));
 
         endTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -117,7 +174,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 }
 
             }
-        });
+        });*/
 
         repeatSpinner = findViewById(R.id.spinner_repeat);
         descSpinner = findViewById(R.id.spinner_desc);
@@ -130,7 +187,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         descSpinner.setAdapter(descAdapter);
         addPresenter = new AddPresenter(this);
     }
-    private LatLng getLatLngFromAddress(String address){
+   /* private LatLng getLatLngFromAddress(String address){
 
         Geocoder geocoder=new Geocoder(AddActivity.this);
         List<Address> addressList;
@@ -151,9 +208,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             return null;
         }
 
-    }
+    }*/
 
-    private Address getAddressFromLatLng(LatLng latLng){
+    /*private Address getAddressFromLatLng(LatLng latLng){
         Geocoder geocoder=new Geocoder(AddActivity.this);
         List<Address> addresses;
         try {
@@ -171,7 +228,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             return null;
         }
 
-    }
+    }*/
 
     @Override
     public void onClick(View v) {
@@ -235,15 +292,17 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             titleTxt.setError("Enter Title");
             titleTxt.requestFocus();
         }
-        if(startTxt.getText().toString().trim().isEmpty()){
+        if(startPoint.trim().isEmpty()){
             flag = false;
-            startTxt.setError("Enter Start Point");
-            startTxt.requestFocus();
+          // startTxt.setError("Enter Start Point");
+            Toast.makeText(this,"Please Enter Start Point",Toast.LENGTH_LONG).show();
+           // startTxt.requestFocus();
         }
-        if(endTxt.getText().toString().trim().isEmpty()){
+        if(endPoint.trim().isEmpty()){
             flag = false;
-            endTxt.setError("Enter Destination");
-            endTxt.requestFocus();
+            Toast.makeText(this,"Please Enter the Destination",Toast.LENGTH_LONG).show();
+            //endTxt.setError("Enter Destination");
+            //endTxt.requestFocus();
         }
         if(txtDate.getText().toString().trim().isEmpty()){
             flag = false;
