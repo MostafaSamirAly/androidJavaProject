@@ -41,4 +41,6 @@ public class AddPresenter implements AddContract.AddPresenter
     public void stop() {
         addView = null;
     }
+
+
 }

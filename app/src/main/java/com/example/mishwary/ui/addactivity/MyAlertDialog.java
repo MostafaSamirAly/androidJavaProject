@@ -106,6 +106,8 @@ public class MyAlertDialog extends Activity {
         builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                removeFromUpcoming();
+                addToHistory();
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.cancelAll();
                 cancelAlarm();
@@ -188,10 +190,9 @@ public class MyAlertDialog extends Activity {
     }
 
     private void addToHistory() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("history_trip").child(userId);
-        String id = databaseReference.push().getKey();
-        mTrip.setId(id);
-        databaseReference.child(id).setValue(mTrip);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("history_trip").child(userId).child(tripId);
+        mTrip.setId(tripId);
+        databaseReference.child(tripId).setValue(mTrip);
     }
     private void removeFromUpcoming() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("upcoming_trip").child(userId);

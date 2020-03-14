@@ -140,14 +140,14 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
     }
 
     private void addToHistory(Trip trip) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("history_trip").child(trip.getUserId());
-        String id = databaseReference.push().getKey();
-        trip.setId(id);
-        databaseReference.child(id).setValue(trip);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("history_trip").child(trip.getUserId()).child(trip.getId());
+        databaseReference.child(trip.getId()).setValue(trip);
     }
     private void removeFromUpcoming(Trip trip) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("upcoming_trip").child(trip.getUserId());
         databaseReference.child(trip.getId()).removeValue();
+        databaseReference = FirebaseDatabase.getInstance().getReference("notes").child(trip.getId());
+        databaseReference.removeValue();
     }
 
     @Override

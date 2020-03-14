@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
@@ -29,15 +28,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mishwary.Models.Trip;
 import com.example.mishwary.PlaceAutoSuggestAdapter;
 import com.example.mishwary.R;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -49,7 +42,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     final Calendar c = Calendar.getInstance();
     private int mYear, mMonth, mDay, mHour, mMinute;
     private AddPresenter addPresenter;
-    private String id;
+    private String userID;
     private Spinner repeatSpinner, descSpinner;
     private ArrayAdapter<CharSequence> repeatAdapter, descAdapter;
     PlacesClient placesClient;
@@ -60,7 +53,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         Intent intent = getIntent();
-        id = intent.getStringExtra("id");
+        userID = intent.getStringExtra("id");
         btnDatePicker = (Button) findViewById(R.id.btn_date);
         btnTimePicker = (Button) findViewById(R.id.btn_time);
         btnAdd = (Button) findViewById(R.id.btn_add);
@@ -272,8 +265,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         if (v == btnAdd) {
             if (validateInputs()) {
                 addTriptoFireBase();
+                startAlarm(c);
             }
-            startAlarm(c);
+
         }
     }
 
@@ -309,7 +303,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
 
     private void addTriptoFireBase() {
         Trip trip = new Trip();
-        trip.setUserId(id);
+        trip.setUserId(userID);
         trip.setTripName(titleTxt.getText().toString());
         trip.setStartPoint(startTxt.getText().toString());
         trip.setDestination(endTxt.getText().toString());
@@ -324,8 +318,8 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
         intent.putExtra("tripId",tripId);
-        intent.putExtra("userId",id);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        intent.putExtra("userId", userID);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, tripId.hashCode(), intent, 0);
         if (c.before(Calendar.getInstance())) {
             c.add(Calendar.DATE, 1);
         }
@@ -348,7 +342,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     private void cancelAlarm() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, tripId.hashCode(), intent, 0);
         alarmManager.cancel(pendingIntent);
         Toast.makeText(this, "Alarm canceled", Toast.LENGTH_SHORT).show();
     }
