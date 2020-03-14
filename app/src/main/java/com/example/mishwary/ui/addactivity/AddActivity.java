@@ -68,9 +68,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         btnDatePicker.setOnClickListener(this);
         btnTimePicker.setOnClickListener(this);
         titleTxt = findViewById(R.id.trip_title);
-        //startTxt = findViewById(R.id.trip_start_point);
-        //endTxt = findViewById(R.id.trip_end_point);
-        String apiKey = "AIzaSyA6iKHcXcfCYH8jXglkFDdKxxdjElaKK2U";
+        startTxt = findViewById(R.id.trip_start_point);
+        endTxt = findViewById(R.id.trip_end_point);
+      /*  String apiKey = "AIzaSyA6iKHcXcfCYH8jXglkFDdKxxdjElaKK2U";
         if(!Places.isInitialized())
         {
             Places.initialize(getApplicationContext(), apiKey);
@@ -112,10 +112,10 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 Log.i(TAG, "An error occurred: " + status);
             }
         });
+*/
 
 
-
-        /*startTxt.setAdapter(new PlaceAutoSuggestAdapter(AddActivity.this,android.R.layout.simple_list_item_1));
+        startTxt.setAdapter(new PlaceAutoSuggestAdapter(AddActivity.this,android.R.layout.simple_list_item_1));
 
         startTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -142,11 +142,11 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 }
 
             }
-        });*/
+        });
 
 
 
-       /*
+
         endTxt.setAdapter(new PlaceAutoSuggestAdapter(AddActivity.this,android.R.layout.simple_list_item_1));
 
         endTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -174,7 +174,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 }
 
             }
-        });*/
+        });
 
         repeatSpinner = findViewById(R.id.spinner_repeat);
         descSpinner = findViewById(R.id.spinner_desc);
@@ -187,7 +187,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         descSpinner.setAdapter(descAdapter);
         addPresenter = new AddPresenter(this);
     }
-   /* private LatLng getLatLngFromAddress(String address){
+    private LatLng getLatLngFromAddress(String address){
 
         Geocoder geocoder=new Geocoder(AddActivity.this);
         List<Address> addressList;
@@ -208,9 +208,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             return null;
         }
 
-    }*/
+    }
 
-    /*private Address getAddressFromLatLng(LatLng latLng){
+    private Address getAddressFromLatLng(LatLng latLng){
         Geocoder geocoder=new Geocoder(AddActivity.this);
         List<Address> addresses;
         try {
@@ -228,7 +228,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             return null;
         }
 
-    }*/
+    }
 
     @Override
     public void onClick(View v) {
@@ -292,17 +292,17 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             titleTxt.setError("Enter Title");
             titleTxt.requestFocus();
         }
-        if(startPoint.trim().isEmpty()){
+        if( startTxt.toString().trim().isEmpty()){
             flag = false;
-          // startTxt.setError("Enter Start Point");
-            Toast.makeText(this,"Please Enter Start Point",Toast.LENGTH_LONG).show();
-           // startTxt.requestFocus();
+           startTxt.setError("Enter Start Point");
+            //Toast.makeText(this,"Please Enter Start Point",Toast.LENGTH_LONG).show();
+            startTxt.requestFocus();
         }
-        if(endPoint.trim().isEmpty()){
+        if(endTxt.toString().trim().isEmpty()){
             flag = false;
-            Toast.makeText(this,"Please Enter the Destination",Toast.LENGTH_LONG).show();
-            //endTxt.setError("Enter Destination");
-            //endTxt.requestFocus();
+            //Toast.makeText(this,"Please Enter the Destination",Toast.LENGTH_LONG).show();
+            endTxt.setError("Enter Destination");
+            endTxt.requestFocus();
         }
         if(txtDate.getText().toString().trim().isEmpty()){
             flag = false;

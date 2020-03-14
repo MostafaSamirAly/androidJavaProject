@@ -29,18 +29,18 @@
         android:gravity="center"/>
 
 
-   <!-- <AutoCompleteTextView
+   <AutoCompleteTextView
         android:id="@+id/trip_start_point"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableEnd="@drawable/quantum_ic_search_grey600_24"
-        android:drawableRight="@drawable/quantum_ic_search_grey600_24" />-->
+        android:drawableRight="@drawable/quantum_ic_search_grey600_24" />
 
-    <fragment android:id="@+id/autocomplete_fragment"
+    <!--<fragment android:id="@+id/autocomplete_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        />
+        />-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -49,18 +49,18 @@
         android:text="@string/End_Point"
         android:gravity="center"/>
 
-    <!--<AutoCompleteTextView
+    <AutoCompleteTextView
         android:id="@+id/trip_end_point"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableEnd="@drawable/quantum_ic_search_grey600_24"
-        android:drawableRight="@drawable/quantum_ic_search_grey600_24" />-->
+        android:drawableRight="@drawable/quantum_ic_search_grey600_24" />
 
-    <fragment android:id="@+id/autocomplete_fragment2"
+    <!--<fragment android:id="@+id/autocomplete_fragment2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        />
+        />-->
 
     <LinearLayout
         android:layout_width="match_parent"
