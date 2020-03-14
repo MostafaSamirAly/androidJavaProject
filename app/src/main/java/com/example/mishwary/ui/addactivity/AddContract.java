@@ -4,6 +4,7 @@ import com.example.mishwary.Models.Trip;
 
 public interface AddContract {
     public interface AddView{
+        void setTripId(String tripId);
         void gotoHome();
     }
     public interface AddPresenter{

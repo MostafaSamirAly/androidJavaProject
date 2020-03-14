@@ -59,8 +59,8 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         holder.startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                removeFromUpcoming(upcomingTrips.get(position));
-//                addToHistory(upcomingTrips.get(position));
+                removeFromUpcoming(upcomingTrips.get(position));
+                addToHistory(upcomingTrips.get(position));
                 //floating icon
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays((context))) {
                     //If the draw over permission is not available open the settings screen

@@ -253,6 +253,7 @@ public class EditTrip extends AppCompatActivity implements AddContract.AddView, 
             if(validateInputs()) {
                 editTripInFireBAse(tripId);
             }
+            cancelAlarm();
             startAlarm(c);
         }
     }
@@ -302,6 +303,8 @@ public class EditTrip extends AppCompatActivity implements AddContract.AddView, 
     private void startAlarm(Calendar c) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
+        intent.putExtra("tripId",tripId);
+        intent.putExtra("userId",id);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
 
         if (c.before(Calendar.getInstance())) {
@@ -316,7 +319,13 @@ public class EditTrip extends AppCompatActivity implements AddContract.AddView, 
         Intent intent = new Intent(this, AlertReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
         alarmManager.cancel(pendingIntent);
-        Toast.makeText(this, "Alarm canceled", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Changes Saved", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setTripId(String tripId) {
+        this.tripId = tripId;
+
     }
 
     @Override
