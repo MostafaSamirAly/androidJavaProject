@@ -269,6 +269,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             if (validateInputs()) {
                 addTriptoFireBase();
                 startAlarm(c);
+                btnAdd.setEnabled(false);
                 //finish();
             }
 

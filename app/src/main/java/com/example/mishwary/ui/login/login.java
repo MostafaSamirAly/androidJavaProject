@@ -73,12 +73,13 @@ public class login extends Activity implements LoginContract.LoginView {
         FBloginbtn = findViewById(R.id.login_button);
         pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         editor = pref.edit();
-        SignInButton signInButton = findViewById(R.id.sign_in_button);
+        final SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 signIn();
+                signInButton.setEnabled(false);
             }
         });
 
@@ -97,6 +98,7 @@ public class login extends Activity implements LoginContract.LoginView {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         handleFacebookAccessToken(loginResult.getAccessToken());
+                        FBloginbtn.setEnabled(false);
                     }
 
                     @Override
@@ -118,6 +120,7 @@ public class login extends Activity implements LoginContract.LoginView {
             @Override
             public void onClick(View view) {
                 login();
+                _loginButton.setEnabled(false);
 
             }
         });
