@@ -91,7 +91,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.delete_item:
-                                removeFromUpcoming(upcomingTrips.get(position));
+                                deleteTrip(upcomingTrips.get(position));
                                 return true;
                             case R.id.edit_item:
                                 Intent intent = new Intent(context, EditTrip.class);
@@ -147,11 +147,15 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("history_trip").child(trip.getUserId());
         databaseReference.child(trip.getId()).setValue(trip);
     }
-    private void removeFromUpcoming(Trip trip) {
+    private void deleteTrip(Trip trip) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("upcoming_trip").child(trip.getUserId());
         databaseReference.child(trip.getId()).removeValue();
         databaseReference = FirebaseDatabase.getInstance().getReference("notes").child(trip.getId());
         databaseReference.removeValue();
+    }
+    private void removeFromUpcoming(Trip trip) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("upcoming_trip").child(trip.getUserId());
+        databaseReference.child(trip.getId()).removeValue();
     }
     private void cancelAlarm(int pos) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

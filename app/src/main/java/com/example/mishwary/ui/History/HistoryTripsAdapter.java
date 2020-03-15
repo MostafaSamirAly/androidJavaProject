@@ -22,6 +22,8 @@ import com.example.mishwary.R;
 import com.example.mishwary.ui.floatingwidget.FloatingWidgetService;
 import com.example.mishwary.ui.home.UpcomingTripsAdapter;
 import com.example.mishwary.ui.notes.AddNote;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -89,6 +91,12 @@ public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapte
                 }
             }
         });
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteTrip(historyTrips.get(position));
+            }
+        });
     }
 
     @Override
@@ -101,6 +109,12 @@ public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapte
         intent.putExtra("tripTitle",historyTrips.get(position).getTripName());
         context.startService(intent);
     }
+    private void deleteTrip(Trip trip) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("history_trip").child(trip.getUserId());
+        databaseReference.child(trip.getId()).removeValue();
+        databaseReference = FirebaseDatabase.getInstance().getReference("notes").child(trip.getId());
+        databaseReference.removeValue();
+    }
     public class HistoryTripsViewHolder extends RecyclerView.ViewHolder {
         private TextView tripTitle;
         private TextView tripDate;
@@ -110,6 +124,7 @@ public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapte
         private ImageView notesImg;
         private ImageView imageView;
         private Button startBtn;
+        private Button deleteBtn;
         private LinearLayout detailsLayout;
 
         public HistoryTripsViewHolder(@NonNull View itemView) {
@@ -123,6 +138,7 @@ public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapte
             startBtn = itemView.findViewById(R.id.startBtn);
             imageView = itemView.findViewById(R.id.imageView);
             detailsLayout = itemView.findViewById(R.id.details_Layout);
+            deleteBtn = itemView.findViewById(R.id.deleteBtn);
         }
 
     }
