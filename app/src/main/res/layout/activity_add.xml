@@ -160,7 +160,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="38dp"
         android:background="@drawable/line"
-        android:layout_margin="5dp"
+        android:layout_margin="15dp"
         android:text="@string/ADD_TRIP" />
 
 </LinearLayout>
