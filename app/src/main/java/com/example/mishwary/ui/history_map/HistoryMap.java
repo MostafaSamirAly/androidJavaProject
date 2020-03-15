@@ -30,21 +30,16 @@ public class HistoryMap extends FragmentActivity implements OnMapReadyCallback {
     LatLng Loc1 ;
     LatLng Loc2;
     int j=0;
-    int BLACK       = 0xFF000000;
-    int GRAY        = 0xFF888888;
-     int WHITE       = 0xFFFFFFFF;
-     int RED         = 0xFFFF0000;
-     int GREEN       = 0xFF00FF00;
-     int BLUE        = 0xFF0000FF;
-     int YELLOW      = 0xFFFFFF00;
-     int CYAN        = 0xFF00FFFF;
-    int MAGENTA     = 0xFFFF00FF;
+    int BLACK = 0xFF000000;
+    int GRAY = 0xFF888888;
+     int WHITE = 0xFFFFFFFF;
+     int RED = 0xFFFF0000;
+     int GREEN = 0xFF00FF00;
+     int BLUE  = 0xFF0000FF;
+     int YELLOW  = 0xFFFFFF00;
+     int CYAN  = 0xFF00FFFF;
+    int MAGENTA = 0xFFFF00FF;
     int [] color = {RED ,GREEN, BLUE,YELLOW, CYAN ,MAGENTA,BLACK,GRAY,WHITE};
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +51,6 @@ public class HistoryMap extends FragmentActivity implements OnMapReadyCallback {
         EndPoints= intent.getStringArrayListExtra("endPoints");
         mapFragment.getMapAsync(this);
     }
-
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -75,10 +68,8 @@ public class HistoryMap extends FragmentActivity implements OnMapReadyCallback {
                     }
                 }
                 String location2 = EndPoints.get(i);
-               // String location2 = "Ismailia";
                 Geocoder gc2 = new Geocoder(this);
                 List<Address> addresses2= gc2.getFromLocationName(location2, 5); // get the found Address Objects
-
                 for(Address a : addresses2){
                     if(a.hasLatitude() && a.hasLongitude()){
                        Loc2 = new LatLng(a.getLatitude(), a.getLongitude());
@@ -96,20 +87,12 @@ public class HistoryMap extends FragmentActivity implements OnMapReadyCallback {
                 j++;
 
 
-
-
             }
 
         } catch (IOException e) {
             // handle the exception
         }
 
-        // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(33.785022, 72.721992);
-       // mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-       /* mMap.addPolyline(
 
-                PolylineOptions().add()
-        )*/
     }
 }

@@ -205,7 +205,6 @@ public class login extends Activity implements LoginContract.LoginView {
 
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(login.this, user.getUid()+user.getEmail()+user.getPhoneNumber()+user.getDisplayName(), Toast.LENGTH_LONG).show();
                             User GoogleUser = new User(user.getUid(),user.getDisplayName(),user.getEmail(),null);
                             goToHome(GoogleUser);
                         } else {
@@ -266,8 +265,6 @@ public class login extends Activity implements LoginContract.LoginView {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(login.this, "user id"+user.getUid(),
-                                    Toast.LENGTH_SHORT).show();
                             User FacebookUser = new User(user.getUid(),user.getDisplayName(),user.getEmail(),null);
                             goToHome(FacebookUser);
 
