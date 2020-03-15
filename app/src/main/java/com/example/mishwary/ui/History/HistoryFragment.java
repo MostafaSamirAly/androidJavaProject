@@ -1,9 +1,12 @@
 package com.example.mishwary.ui.History;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -15,7 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mishwary.Models.Trip;
 import com.example.mishwary.R;
+import com.example.mishwary.ui.addactivity.AddActivity;
+import com.example.mishwary.ui.history_map.HistoryMap;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryFragment extends Fragment implements HistoryContract.HistoryView{
@@ -24,7 +31,10 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
     private HistoryPresenter historyPresenter;
     private HistoryTripsAdapter adapter;
     private ProgressBar progressBar;
+    private Button showMap;
     String id;
+    public  List<String>StartPoints;
+    public List<String>EndPoints;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -35,10 +45,23 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
         noTrips_layout = root.findViewById(R.id.no_history_trips_layout);
         progressBar = root.findViewById(R.id.progress_bar);
         historyTrips_recyclerView.setVisibility(View.INVISIBLE);
+        StartPoints = new ArrayList<String>();
+        EndPoints =  new ArrayList<String>();
+        showMap = root.findViewById(R.id.showMap);
         if (getArguments() != null) {
             Bundle bundle= getArguments();
             id = bundle.getString("id");
         }
+        showMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), HistoryMap.class);
+                intent.putStringArrayListExtra("startPoints", (ArrayList<String>) StartPoints);
+               intent.putStringArrayListExtra("endPoints", (ArrayList<String>) EndPoints);
+
+                startActivity(intent);
+            }
+        });
         return root;
     }
 
@@ -69,6 +92,8 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
         historyTrips_recyclerView.setLayoutManager(layoutManager);
         historyTrips_recyclerView.setHasFixedSize(true);
         historyTrips_recyclerView.setAdapter(adapter);
+        StartPoints=adapter.getStartPoints();
+        EndPoints = adapter.getEndPoints();
     }
 
     @Override

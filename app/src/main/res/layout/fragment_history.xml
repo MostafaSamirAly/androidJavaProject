@@ -37,4 +37,15 @@
             android:text="@string/nohistory"
             android:textAlignment="center" />
     </LinearLayout>
+
+
+    <Button
+        android:id="@+id/showMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:textColor="#F44336"
+        android:background="@drawable/circle"
+        android:text="@string/showmap" />
 </FrameLayout>
