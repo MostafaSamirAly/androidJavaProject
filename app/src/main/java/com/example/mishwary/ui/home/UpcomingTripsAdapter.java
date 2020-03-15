@@ -1,6 +1,8 @@
 package com.example.mishwary.ui.home;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mishwary.MainActivity;
 import com.example.mishwary.Models.Trip;
 import com.example.mishwary.R;
+import com.example.mishwary.ui.addactivity.AlertReceiver;
 import com.example.mishwary.ui.edittrip.EditTrip;
 import com.example.mishwary.ui.floatingwidget.FloatingWidgetService;
 import com.example.mishwary.ui.notes.AddNote;
@@ -61,6 +64,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
             public void onClick(View v) {
                 removeFromUpcoming(upcomingTrips.get(position));
                 addToHistory(upcomingTrips.get(position));
+                cancelAlarm(position);
                 //floating icon
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays((context))) {
                     //If the draw over permission is not available open the settings screen
@@ -148,6 +152,12 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         databaseReference.child(trip.getId()).removeValue();
         databaseReference = FirebaseDatabase.getInstance().getReference("notes").child(trip.getId());
         databaseReference.removeValue();
+    }
+    private void cancelAlarm(int pos) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, upcomingTrips.get(pos).getId().hashCode(), intent, 0);
+        alarmManager.cancel(pendingIntent);
     }
 
     @Override

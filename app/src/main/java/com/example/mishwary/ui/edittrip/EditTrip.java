@@ -375,7 +375,6 @@ public class EditTrip extends AppCompatActivity implements AddContract.AddView, 
         Intent intent = new Intent(this, AlertReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, tripId.hashCode(), intent, 0);
         alarmManager.cancel(pendingIntent);
-
     }
 
     @Override
