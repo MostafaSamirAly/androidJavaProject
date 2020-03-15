@@ -59,6 +59,7 @@ public class EditTrip extends AppCompatActivity implements AddContract.AddView, 
         setContentView(R.layout.activity_edit_trip);
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
+        tripId = intent.getStringExtra("tripId");
         btnDatePicker = (Button) findViewById(R.id.btn_date);
         btnTimePicker = (Button) findViewById(R.id.btn_time);
         btnAdd = (Button) findViewById(R.id.btn_save_changes);
@@ -187,7 +188,6 @@ public class EditTrip extends AppCompatActivity implements AddContract.AddView, 
         txtTime.setText(intent.getStringExtra("time"));
         startTxt.setText(intent.getStringExtra("start"));
         endTxt.setText(intent.getStringExtra("dest"));
-        tripId = intent.getStringExtra("tripId");
         if(intent.getStringExtra("repeat").equals("No Repeat")){
             repeatSpinner.setSelection(0);
         }else if(intent.getStringExtra("repeat").equals("daily")) {
@@ -294,9 +294,10 @@ public class EditTrip extends AppCompatActivity implements AddContract.AddView, 
         if (v == btnAdd) {
             if (validateInputs()) {
                 editTripInFireBase();
+                cancelAlarm();
+                startAlarm(c);
             }
-            cancelAlarm();
-            startAlarm(c);
+
         }
     }
 
@@ -366,7 +367,7 @@ public class EditTrip extends AppCompatActivity implements AddContract.AddView, 
         } else {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),AlarmManager.INTERVAL_DAY*30, pendingIntent);
         }
-
+        Toast.makeText(this, "Changes Saved", Toast.LENGTH_SHORT).show();
     }
 
     private void cancelAlarm() {
@@ -374,7 +375,7 @@ public class EditTrip extends AppCompatActivity implements AddContract.AddView, 
         Intent intent = new Intent(this, AlertReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, tripId.hashCode(), intent, 0);
         alarmManager.cancel(pendingIntent);
-        Toast.makeText(this, "Alarm canceled", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
