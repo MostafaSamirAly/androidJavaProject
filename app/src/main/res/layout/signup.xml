@@ -102,8 +102,8 @@
         android:layout_marginBottom="76dp"
         android:background="@color/cardview_shadow_end_color"
         android:padding="12dp"
-        android:text="Already have an account ?"
         android:textColor="#ff2600"
+        android:text="@string/HaveAcount"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

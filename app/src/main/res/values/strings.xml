@@ -55,8 +55,15 @@
     <string name="floating_widget_details">Notes:</string>
     <string name="draw_other_app_permission_denied">Draw over other app permission not available. App won\'t work without permission. Please try again.</string>
 
+    <string name="Trip_Name">Trip Name</string>
+    <string name="Start_Point">Start Point</string>
+    <string name="End_Point">End Point</string>
+    <string name="Start_Details">Start Details</string>
+    <string name="ADD_TRIP">ADD TRIP</string>
+
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_history_map">Map</string>
-    <string name="showmap">Show Map</string>
+    <string name="showmap">Map</string>
+    <string name="EnterEmail">Enter Email</string>
+    <string name="HaveAcount">ALREADY HAVE AN ACCOUNT ?</string>
 </resources>

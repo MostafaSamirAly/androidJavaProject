@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">مشواري</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">مشواري</string>
+    <string name="nav_header_subtitle">Our App Help You To Start Your Traps Easily </string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="menu_home">الصفحة الرئيسية</string>
+    <string name="menu_History">السجل</string>
+    <string name="menu_logout">تسجيل الخروج</string>
+    <string name="enter_email"> ادخل البريد الالكتورني</string>
+    <string name="enter_Password">ادخل كلمة المرور</string>
+    <string name="Login">تسجيل الدخول</string>
+    <string name="fORGIR_PASSWORD">نسيت كلمة المرور ?</string>
+    <string name="OR">_______________ او _______________</string>
+    <string name="No_account_yet">ليس ليك حساب ؟ انشيء حساب جديد</string>
+
+    <string name="Resister">تسجيل</string>
+    <string name="User_name"> ادخل الاسم</string>
+    <string name="Email"> ادخل البريد الالكتورني</string>
+    <string name="Password"> ادخل كلمة السر</string>
+    <string name="Password2"> اعد ادخال كلمة السر </string>
+    <string name="facebook_app_id">631417260926220</string>
+    <string name="fb_login_protocol_scheme">fb631417260926220</string>
+    <string name="notrip">لا يوجد رحلات قادمة</string>
+    <string name="titlehint">عنوان الرحلة</string>
+    <string name="datehint">اتاريخ الرحلة</string>
+    <string name="timehint">وقت الرحلة</string>
+    <string name="starthint">بداية الرحلة</string>
+    <string name="destinationhint">نهاية الرحلة</string>
+    <string name="start">ابدأ الرحلة</string>
+    <string name="nohistory">لا رحلات في السجل</string>
+    <string name="delete">مسح</string>
+    <string name="cancel">الغاء</string>
+    <string name="shownotes">اظهار الملاحظات</string>
+    <string name="edit">تعديل</string>
+    <string name="Add_Note">اضافة</string>
+    <string name="no_notes">لا يوجد ملاحظات </string>
+    <string name="save_changes">حفظ التغيرات</string>
+    <string-array name="descSpinner">
+        <item>رحلة ذهاب فقط</item>
+        <item>رحلة ذهاب و عودة</item>
+    </string-array>
+    <string-array name="repeatSpinner">
+        <item>لا تكرار</item>
+        <item>يوميا</item>
+        <item>اسبوعيا</item>
+        <item>شهريا</item>
+    </string-array>
+    <string name="create_floating_widget">Create Floating Widget</string>
+    <string name="floating_widget_details">الملاحظات:</string>
+    <string name="draw_other_app_permission_denied">التطبيق لن يعمل بدون اذن . الرجاء قبول الاذن و المحاولة مرة اخري</string>
+
+    <string name="Trip_Name">اسم الرحلة</string>
+    <string name="Start_Point">بداية الرحلة</string>
+    <string name="End_Point">نهاية الرحلة </string>
+    <string name="Start_Details">ابدأ التفاصيل</string>
+    <string name="ADD_TRIP">اضافة رحلة </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_activity_history_map">الخريطة</string>
+    <string name="showmap">الخريطة</string>
+    <string name="EnterEmail">ادخل البريد الالكتورني</string>
+    <string name="HaveAcount">بالفعل لديك حساب ?</string>
+</resources>
