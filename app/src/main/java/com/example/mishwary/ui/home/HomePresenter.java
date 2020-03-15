@@ -23,7 +23,6 @@ public class HomePresenter implements  HomeContract.HomePresenter {
 
     @Override
     public void getUpcomingTrips() {
-        System.out.println("getUpcomingTrips");
         final List<Trip> upcomingTrips = new ArrayList<>();
         firebaseReference = FirebaseDatabase.getInstance().getReference("upcoming_trip").child(id);
         firebaseReference.addValueEventListener(new ValueEventListener() {

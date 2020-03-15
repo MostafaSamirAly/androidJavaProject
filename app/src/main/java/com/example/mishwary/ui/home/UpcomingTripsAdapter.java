@@ -36,7 +36,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
     LayoutInflater inflater;
     Context context;
     List<Trip> upcomingTrips;
-    private static final int DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE = 1222;
+    public static final int DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE = 1222;
 
     public UpcomingTripsAdapter(Context context, List upcomingTrips) {
         this.context = context;
@@ -144,7 +144,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
     }
 
     private void addToHistory(Trip trip) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("history_trip").child(trip.getUserId()).child(trip.getId());
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("history_trip").child(trip.getUserId());
         databaseReference.child(trip.getId()).setValue(trip);
     }
     private void removeFromUpcoming(Trip trip) {
