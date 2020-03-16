@@ -1,5 +1,6 @@
 package com.example.mishwary.ui.History;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -88,10 +89,13 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
     }
 
 
+
+    @SuppressLint("RestrictedApi")
     @Override
     public void displayTrips(List<Trip> historyTrips) {
         System.out.println("inside  display trips");
         historyTrips_recyclerView.setVisibility(View.VISIBLE);
+        showMap.setVisibility(View.VISIBLE);
         noTrips_layout.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
         adapter = new HistoryTripsAdapter(getActivity(),historyTrips);
@@ -103,9 +107,11 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
         EndPoints = adapter.getEndPoints();
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void displayNoTrips() {
         System.out.println("inside  display no trips");
+        showMap.setVisibility(View.INVISIBLE);
         historyTrips_recyclerView.setVisibility(View.INVISIBLE);
         noTrips_layout.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
