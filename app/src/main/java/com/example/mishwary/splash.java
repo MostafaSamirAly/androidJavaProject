@@ -2,10 +2,18 @@ package com.example.mishwary;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.widget.ProgressBar;
 
 import com.example.mishwary.ui.login.login;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 public class splash extends Activity {
@@ -19,6 +27,27 @@ public class splash extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splashscreen);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+
+       /*try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    getPackageName(),
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest messageDigest = MessageDigest.getInstance("SHA");
+                messageDigest.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
+            }
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            // T75Ykj3C83LZgScbTD7tqG1IQzc=
+            //yT6KBfyKhcfob0Tua6a+6KzdQbE=
+
+        }
+        catch (NoSuchAlgorithmException e) {
+
+        }*/
+
 
         Thread splashTread = new Thread() {
             @Override
