@@ -11,8 +11,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="175dp"
-        android:layout_height="101dp"
+        android:layout_width="126dp"
+        android:layout_height="55dp"
         android:layout_marginTop="28dp"
         android:src="@drawable/logo"
         app:civ_border_color="#fff"
@@ -25,13 +25,13 @@
         android:id="@+id/user"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:inputType="textEmailAddress"
-        android:textColor="#6C6C6C"
         android:text="@string/EnterEmail"
+        android:textColor="#6C6C6C"
         android:textColorHint="#4C4C4C"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
@@ -39,10 +39,10 @@
         android:id="@+id/textInputLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="24dp"
         android:textColorHint="#6C6C6C"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user"
         app:passwordToggleEnabled="true"
@@ -67,19 +67,21 @@
         android:id="@+id/btn_login"
         android:layout_width="299dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
         android:background="@drawable/line"
         android:padding="12dp"
         android:text="@string/Login"
         android:textColor="#FF2600"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
     <Button
         android:id="@+id/forgot_password"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
+        android:layout_marginTop="20dp"
         android:background="@color/cardview_shadow_end_color"
         android:gravity="center"
         android:text="@string/fORGIR_PASSWORD"
@@ -88,7 +90,8 @@
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button" />
 
     <TextView
         android:id="@+id/textView3"
@@ -99,30 +102,31 @@
         android:textColor="#6C6C6C"
         app:layout_constraintBottom_toTopOf="@+id/link_signup"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.432"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/link_signup"
         android:layout_width="fill_parent"
         android:layout_height="55dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="20dp"
         android:background="@color/cardview_shadow_end_color"
         android:gravity="center"
         android:text="@string/No_account_yet"
         android:textColor="#ff5c62"
         android:textSize="16dip"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="299dp"
         android:layout_height="50dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
         android:background="@drawable/line"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_login">
 
     </com.google.android.gms.common.SignInButton>
@@ -131,10 +135,10 @@
         android:id="@+id/login_button"
         android:layout_width="299dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.50"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
 
 

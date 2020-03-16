@@ -31,6 +31,7 @@ import com.example.mishwary.R;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -47,6 +48,8 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     private ArrayAdapter<CharSequence> repeatAdapter, descAdapter;
     PlacesClient placesClient;
     String TAG = "AddActivity", startPoint = " ", endPoint = " ",tripId;
+    Geocoder gc2 = new Geocoder(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -266,6 +269,8 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             if (validateInputs()) {
                 addTriptoFireBase();
                 startAlarm(c);
+                btnAdd.setEnabled(false);
+                //finish();
             }
 
         }
@@ -284,6 +289,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             //Toast.makeText(this,"Please Enter Start Point",Toast.LENGTH_LONG).show();
             startTxt.requestFocus();
         }
+
         if (endTxt.toString().trim().isEmpty()) {
             flag = false;
             //Toast.makeText(this,"Please Enter the Destination",Toast.LENGTH_LONG).show();
@@ -298,6 +304,35 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             flag = false;
             Toast.makeText(this, "Please Select Time", Toast.LENGTH_LONG).show();
         }
+
+       /* try {
+
+            List<Address> addresses= null; // get the found Address Objects
+            addresses = gc2.getFromLocationName(startTxt.toString(), 5);
+            if( addresses.size()==0){
+                    Toast.makeText(this,"Please Enter  valid Start Point",Toast.LENGTH_LONG).show();
+                    startTxt.requestFocus();
+                    flag = false;
+
+                }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            List<Address> addresses2= null; // get the found Address Objects
+            addresses2 = gc2.getFromLocationName(endTxt.toString(), 5);
+            if( addresses2.size()==0)
+            {
+                Toast.makeText(this,"Please Enter valid End Point",Toast.LENGTH_LONG).show();
+                endTxt.requestFocus();
+                flag = false;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
         return flag;
     }
 

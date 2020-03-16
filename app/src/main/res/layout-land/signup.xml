@@ -11,8 +11,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="175dp"
-        android:layout_height="101dp"
+        android:layout_width="138dp"
+        android:layout_height="68dp"
         android:layout_marginTop="28dp"
         android:src="@drawable/logo"
         app:civ_border_color="#fff"
@@ -22,90 +22,94 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <!-- Password Re-enter Label -->
     <EditText
         android:id="@+id/input_name"
         android:layout_width="302dp"
         android:layout_height="42dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="20dp"
         android:hint="@string/User_name"
         android:inputType="textPersonName"
         android:textColor="#6C6C6C"
         android:textColorHint="#6C6C6C"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_image" />
-
-
 
     <EditText
         android:id="@+id/input_email"
         android:layout_width="304dp"
         android:layout_height="42dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginRight="35dp"
         android:hint="@string/Email"
         android:inputType="textEmailAddress"
         android:textColor="#6C6C6C"
         android:textColorHint="#6C6C6C"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_name" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+
+
+    <!-- Signup Button -->
 
     <EditText
         android:id="@+id/input_password"
         android:layout_width="305dp"
         android:layout_height="42dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="28dp"
         android:hint="@string/Password"
         android:inputType="textPassword"
         android:textColor="#6C6C6C"
         android:textColorHint="#6C6C6C"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_email" />
 
-    <!-- Password Re-enter Label -->
     <EditText
         android:id="@+id/input_password2"
         android:layout_width="305dp"
         android:layout_height="42dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginRight="35dp"
         android:hint="@string/Password2"
         android:inputType="textPassword"
         android:textColor="#6C6C6C"
         android:textColorHint="#6C6C6C"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_password" />
-
-
-
-    <!-- Signup Button -->
+        app:layout_constraintTop_toBottomOf="@+id/input_email" />
 
     <Button
         android:id="@+id/btn_signup"
         android:layout_width="339dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/line"
         android:padding="12dp"
         android:text="@string/Resister"
         android:textColor="#ff2600"
         app:layout_constraintBottom_toTopOf="@+id/btn_login"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.362"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_password" />
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="76dp"
+        android:layout_marginBottom="20dp"
         android:background="@color/cardview_shadow_end_color"
         android:padding="12dp"
-        android:textColor="#ff2600"
         android:text="@string/HaveAcount"
+        android:textColor="#ff2600"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
 

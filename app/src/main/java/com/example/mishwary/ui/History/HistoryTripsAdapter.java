@@ -25,6 +25,7 @@ import com.example.mishwary.ui.notes.AddNote;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,9 +34,22 @@ public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapte
     Context context;
     List<Trip> historyTrips;
 
+    public List<String> getStartPoints() {
+        return StartPoints;
+    }
+
+    public List<String> getEndPoints() {
+        return EndPoints;
+    }
+
+    List<String>StartPoints;
+    List<String>EndPoints;
+
     public HistoryTripsAdapter(Context context, List<Trip> historyTrips) {
         this.context = context;
         this.historyTrips = historyTrips;
+        this.StartPoints=new ArrayList<>();
+        this.EndPoints =new ArrayList<>();
         inflater = LayoutInflater.from(context);
     }
 
@@ -53,6 +67,8 @@ public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapte
         holder.tripTime.setText(historyTrips.get(position).getTime());
         holder.tripStart.setText(historyTrips.get(position).getStartPoint());
         holder.tripDestination.setText(historyTrips.get(position).getDestination());
+        StartPoints.add(historyTrips.get(position).getStartPoint());
+        EndPoints.add(historyTrips.get(position).getDestination());
 
         holder.startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
