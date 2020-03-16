@@ -71,7 +71,7 @@ public class MyAlertDialog extends Activity {
     public void showDialog(final Context context) {
         getTrip();
         AlertDialog.Builder builder = new AlertDialog.Builder(MyAlertDialog.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
-        builder.setMessage("Reminder for your trip!!!!");
+        builder.setMessage("Reminder for your trip " + mTrip.getTripName());
         builder.setCancelable(false);
         builder.setTitle("MishWary!");
 
