@@ -47,6 +47,7 @@ public class HomeFragment extends Fragment implements HomeContract.HomeView {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                fab.setEnabled(false);
                 Intent intent = new Intent(getActivity().getApplicationContext(), AddActivity.class);
                 intent.putExtra("id",id);
                 startActivity(intent);
@@ -71,6 +72,11 @@ public class HomeFragment extends Fragment implements HomeContract.HomeView {
         homePresenter.stop();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        fab.setEnabled(true);
+    }
 
     @SuppressLint("RestrictedApi")
     @Override

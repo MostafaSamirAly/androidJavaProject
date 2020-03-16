@@ -20,6 +20,7 @@ import com.example.mishwary.Models.Trip;
 import com.example.mishwary.R;
 import com.example.mishwary.ui.addactivity.AddActivity;
 import com.example.mishwary.ui.history_map.HistoryMap;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,8 +32,9 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
     private HistoryPresenter historyPresenter;
     private HistoryTripsAdapter adapter;
     private ProgressBar progressBar;
-    private Button showMap;
+   // private Button showMap;
     String id;
+    private FloatingActionButton showMap;
     public  List<String>StartPoints;
     public List<String>EndPoints;
 
@@ -55,10 +57,10 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
         showMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showMap.setEnabled(false);
                 Intent intent = new Intent(getActivity().getApplicationContext(), HistoryMap.class);
                 intent.putStringArrayListExtra("startPoints", (ArrayList<String>) StartPoints);
                intent.putStringArrayListExtra("endPoints", (ArrayList<String>) EndPoints);
-
                 startActivity(intent);
             }
         });
@@ -72,6 +74,11 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
         noTrips_layout.setVisibility(View.INVISIBLE);
         historyPresenter = new HistoryPresenter(this,id);
         historyPresenter.getHistoryTrips();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        showMap.setEnabled(true);
     }
 
     @Override
