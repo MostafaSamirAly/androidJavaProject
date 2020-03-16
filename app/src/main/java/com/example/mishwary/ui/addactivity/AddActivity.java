@@ -118,7 +118,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         startTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("Address : ", startTxt.getText().toString());
+               /* Log.d("Address : ", startTxt.getText().toString());
                 LatLng latLng = getLatLngFromAddress(startTxt.getText().toString());
                 if (latLng != null) {
                     Log.d("Lat Lng : ", " " + latLng.latitude + " " + latLng.longitude);
@@ -135,7 +135,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                     }
                 } else {
                     Log.d("Lat Lng", "Lat Lng Not Found");
-                }
+                }*/
 
             }
         });
@@ -146,7 +146,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         endTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("Address : ", endTxt.getText().toString());
+              /*  Log.d("Address : ", endTxt.getText().toString());
                 LatLng latLng = getLatLngFromAddress(endTxt.getText().toString());
                 if (latLng != null) {
                     Log.d("Lat Lng : ", " " + latLng.latitude + " " + latLng.longitude);
@@ -163,7 +163,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                     }
                 } else {
                     Log.d("Lat Lng", "Lat Lng Not Found");
-                }
+                }*/
 
             }
         });
