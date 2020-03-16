@@ -48,7 +48,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     private ArrayAdapter<CharSequence> repeatAdapter, descAdapter;
     PlacesClient placesClient;
     String TAG = "AddActivity", startPoint = " ", endPoint = " ",tripId;
-    Geocoder gc2 = new Geocoder(this);
+    Geocoder gc2;
 
 
     @Override
@@ -67,6 +67,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         titleTxt = findViewById(R.id.trip_title);
         startTxt = findViewById(R.id.trip_start_point);
         endTxt = findViewById(R.id.trip_end_point);
+        gc2 = new Geocoder(this);
       /*  String apiKey = "AIzaSyA6iKHcXcfCYH8jXglkFDdKxxdjElaKK2U";
         if(!Places.isInitialized())
         {
