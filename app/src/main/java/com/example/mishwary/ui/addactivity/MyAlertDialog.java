@@ -189,7 +189,7 @@ public class MyAlertDialog extends Activity {
     }
 
     private void addToHistory() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("history_trip").child(userId).child(tripId);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("history_trip").child(userId);
         mTrip.setId(tripId);
         databaseReference.child(tripId).setValue(mTrip);
     }
