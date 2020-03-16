@@ -75,16 +75,20 @@ public class HistoryMap extends FragmentActivity implements OnMapReadyCallback {
                        Loc2 = new LatLng(a.getLatitude(), a.getLongitude());
                     }
                 }
-                mMap.addMarker(new MarkerOptions().position(Loc1).title("Start Point"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Loc1,10f));
-                if(j>8)
-                    j=0;
-                mMap.addPolyline(
-                        new PolylineOptions().add(Loc1).add(Loc2).width(3f).color(color[j])
-                );
-                mMap.addMarker(new MarkerOptions().position(Loc2).title("End Point"));
+                if(Loc1 != null&&Loc2!=null)
+                {
+                    mMap.addMarker(new MarkerOptions().position(Loc1).title("Start Point"));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Loc1,10f));
+                    if(j>8)
+                        j=0;
+                    mMap.addPolyline(
+                            new PolylineOptions().add(Loc1).add(Loc2).width(3f).color(color[j])
+                    );
+                    mMap.addMarker(new MarkerOptions().position(Loc2).title("End Point"));
 
-                j++;
+                    j++;
+                }
+
 
 
             }
