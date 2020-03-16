@@ -92,6 +92,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
                         switch (item.getItemId()) {
                             case R.id.delete_item:
                                 deleteTrip(upcomingTrips.get(position));
+                                cancelAlarm(position);
                                 return true;
                             case R.id.edit_item:
                                 Intent intent = new Intent(context, EditTrip.class);

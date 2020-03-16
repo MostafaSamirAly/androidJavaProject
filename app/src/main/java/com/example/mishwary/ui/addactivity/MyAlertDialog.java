@@ -52,7 +52,6 @@ public class MyAlertDialog extends Activity {
         Intent intent = getIntent();
         tripId = intent.getStringExtra("tripId");
         userId = intent.getStringExtra("userId");
-        getTrip();
         ringtone = RingtoneManager.getRingtone(MyAlertDialog.this, alarmUri);
         ringtone.play();
     }
@@ -70,7 +69,7 @@ public class MyAlertDialog extends Activity {
     }
 
     public void showDialog(final Context context) {
-
+        getTrip();
         AlertDialog.Builder builder = new AlertDialog.Builder(MyAlertDialog.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
         builder.setMessage("Reminder for your trip!!!!");
         builder.setCancelable(false);
@@ -106,7 +105,6 @@ public class MyAlertDialog extends Activity {
         builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 removeFromUpcoming();
                 addToHistory();
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
