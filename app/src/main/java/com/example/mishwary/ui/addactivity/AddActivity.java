@@ -375,14 +375,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
 
     }
 
-    private void cancelAlarm() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlertReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, tripId.hashCode(), intent, 0);
-        alarmManager.cancel(pendingIntent);
-        Toast.makeText(this, "Alarm canceled", Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public void setTripId(String tripId) {
         this.tripId = tripId;

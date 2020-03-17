@@ -372,7 +372,7 @@ public class EditTrip extends AppCompatActivity implements AddContract.AddView, 
 
     @Override
     public void setTripId(String tripId) {
-        this.tripId = tripId;
+
     }
 
     @Override
