@@ -88,7 +88,7 @@ public class MyAlertDialog extends Activity {
                 cancelAlarm();
                 ringtone.stop();
                 dialog.cancel();
-                    finish();
+                finish();
             }
         });
         builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -97,7 +97,7 @@ public class MyAlertDialog extends Activity {
                 removeFromUpcoming();
                 addToHistory();
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.cancelAll();
+                notificationManager.cancel(mTrip.getId().hashCode());
                 cancelAlarm();
                 ringtone.stop();
                 dialog.cancel();
@@ -108,9 +108,10 @@ public class MyAlertDialog extends Activity {
         builder.setNeutralButton("SNOOZE", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                showNotification(getApplicationContext());
-                finish();
+                showNotification(MyAlertDialog.this);
                 ringtone.stop();
+                dialog.cancel();
+                finish();
             }
         });
         builder.create();
@@ -137,7 +138,7 @@ public class MyAlertDialog extends Activity {
         notifyIntent.putExtra("tripId",tripId);
         notifyIntent.putExtra("userId",userId);
         PendingIntent notifyPendingIntent = PendingIntent.getActivity(
-                this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                this, mTrip.getId().hashCode(), notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelID);
         builder.setContentTitle("MishWary!")

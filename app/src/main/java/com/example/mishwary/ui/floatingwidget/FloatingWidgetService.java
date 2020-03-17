@@ -375,9 +375,6 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("tripId",tripId);
                 startActivity(intent);
-
-                //close the service and remove view from the view hierarchy
-                stopSelf();
                 break;
         }
     }
