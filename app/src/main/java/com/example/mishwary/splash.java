@@ -44,6 +44,7 @@ public class splash extends Activity {
             //yT6KBfyKhcfob0Tua6a+6KzdQbE=
 
         }
+        //
         catch (NoSuchAlgorithmException e) {
 
         }*/

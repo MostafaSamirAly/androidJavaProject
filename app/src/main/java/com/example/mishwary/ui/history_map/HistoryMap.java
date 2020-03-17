@@ -83,7 +83,8 @@ public class HistoryMap extends FragmentActivity implements OnMapReadyCallback {
                             new PolylineOptions().add(Loc1).add(Loc2).width(3f).color(color[j])
                     );
                     mMap.addMarker(new MarkerOptions().position(Loc2).title("End Point"));
-
+                    Loc1=null;
+                    Loc2=null;
                     j++;
                 }
 

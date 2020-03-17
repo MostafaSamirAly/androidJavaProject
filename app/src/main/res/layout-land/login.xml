@@ -78,37 +78,10 @@
         app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
     <Button
-        android:id="@+id/forgot_password"
-        android:layout_width="fill_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/cardview_shadow_end_color"
-        android:gravity="center"
-        android:text="@string/fORGIR_PASSWORD"
-        android:textColor="#009193"
-        android:textSize="16dip"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_button" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="248dp"
-        android:layout_height="30dp"
-        android:gravity="center"
-        android:text="@string/OR"
-        android:textColor="#6C6C6C"
-        app:layout_constraintBottom_toTopOf="@+id/link_signup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/link_signup"
         android:layout_width="fill_parent"
         android:layout_height="55dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="36dp"
         android:background="@color/cardview_shadow_end_color"
         android:gravity="center"
         android:text="@string/No_account_yet"
@@ -116,6 +89,7 @@
         android:textSize="16dip"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.gms.common.SignInButton
