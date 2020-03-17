@@ -15,13 +15,11 @@
     <string name="fORGIR_PASSWORD">FORGOT PASSWORD ?</string>
     <string name="OR">_______________OR_______________</string>
     <string name="No_account_yet">No account yet? Create one</string>
-    <string name="Male">Male</string>
-    <string name="Female">Female</string>
+
     <string name="Resister">Register</string>
     <string name="User_name">  Enter  User name</string>
     <string name="Email">  Enter  Email</string>
-    <string name="Phone">  Enter Phone</string>
-    <string name="City">  Enter  City</string>
+
     <string name="Password">  Enter Password</string>
     <string name="Password2">  Renter Password </string>
     <string name="facebook_app_id">631417260926220</string>
@@ -66,4 +64,5 @@
     <string name="showmap">Map</string>
     <string name="EnterEmail">Enter Email</string>
     <string name="HaveAcount">ALREADY HAVE AN ACCOUNT ?</string>
+    <string name="Current_Location">Current Location</string>
 </resources>
