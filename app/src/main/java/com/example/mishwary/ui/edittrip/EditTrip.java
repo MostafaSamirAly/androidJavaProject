@@ -28,7 +28,6 @@ import android.widget.Toast;
 import com.example.mishwary.Models.Trip;
 import com.example.mishwary.PlaceAutoSuggestAdapter;
 import com.example.mishwary.R;
-import com.example.mishwary.ui.addactivity.AddActivity;
 import com.example.mishwary.ui.addactivity.AddContract;
 import com.example.mishwary.ui.addactivity.AddPresenter;
 import com.example.mishwary.ui.addactivity.AlertReceiver;
@@ -47,18 +46,18 @@ public class EditTrip extends AppCompatActivity implements AddContract.AddView, 
     final Calendar c = Calendar.getInstance();
     private int mYear, mMonth, mDay, mHour, mMinute;
     private AddPresenter addPresenter;
-    private String id;
+    private String userId,tripId;
     private Spinner repeatSpinner, descSpinner;
     private ArrayAdapter<CharSequence> repeatAdapter, descAdapter;
     PlacesClient placesClient;
-    String TAG = "AddActivity", startPoint = " ", endPoint = " ",tripId;
+    String TAG = "AddActivity", startPoint = " ", endPoint = " ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_trip);
         Intent intent = getIntent();
-        id = intent.getStringExtra("id");
+        userId = intent.getStringExtra("id");
         tripId = intent.getStringExtra("tripId");
         btnDatePicker = (Button) findViewById(R.id.btn_date);
         btnTimePicker = (Button) findViewById(R.id.btn_time);
@@ -294,7 +293,6 @@ public class EditTrip extends AppCompatActivity implements AddContract.AddView, 
         if (v == btnAdd) {
             if (validateInputs()) {
                 editTripInFireBase();
-                cancelAlarm();
                 startAlarm(c);
             }
 
@@ -333,7 +331,7 @@ public class EditTrip extends AppCompatActivity implements AddContract.AddView, 
 
     private void editTripInFireBase() {
         Trip trip = new Trip();
-        trip.setUserId(id);
+        trip.setUserId(userId);
         trip.setId(tripId);
         trip.setTripName(titleTxt.getText().toString());
         trip.setStartPoint(startTxt.getText().toString());
@@ -349,7 +347,7 @@ public class EditTrip extends AppCompatActivity implements AddContract.AddView, 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
         intent.putExtra("tripId",tripId);
-        intent.putExtra("userId",id);
+        intent.putExtra("userId",userId);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, tripId.hashCode(), intent, 0);
         if (c.before(Calendar.getInstance())) {
             c.add(Calendar.DATE, 1);
@@ -367,15 +365,10 @@ public class EditTrip extends AppCompatActivity implements AddContract.AddView, 
         } else {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),AlarmManager.INTERVAL_DAY*30, pendingIntent);
         }
+
         Toast.makeText(this, "Changes Saved", Toast.LENGTH_SHORT).show();
     }
 
-    private void cancelAlarm() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlertReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, tripId.hashCode(), intent, 0);
-        alarmManager.cancel(pendingIntent);
-    }
 
     @Override
     public void setTripId(String tripId) {

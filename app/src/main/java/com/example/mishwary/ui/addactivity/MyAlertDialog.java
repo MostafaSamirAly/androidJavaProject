@@ -52,26 +52,15 @@ public class MyAlertDialog extends Activity {
         Intent intent = getIntent();
         tripId = intent.getStringExtra("tripId");
         userId = intent.getStringExtra("userId");
+        getTrip();
         ringtone = RingtoneManager.getRingtone(MyAlertDialog.this, alarmUri);
         ringtone.play();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        showDialog(getApplicationContext());
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-    }
 
     public void showDialog(final Context context) {
-        getTrip();
         AlertDialog.Builder builder = new AlertDialog.Builder(MyAlertDialog.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
-        builder.setMessage("Reminder for your trip!!!!");
+        builder.setMessage("Reminder for your trip \""+mTrip.getTripName()+"\" !!!!");
         builder.setCancelable(false);
         builder.setTitle("MishWary!");
 
@@ -145,14 +134,15 @@ public class MyAlertDialog extends Activity {
 
         Intent notifyIntent = new Intent(this, MyAlertDialog.class);
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
+        notifyIntent.putExtra("tripId",tripId);
+        notifyIntent.putExtra("userId",userId);
         PendingIntent notifyPendingIntent = PendingIntent.getActivity(
                 this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelID);
         builder.setContentTitle("MishWary!")
-                .setContentText("Your Trip is not started yet.")
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentText("Your Trip \""+mTrip.getTripName()+"\" is not started yet.")
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(notifyPendingIntent)
                 .setOngoing(true);
@@ -176,6 +166,7 @@ public class MyAlertDialog extends Activity {
                     Trip retrievedTrip  = dataSnapshot1.getValue(Trip.class);
                     if(retrievedTrip.getId().equals(tripId)){
                         mTrip = retrievedTrip;
+                        showDialog(getApplicationContext());
                         break;
                     }
                 }
