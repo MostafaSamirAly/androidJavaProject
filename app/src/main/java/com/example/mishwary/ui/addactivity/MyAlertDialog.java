@@ -97,7 +97,7 @@ public class MyAlertDialog extends Activity {
                 removeFromUpcoming();
                 addToHistory();
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.cancel(mTrip.getId().hashCode());
+                notificationManager.cancelAll();
                 cancelAlarm();
                 ringtone.stop();
                 dialog.cancel();
