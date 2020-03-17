@@ -38,7 +38,7 @@ public class MyAlertDialog extends Activity {
     public static final String channelName = "Channel Name";
     public static final int NOTIFICATION_ID = 1;
     Ringtone ringtone;
-    String userId,tripId;
+    String userId, tripId;
     Trip mTrip;
 
     @Override
@@ -60,7 +60,7 @@ public class MyAlertDialog extends Activity {
 
     public void showDialog(final Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MyAlertDialog.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
-        builder.setMessage("Reminder for your trip \""+mTrip.getTripName()+"\" !!!!");
+        builder.setMessage("Reminder for your trip \"" + mTrip.getTripName() + "\" !!!!");
         builder.setCancelable(false);
         builder.setTitle("MishWary!");
 
@@ -70,19 +70,10 @@ public class MyAlertDialog extends Activity {
                 removeFromUpcoming();
                 addToHistory();
                 //floating icon
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
-                    //If the draw over permission is not available open the settings screen
-                    //to grant the permission.
-                    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                            Uri.parse("package:" + getPackageName()));
-                    startActivityForResult(intent,DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE);
-                }else{
-                    //If permission is granted start floating widget service
-                    startFloatingWidgetService();
-                }
-                    // open google maps with start and destination provided with the path
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + mTrip.getStartPoint() + "&daddr=" + mTrip.getDestination()));
-                    startActivity(intent);
+                startFloatingWidgetService();
+                // open google maps with start and destination provided with the path
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + mTrip.getStartPoint() + "&daddr=" + mTrip.getDestination()));
+                startActivity(intent);
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.cancelAll();
                 cancelAlarm();
@@ -135,14 +126,14 @@ public class MyAlertDialog extends Activity {
 
         Intent notifyIntent = new Intent(this, MyAlertDialog.class);
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        notifyIntent.putExtra("tripId",tripId);
-        notifyIntent.putExtra("userId",userId);
+        notifyIntent.putExtra("tripId", tripId);
+        notifyIntent.putExtra("userId", userId);
         PendingIntent notifyPendingIntent = PendingIntent.getActivity(
                 this, mTrip.getId().hashCode(), notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelID);
         builder.setContentTitle("MishWary!")
-                .setContentText("Your Trip \""+mTrip.getTripName()+"\" is not started yet.")
+                .setContentText("Your Trip \"" + mTrip.getTripName() + "\" is not started yet.")
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(notifyPendingIntent)
@@ -163,9 +154,9 @@ public class MyAlertDialog extends Activity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    Trip retrievedTrip  = dataSnapshot1.getValue(Trip.class);
-                    if(retrievedTrip.getId().equals(tripId)){
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Trip retrievedTrip = dataSnapshot1.getValue(Trip.class);
+                    if (retrievedTrip.getId().equals(tripId)) {
                         mTrip = retrievedTrip;
                         showDialog(getApplicationContext());
                         break;
@@ -185,6 +176,7 @@ public class MyAlertDialog extends Activity {
         mTrip.setId(tripId);
         databaseReference.child(tripId).setValue(mTrip);
     }
+
     private void removeFromUpcoming() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("upcoming_trip").child(userId);
         databaseReference.child(tripId).removeValue();

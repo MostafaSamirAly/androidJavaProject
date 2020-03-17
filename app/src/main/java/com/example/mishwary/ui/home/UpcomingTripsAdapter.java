@@ -2,6 +2,7 @@ package com.example.mishwary.ui.home;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -65,6 +66,8 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
                 removeFromUpcoming(upcomingTrips.get(position));
                 addToHistory(upcomingTrips.get(position));
                 cancelAlarm(position);
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.cancelAll();
                 //floating icon
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays((context))) {
                     //If the draw over permission is not available open the settings screen

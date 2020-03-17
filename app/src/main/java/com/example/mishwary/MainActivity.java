@@ -2,8 +2,11 @@ package com.example.mishwary;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import com.example.mishwary.Models.FireBaseCreator;
 import com.example.mishwary.ui.History.HistoryFragment;
 import com.example.mishwary.ui.floatingwidget.FloatingWidgetService;
 import com.example.mishwary.ui.home.HomeFragment;
@@ -13,10 +16,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import android.provider.Settings;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.fragment.app.Fragment;
 
@@ -35,15 +40,22 @@ import android.widget.Toast;
 import static com.example.mishwary.ui.home.HomeFragment.DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE;
 
 public class MainActivity extends AppCompatActivity {
-    String id ,name,email;
-    SharedPreferences pref ; // 0 - for private mode
-    SharedPreferences.Editor editor ;
+    String id, name, email;
+    SharedPreferences pref; // 0 - for private mode
+    SharedPreferences.Editor editor;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        if (!Settings.canDrawOverlays(this)) {
+            int REQUEST_CODE = 101;
+            Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+            myIntent.setData(Uri.parse("package:" + getPackageName()));
+            startActivityForResult(myIntent, REQUEST_CODE);
+        }
+        FireBaseCreator.getInstance();
         Toolbar toolbar = findViewById(R.id.toolbar);
         pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         editor = pref.edit();
@@ -51,50 +63,50 @@ public class MainActivity extends AppCompatActivity {
 
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle
-                (this,drawer,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+                (this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         Intent intent = getIntent();
-         id = intent.getStringExtra("id");
-         name= intent.getStringExtra("name");
-         email= intent.getStringExtra("email");
+        id = intent.getStringExtra("id");
+        name = intent.getStringExtra("name");
+        email = intent.getStringExtra("email");
 
 
-        Bundle bundle=new Bundle();
-        bundle.putString("id",id);
-        bundle.putString("name",name);
-        bundle.putString("email",email);
-        HomeFragment home=new HomeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", id);
+        bundle.putString("name", name);
+        bundle.putString("email", email);
+        HomeFragment home = new HomeFragment();
         home.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace( R.id.nav_host_fragment,home).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, home).commit();
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                Fragment selectedFregment=null;
+                Fragment selectedFregment = null;
                 switch (menuItem.getItemId()) {
                     case R.id.nav_logout:
                         logout();
-                        Toast.makeText(MainActivity.this,"Log Out",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Log Out", Toast.LENGTH_LONG).show();
                         break;
-                    case  R.id.nav_home:
-                        Bundle bundle=new Bundle();
-                        bundle.putString("id",id);
-                        bundle.putString("name",name);
-                        bundle.putString("email",email);
-                        selectedFregment=new HomeFragment();
+                    case R.id.nav_home:
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id", id);
+                        bundle.putString("name", name);
+                        bundle.putString("email", email);
+                        selectedFregment = new HomeFragment();
                         selectedFregment.setArguments(bundle);
-                        getSupportFragmentManager().beginTransaction().replace( R.id.nav_host_fragment,selectedFregment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, selectedFregment).commit();
                         break;
                     case R.id.nav_history:
-                        Bundle bundle2=new Bundle();
-                        bundle2.putString("id",id);
-                        selectedFregment=new HistoryFragment() ;
+                        Bundle bundle2 = new Bundle();
+                        bundle2.putString("id", id);
+                        selectedFregment = new HistoryFragment();
                         selectedFregment.setArguments(bundle2);
-                        getSupportFragmentManager().beginTransaction().replace( R.id.nav_host_fragment,selectedFregment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, selectedFregment).commit();
                         break;
                 }
                 drawer.closeDrawers();
@@ -121,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
     private void startFloatingWidgetService() {
         startService(new Intent(MainActivity.this, FloatingWidgetService.class));
         finish();
@@ -146,14 +159,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-    }
+}

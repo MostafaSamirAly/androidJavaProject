@@ -25,6 +25,7 @@ public class HomePresenter implements  HomeContract.HomePresenter {
     public void getUpcomingTrips() {
         final List<Trip> upcomingTrips = new ArrayList<>();
         firebaseReference = FirebaseDatabase.getInstance().getReference("upcoming_trip").child(id);
+        firebaseReference.keepSynced(true);
         firebaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

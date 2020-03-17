@@ -26,6 +26,7 @@ public class HistoryPresenter implements HistoryContract.HistoryPresenter {
     public void getHistoryTrips() {
         final List<Trip> upcomingTrips = new ArrayList<>();
         firebaseReference = FirebaseDatabase.getInstance().getReference("history_trip").child(id);
+        firebaseReference.keepSynced(true);
         firebaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
