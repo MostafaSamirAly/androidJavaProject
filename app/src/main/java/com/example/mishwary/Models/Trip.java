@@ -10,9 +10,14 @@ public class Trip {
     private String destination;
     private String repeat;
     private String description; // one way or round-trip
-    private String time;
-    private String date;
+    private int hourOfDay;
+    private int minutes;
+    private int year;
+    private int months;
+    private int dayOfMnoth;
     private String userId;
+    private String date;
+    private String time;
 
     public String getTripName() {
         return tripName;
@@ -54,22 +59,6 @@ public class Trip {
         this.description = description;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public String getId() {
         return id;
     }
@@ -86,9 +75,63 @@ public class Trip {
         this.userId = userId;
     }
 
+    public int getHourOfDay() {
+        return hourOfDay;
+    }
 
+    public void setHourOfDay(int hourOfDay) {
+        this.hourOfDay = hourOfDay;
+    }
 
-   /* public ArrayList<String> getNotes() {
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getMonths() {
+        return months;
+    }
+
+    public void setMonths(int months) {
+        this.months = months;
+    }
+
+    public int getDayOfMnoth() {
+        return dayOfMnoth;
+    }
+
+    public void setDayOfMnoth(int dayOfMnoth) {
+        this.dayOfMnoth = dayOfMnoth;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    /* public ArrayList<String> getNotes() {
         return notes;
     }*/
 

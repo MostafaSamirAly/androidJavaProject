@@ -1,14 +1,11 @@
 package com.example.mishwary.ui.home;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mishwary.MainActivity;
 import com.example.mishwary.Models.Trip;
 import com.example.mishwary.R;
 import com.example.mishwary.ui.addactivity.AlertReceiver;

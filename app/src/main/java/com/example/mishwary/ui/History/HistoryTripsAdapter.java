@@ -16,7 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mishwary.MainActivity;
+import com.example.mishwary.main.MainActivity;
 import com.example.mishwary.Models.Trip;
 import com.example.mishwary.R;
 import com.example.mishwary.ui.floatingwidget.FloatingWidgetService;

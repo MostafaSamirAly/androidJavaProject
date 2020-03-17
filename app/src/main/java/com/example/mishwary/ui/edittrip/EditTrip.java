@@ -26,7 +26,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.mishwary.Models.Trip;
-import com.example.mishwary.PlaceAutoSuggestAdapter;
+import com.example.mishwary.ui.addactivity.PlaceAutoSuggestAdapter;
 import com.example.mishwary.R;
 import com.example.mishwary.ui.addactivity.AddContract;
 import com.example.mishwary.ui.addactivity.AddPresenter;

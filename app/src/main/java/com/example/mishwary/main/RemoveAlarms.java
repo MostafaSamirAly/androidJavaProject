@@ -1,10 +1,9 @@
-package com.example.mishwary.ui.home;
+package com.example.mishwary.main;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
 
@@ -17,38 +16,29 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-public class HomePresenter implements  HomeContract.HomePresenter {
-    private HomeContract.HomeView homeFragment;
-    private DatabaseReference firebaseReference;
-    private String id;
-    public HomePresenter(HomeContract.HomeView ref, String id) {
-        homeFragment = ref;
-        this.id = id;
+public class RemoveAlarms {
+    private Context context;
+    private String userId;
+    List<Trip> upcomingTrips;
+
+    public RemoveAlarms(Context context, String userId) {
+        this.context = context;
+        this.userId = userId;
+        getUpcomingTrips();
+
     }
 
-    @Override
     public void getUpcomingTrips() {
-        final List<Trip> upcomingTrips = new ArrayList<>();
-        firebaseReference = FirebaseDatabase.getInstance().getReference("upcoming_trip").child(id);
-        firebaseReference.keepSynced(true);
+        DatabaseReference firebaseReference = FirebaseDatabase.getInstance().getReference("upcoming_trip").child(userId);
         firebaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                upcomingTrips.clear();
                 if (dataSnapshot.getChildren() != null) {
                     for (DataSnapshot trip : dataSnapshot.getChildren()) {
                         Trip upcoming = trip.getValue(Trip.class);
-                        upcomingTrips.add(upcoming);
-                    }
-                }
-                if (homeFragment!=null) {
-                    if (upcomingTrips != null && upcomingTrips.size() > 0) {
-                        homeFragment.displayTrips(upcomingTrips);
-                    } else {
-                        homeFragment.displayNoTrips();
+                        cancelAlarm(upcoming);
                     }
                 }
             }
@@ -60,7 +50,10 @@ public class HomePresenter implements  HomeContract.HomePresenter {
         });
     }
 
-    @Override
-    public void stop() { homeFragment = null; }
-
+    public void cancelAlarm(Trip trip) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, trip.getId().hashCode(), intent, 0);
+        alarmManager.cancel(pendingIntent);
+    }
 }

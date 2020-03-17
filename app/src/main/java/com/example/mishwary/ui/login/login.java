@@ -13,10 +13,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.mishwary.MainActivity;
+import com.example.mishwary.main.MainActivity;
 import com.example.mishwary.Models.User;
 import com.example.mishwary.R;
-import com.example.mishwary.ui.signup.SignupPresenter;
 import com.example.mishwary.ui.signup.signup;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -33,7 +32,6 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -69,7 +67,6 @@ public class login extends Activity implements LoginContract.LoginView {
         _passwordText = findViewById(R.id.input_password);
         _loginButton = findViewById(R.id.btn_login);
         _signupLink = findViewById(R.id.link_signup);
-        _forgetPass = findViewById(R.id.forgot_password);
         FBloginbtn = findViewById(R.id.login_button);
         pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         editor = pref.edit();
@@ -133,12 +130,7 @@ public class login extends Activity implements LoginContract.LoginView {
                 startActivityForResult(intent,SIGNUP_ACTIVITY_REQUEST_CODE);
             }
         });
-        _forgetPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               // startActivity(new Intent(login.this, forgetPassword.class));
-            }
-        });
+
 
 
     }

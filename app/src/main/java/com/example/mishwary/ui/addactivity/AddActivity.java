@@ -10,7 +10,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,12 +25,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mishwary.Models.Trip;
-import com.example.mishwary.PlaceAutoSuggestAdapter;
 import com.example.mishwary.R;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -42,12 +39,12 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     AutoCompleteTextView startTxt, endTxt;
     final Calendar c = Calendar.getInstance();
     private int mYear, mMonth, mDay, mHour, mMinute;
+    private int selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute;
     private AddPresenter addPresenter;
-    private String userID;
+    private String userID,tripId;
     private Spinner repeatSpinner, descSpinner;
     private ArrayAdapter<CharSequence> repeatAdapter, descAdapter;
     PlacesClient placesClient;
-    String TAG = "AddActivity", startPoint = " ", endPoint = " ",tripId;
     Geocoder gc2;
 
 
@@ -235,9 +232,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                         @Override
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
-                            c.set(Calendar.YEAR, year);
-                            c.set(Calendar.MONTH, monthOfYear);
-                            c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                           selectedDay = dayOfMonth;
+                           selectedYear = year;
+                           selectedMonth = monthOfYear;
                             txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
                         }
@@ -257,9 +254,8 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
                                               int minute) {
-                            c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                            c.set(Calendar.MINUTE, minute);
-                            c.set(Calendar.SECOND, 0);
+                            selectedHour = hourOfDay;
+                            selectedMinute = minute;
                             txtTime.setText(hourOfDay + ":" + minute);
                         }
                     }, mHour, mMinute, false);
@@ -269,9 +265,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         if (v == btnAdd) {
             if (validateInputs()) {
                 addTriptoFireBase();
-                startAlarm(c);
                 btnAdd.setEnabled(false);
-                //finish();
             }
 
         }
@@ -343,36 +337,16 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         trip.setTripName(titleTxt.getText().toString());
         trip.setStartPoint(startTxt.getText().toString());
         trip.setDestination(endTxt.getText().toString());
-        trip.setTime(txtTime.getText().toString());
         trip.setDate(txtDate.getText().toString());
+        trip.setTime(txtTime.getText().toString());
+        trip.setHourOfDay(selectedHour);
+        trip.setMinutes(selectedMinute);
+        trip.setDayOfMnoth(selectedDay);
+        trip.setYear(selectedYear);
+        trip.setMonths(selectedMonth+1);
         trip.setRepeat(repeatSpinner.getSelectedItem().toString());
         trip.setDescription(descSpinner.getSelectedItem().toString());
         addPresenter.addTrip(trip);
-    }
-
-    private void startAlarm(Calendar c) {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlertReceiver.class);
-        intent.putExtra("tripId",tripId);
-        intent.putExtra("userId", userID);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, tripId.hashCode(), intent, 0);
-        if (c.before(Calendar.getInstance())) {
-            c.add(Calendar.DATE, 1);
-        }
-        if (repeatSpinner.getSelectedItem().toString().equals("No Repeat")) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
-            } else {
-                alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
-            }
-        } else if (repeatSpinner.getSelectedItem().toString().equals("daily")) {
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pendingIntent);
-        } else if (repeatSpinner.getSelectedItem().toString().equals("Weekly")) {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),AlarmManager.INTERVAL_DAY*7, pendingIntent);
-        } else {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),AlarmManager.INTERVAL_DAY*30, pendingIntent);
-        }
-
     }
 
     @Override

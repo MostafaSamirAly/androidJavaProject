@@ -6,6 +6,7 @@
     <string name="nav_header_title">مشواري</string>
     <string name="nav_header_subtitle">Our App Help You To Start Your Traps Easily </string>
     <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">الضبط</string>
     <string name="menu_home">الصفحة الرئيسية</string>
     <string name="menu_History">السجل</string>
     <string name="menu_logout">تسجيل الخروج</string>

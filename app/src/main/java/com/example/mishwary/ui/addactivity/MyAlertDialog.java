@@ -112,7 +112,7 @@ public class MyAlertDialog extends Activity {
     public void cancelAlarm() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, mTrip.getId().hashCode(), intent, 0);
         alarmManager.cancel(pendingIntent);
     }
 

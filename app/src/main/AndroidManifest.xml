@@ -43,10 +43,10 @@
             android:label="@string/title_activity_history_map"></activity>
         <activity android:name=".ui.edittrip.EditTrip" />
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".splash">
+        <activity android:name=".ui.splash.splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -81,8 +81,8 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="@string/fb_login_protocol_scheme" />
+                <data android:scheme="@string/fb_login_protocol_scheme"
+                    tools:ignore="ManifestResource" />
             </intent-filter>
         </activity>
 
