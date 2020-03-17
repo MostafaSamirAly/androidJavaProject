@@ -29,7 +29,7 @@ public class splash extends Activity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
-       /*try {
+     /*  try {
             PackageInfo info = getPackageManager().getPackageInfo(
                     getPackageName(),
                     PackageManager.GET_SIGNATURES);
@@ -47,7 +47,6 @@ public class splash extends Activity {
         catch (NoSuchAlgorithmException e) {
 
         }*/
-
 
         Thread splashTread = new Thread() {
             @Override

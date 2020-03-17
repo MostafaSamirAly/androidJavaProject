@@ -3,13 +3,11 @@ package com.example.mishwary.ui.history_map;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 
 import com.example.mishwary.R;
-import com.example.mishwary.ui.History.HistoryTripsAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -75,7 +73,7 @@ public class HistoryMap extends FragmentActivity implements OnMapReadyCallback {
                        Loc2 = new LatLng(a.getLatitude(), a.getLongitude());
                     }
                 }
-                if(Loc1 != null&&Loc2!=null)
+                if(Loc1!= null&&Loc2!=null)
                 {
                     mMap.addMarker(new MarkerOptions().position(Loc1).title("Start Point"));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Loc1,10f));
