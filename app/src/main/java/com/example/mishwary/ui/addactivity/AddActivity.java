@@ -97,7 +97,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 {
                     startTxt.setVisibility(View.GONE);
                     getLoc();
-                    Toast.makeText(AddActivity.this, loc, Toast.LENGTH_LONG).show();
                 }
                 else
                 {
@@ -332,8 +331,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
-            Toast.makeText(AddActivity.this,mLastLocation.getLatitude()+"", Toast.LENGTH_LONG).show();
-            Toast.makeText(AddActivity.this,mLastLocation.getLongitude()+"", Toast.LENGTH_LONG).show();
+
         }
     };
     @Override
