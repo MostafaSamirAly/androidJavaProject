@@ -21,6 +21,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -81,9 +82,10 @@ public class login extends Activity implements LoginContract.LoginView {
         });
 
 
-        FBloginbtn.setReadPermissions(Arrays.asList("email","public_profile"));
-        callbackManager = CallbackManager.Factory.create();
 
+        callbackManager = CallbackManager.Factory.create();
+        FBloginbtn.setLoginBehavior(LoginBehavior.WEB_ONLY);
+        FBloginbtn.setReadPermissions(Arrays.asList("email","public_profile"));
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
