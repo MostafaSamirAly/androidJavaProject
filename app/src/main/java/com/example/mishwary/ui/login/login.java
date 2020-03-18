@@ -166,9 +166,10 @@ public class login extends Activity implements LoginContract.LoginView {
 
         if(requestCode== SIGNUP_ACTIVITY_REQUEST_CODE&& resultCode==RESULT_OK)
         {
-
-            _emailText.setText(data.getStringExtra("email"));
-            _passwordText.setText(data.getStringExtra("pass"));
+            if(data.hasExtra("email")) {
+                _emailText.setText(data.getStringExtra("email"));
+                _passwordText.setText(data.getStringExtra("pass"));
+            }
 
         }
         if (requestCode == RC_SIGN_IN) {
