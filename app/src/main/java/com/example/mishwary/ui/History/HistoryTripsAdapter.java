@@ -1,6 +1,8 @@
 package com.example.mishwary.ui.History;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -110,7 +112,7 @@ public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapte
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteTrip(historyTrips.get(position));
+                showDeleteAlert(position);
             }
         });
     }
@@ -130,6 +132,28 @@ public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapte
         databaseReference.child(trip.getId()).removeValue();
         databaseReference = FirebaseDatabase.getInstance().getReference("notes").child(trip.getId());
         databaseReference.removeValue();
+    }
+    private void showDeleteAlert(final int pos) {
+        AlertDialog.Builder alertdialog=new AlertDialog.Builder(context);
+        alertdialog.setTitle("Warning");
+        alertdialog.setMessage("Are you sure you Want to delete "+historyTrips.get(pos).getTripName()+" ???");
+        alertdialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteTrip(historyTrips.get(pos));
+            }
+        });
+
+        alertdialog.setNegativeButton("No", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alert=alertdialog.create();
+        alertdialog.show();
+
     }
     public class HistoryTripsViewHolder extends RecyclerView.ViewHolder {
         private TextView tripTitle;

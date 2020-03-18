@@ -1,9 +1,11 @@
 package com.example.mishwary.ui.home;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -82,8 +84,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.delete_item:
-                                deleteTrip(upcomingTrips.get(position));
-                                cancelAlarm(position);
+                                showDeleteAlert(position);
                                 return true;
                             case R.id.edit_item:
                                 Intent intent = new Intent(context, EditTrip.class);
@@ -127,6 +128,31 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         });
 
     }
+
+    private void showDeleteAlert(final int pos) {
+        AlertDialog.Builder alertdialog=new AlertDialog.Builder(context);
+        alertdialog.setTitle("Warning");
+        alertdialog.setMessage("Are you sure you Want to delete "+upcomingTrips.get(pos).getTripName()+" ???");
+        alertdialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteTrip(upcomingTrips.get(pos));
+                cancelAlarm(pos);
+            }
+        });
+
+        alertdialog.setNegativeButton("No", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alert=alertdialog.create();
+        alertdialog.show();
+
+    }
+
 
     private void startFloatingWidgetService(int position) {
         Intent intent = new Intent(context, FloatingWidgetService.class);
