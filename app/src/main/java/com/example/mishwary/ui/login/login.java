@@ -21,6 +21,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -47,15 +48,15 @@ public class login extends Activity implements LoginContract.LoginView {
     EditText _emailText, _passwordText;
     Button _loginButton, _signupLink, _forgetPass;
     LoginButton FBloginbtn;
-    String TAG = "login";
+    String TAG ="login" ;
     private FirebaseAuth mAuth;
     LoginPresenter loginPresenter;
-    CallbackManager callbackManager;
-    public static final int SIGNUP_ACTIVITY_REQUEST_CODE = 2;
+    CallbackManager  callbackManager;
+    public static final int SIGNUP_ACTIVITY_REQUEST_CODE=2;
     public static final int RC_SIGN_IN = 1;
-    public static GoogleSignInClient mGoogleSignInClient;
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
+    public static  GoogleSignInClient mGoogleSignInClient;
+    SharedPreferences pref ;
+    SharedPreferences.Editor editor ;
 
 
     @Override
@@ -81,9 +82,10 @@ public class login extends Activity implements LoginContract.LoginView {
         });
 
 
-        FBloginbtn.setReadPermissions(Arrays.asList("email", "public_profile"));
-        callbackManager = CallbackManager.Factory.create();
 
+        callbackManager = CallbackManager.Factory.create();
+        FBloginbtn.setLoginBehavior(LoginBehavior.WEB_ONLY);
+        FBloginbtn.setReadPermissions(Arrays.asList("email","public_profile"));
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -105,12 +107,12 @@ public class login extends Activity implements LoginContract.LoginView {
 
                     @Override
                     public void onError(FacebookException exception) {
-                        Log.d(TAG, "facebook:onError", exception);
+                        Log.d(TAG, "facebook:onError",exception);
                     }
                 });
 
 
-        mAuth = FirebaseAuth.getInstance();
+             mAuth = FirebaseAuth.getInstance();
 
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
@@ -126,29 +128,32 @@ public class login extends Activity implements LoginContract.LoginView {
         _signupLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(login.this, signup.class);
-                startActivityForResult(intent, SIGNUP_ACTIVITY_REQUEST_CODE);
+                Intent intent = new Intent(login.this,signup.class);
+                startActivityForResult(intent,SIGNUP_ACTIVITY_REQUEST_CODE);
             }
         });
 
 
-    }
 
+    }
     @Override
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        // GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if (currentUser != null) {
-            Log.i("login", currentUser.getEmail() + " 1 " + currentUser.getUid() + " 2" + currentUser.getDisplayName() + " 3 " + currentUser.getPhoneNumber());
-            User FacebookUser = new User(currentUser.getUid(), currentUser.getDisplayName(), currentUser.getEmail(), null);
+       // GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(currentUser!=null)
+        {
+            Log.i("login",currentUser.getEmail()+" 1 "+currentUser.getUid()+" 2"+currentUser.getDisplayName()+" 3 "+currentUser.getPhoneNumber());
+            User FacebookUser = new User(currentUser.getUid(),currentUser.getDisplayName(),currentUser.getEmail(),null);
             goToHome(FacebookUser);
 
         }
-        if (pref.getString("id", null) != null) {
-            User loginUser = new User(pref.getString("id", null), pref.getString("name", null), pref.getString("email", null), null);
+        if( pref.getString("id", null) != null)
+        {
+            User loginUser = new User(pref.getString("id",null),pref.getString("name",null),pref.getString("email",null),null);
             goToHome(loginUser);
         }
+
 
 
     }
@@ -159,24 +164,23 @@ public class login extends Activity implements LoginContract.LoginView {
 
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == SIGNUP_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            if (data.hasExtra("email")) {
-                _emailText.setText(data.getStringExtra("email"));
-                _passwordText.setText(data.getStringExtra("pass"));
-            }
+        if(requestCode== SIGNUP_ACTIVITY_REQUEST_CODE&& resultCode==RESULT_OK)
+        {
 
-        } else {
-            if (requestCode == RC_SIGN_IN) {
-                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                handleSignInResult(task);
-            }
+            _emailText.setText(data.getStringExtra("email"));
+            _passwordText.setText(data.getStringExtra("pass"));
+
+        }
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
         }
     }
-
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             firebaseAuthWithGoogle(account);
+
 
 
         } catch (ApiException e) {
@@ -198,7 +202,7 @@ public class login extends Activity implements LoginContract.LoginView {
 
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            User GoogleUser = new User(user.getUid(), user.getDisplayName(), user.getEmail(), null);
+                            User GoogleUser = new User(user.getUid(),user.getDisplayName(),user.getEmail(),null);
                             goToHome(GoogleUser);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -213,10 +217,10 @@ public class login extends Activity implements LoginContract.LoginView {
     }
 
 
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
+   private void signIn() {
+       Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+       startActivityForResult(signInIntent, RC_SIGN_IN);
+   }
 
     public void login() {
 
@@ -235,18 +239,18 @@ public class login extends Activity implements LoginContract.LoginView {
         }
 
         loginPresenter = new LoginPresenter(this);
-        loginPresenter.validateAccount(email, password);
+        loginPresenter.validateAccount(email,password);
+
 
 
     }
-
-    public void SaveUser(User user) {
-        editor.putString("id", user.getId());
-        editor.putString("name", user.getName());
-        editor.putString("email", user.getEmail());
-        editor.commit();
-    }
-
+     public void SaveUser(User user)
+     {
+         editor.putString("id", user.getId());
+         editor.putString("name",user.getName());
+         editor.putString("email",user.getEmail());
+         editor.commit();
+     }
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
 
@@ -258,7 +262,7 @@ public class login extends Activity implements LoginContract.LoginView {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            User FacebookUser = new User(user.getUid(), user.getDisplayName(), user.getEmail(), null);
+                            User FacebookUser = new User(user.getUid(),user.getDisplayName(),user.getEmail(),null);
                             goToHome(FacebookUser);
 
 
@@ -278,17 +282,17 @@ public class login extends Activity implements LoginContract.LoginView {
     @Override
     public void goToHome(User user) {
         Intent intentp = new Intent(this, MainActivity.class);
-        intentp.putExtra("id", user.getId());
-        intentp.putExtra("name", user.getName());
-        intentp.putExtra("email", user.getEmail());
-        startActivity(intentp);
+        intentp.putExtra("id",user.getId());
+        intentp.putExtra("name",user.getName());
+        intentp.putExtra("email",user.getEmail());
+        startActivity(intentp );
         finish();
     }
 
     @Override
     public void showError() {
         _loginButton.setEnabled(true);
-        Toast.makeText(this, "Invalid UserName or Password", Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Invalid UserName or Password",Toast.LENGTH_LONG).show();
     }
 }
 

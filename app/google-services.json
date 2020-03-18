@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "487146135126-634mjlmdr1ukce05m5o419goel3v45e5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mishwary",
+            "certificate_hash": "8552354c04d61b430b4f807d801a84d51b651632"
+          }
+        },
+        {
           "client_id": "487146135126-bbv440cn5cpfc7imj0f7te3u89o7krqm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
