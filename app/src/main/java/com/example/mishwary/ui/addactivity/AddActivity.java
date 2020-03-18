@@ -62,13 +62,11 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     private String userID,tripId;
     private Spinner repeatSpinner, descSpinner;
     private ArrayAdapter<CharSequence> repeatAdapter, descAdapter;
-    String StartPoint;
+    private String startPoint = "At Start Location";
+    private boolean currntIsChecked = false;
     CheckBox CurrentLoc;
-    private static final int REQUEST_CODE_PERMISSION = 44;
     FusedLocationProviderClient mFusedLocationClient;
-    String Lon,lat,loc = "";
     Geocoder geocoder;
-    List<Address> addresses;
 
 
     @Override
@@ -96,12 +94,12 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 if(CurrentLoc.isChecked())
                 {
                     startTxt.setVisibility(View.GONE);
-                    getLoc();
+                    currntIsChecked = true;
                 }
                 else
                 {
-                    loc="";
                     startTxt.setVisibility(View.VISIBLE);
+                    currntIsChecked = false;
                 }
             }
         });
@@ -184,15 +182,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             titleTxt.setError("Enter Title");
             titleTxt.requestFocus();
         }
-        if(loc.isEmpty())
-        {
-            if (startTxt.toString().trim().isEmpty()) {
-                flag = false;
-                startTxt.setError("Enter Start Point");
-                //Toast.makeText(this,"Please Enter Start Point",Toast.LENGTH_LONG).show();
-                startTxt.requestFocus();
-            }
-        }
 
         if (endTxt.toString().trim().isEmpty()) {
             flag = false;
@@ -217,15 +206,11 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         Trip trip = new Trip();
         trip.setUserId(userID);
         trip.setTripName(titleTxt.getText().toString());
-        if(loc.isEmpty())
-        {
+        if(currntIsChecked){
+            trip.setStartPoint(startPoint);
+        }else {
             trip.setStartPoint(startTxt.getText().toString());
         }
-        else
-        {
-            trip.setStartPoint(loc);
-        }
-
         trip.setDestination(endTxt.getText().toString());
         trip.setDate(txtDate.getText().toString());
         trip.setTime(txtTime.getText().toString());
@@ -249,98 +234,5 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         finish();
     }
 
-    public void getLoc()
-    {
-        if (checkPermissions()) {
-            if (isLocationEnabled()) {
-                mFusedLocationClient.getLastLocation().addOnCompleteListener(
-                        new OnCompleteListener<Location>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Location> task) {
-                                Location location = task.getResult();
-                                if (location == null) {
-                                    requestNewLocationData();
-                                } else {
-                                    Lon =location.getLatitude()+"";
-                                    lat = location.getLongitude()+"";
-                                    try {
-                                        addresses =  geocoder.getFromLocation(
-                                                location.getLatitude(),
-                                                location.getLongitude(),
-                                                1);
-                                        Address address = addresses.get(0);
-                                        loc = address.getLocality();
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
 
-
-                                }
-                            }
-                        }
-                );
-            } else {
-                Toast.makeText(AddActivity.this, "Turn on location", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-            }
-        } else {
-            requestPermissions();
-        }
-
-
-    }
-    private boolean isLocationEnabled() {
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
-                LocationManager.NETWORK_PROVIDER
-        );
-    }
-    private boolean checkPermissions() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        return false;
-    }
-
-    private void requestPermissions() {
-        ActivityCompat.requestPermissions(
-                this,
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
-                REQUEST_CODE_PERMISSION
-        );
-    }
-    private void requestNewLocationData(){
-
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(0);
-        mLocationRequest.setFastestInterval(0);
-        mLocationRequest.setNumUpdates(1);
-
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        mFusedLocationClient.requestLocationUpdates(
-                mLocationRequest, mLocationCallback,
-                Looper.myLooper()
-        );
-
-    }
-
-    private LocationCallback mLocationCallback = new LocationCallback() {
-        @Override
-        public void onLocationResult(LocationResult locationResult) {
-            Location mLastLocation = locationResult.getLastLocation();
-
-        }
-    };
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE_PERMISSION ) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //Toast.makeText(MainActivity.this," yalaa ya ahble", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
 }

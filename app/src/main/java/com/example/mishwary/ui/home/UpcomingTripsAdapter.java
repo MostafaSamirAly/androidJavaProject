@@ -69,8 +69,14 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
                 //floating icon
                 startFloatingWidgetService(position);
                 // open google maps with start and destination provided with the path
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+upcomingTrips.get(position).getStartPoint()+"&daddr="+upcomingTrips.get(position).getDestination()));
-                context.startActivity(intent);
+                if(upcomingTrips.get(position).getStartPoint().equals("At Start Location")){
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+"&daddr="+upcomingTrips.get(position).getDestination()));
+                    context.startActivity(intent);
+                }else{
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+upcomingTrips.get(position).getStartPoint()+"&daddr="+upcomingTrips.get(position).getDestination()));
+                    context.startActivity(intent);
+                }
+
             }
         });
 

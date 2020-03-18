@@ -86,8 +86,13 @@ public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapte
                     //If permission is granted start floating widget service
                     startFloatingWidgetService(position);
                 // open google maps with start and destination provided with the path
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+historyTrips.get(position).getStartPoint()+"&daddr="+historyTrips.get(position).getDestination()));
-                context.startActivity(intent);
+                if(historyTrips.get(position).getStartPoint().equals("At Start Location")){
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+"&daddr="+historyTrips.get(position).getDestination()));
+                    context.startActivity(intent);
+                }else{
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+historyTrips.get(position).getStartPoint()+"&daddr="+historyTrips.get(position).getDestination()));
+                    context.startActivity(intent);
+                }
             }
         });
         holder.notesImg.setOnClickListener(new View.OnClickListener() {
