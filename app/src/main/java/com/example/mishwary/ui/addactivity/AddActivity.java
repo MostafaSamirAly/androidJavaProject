@@ -1,20 +1,27 @@
 package com.example.mishwary.ui.addactivity;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -22,15 +29,26 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.mishwary.Models.Trip;
 import com.example.mishwary.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class AddActivity extends AppCompatActivity implements View.OnClickListener, AddContract.AddView {
     Button btnDatePicker, btnTimePicker, btnAdd;
@@ -44,8 +62,13 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     private String userID,tripId;
     private Spinner repeatSpinner, descSpinner;
     private ArrayAdapter<CharSequence> repeatAdapter, descAdapter;
-    PlacesClient placesClient;
-    Geocoder gc2;
+    String StartPoint;
+    CheckBox CurrentLoc;
+    private static final int REQUEST_CODE_PERMISSION = 44;
+    FusedLocationProviderClient mFusedLocationClient;
+    String Lon,lat,loc = "";
+    Geocoder geocoder;
+    List<Address> addresses;
 
 
     @Override
@@ -64,107 +87,27 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         titleTxt = findViewById(R.id.trip_title);
         startTxt = findViewById(R.id.trip_start_point);
         endTxt = findViewById(R.id.trip_end_point);
-        gc2 = new Geocoder(this);
-      /*  String apiKey = "AIzaSyA6iKHcXcfCYH8jXglkFDdKxxdjElaKK2U";
-        if(!Places.isInitialized())
-        {
-            Places.initialize(getApplicationContext(), apiKey);
-        }
-        placesClient = Places.createClient(this);
-        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
-                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
-
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
-
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        geocoder = new Geocoder(this, Locale.getDefault());
+        CurrentLoc = findViewById(R.id.currentLocation);
+        CurrentLoc.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                startPoint = place.getName();
-                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
-            }
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-                Log.i(TAG, "An error occurred: " + status);
+            public void onClick(View v) {
+                if(CurrentLoc.isChecked())
+                {
+                    startTxt.setVisibility(View.GONE);
+                    getLoc();
+                }
+                else
+                {
+                    loc="";
+                    startTxt.setVisibility(View.VISIBLE);
+                }
             }
         });
-        AutocompleteSupportFragment autocompleteFragment2 = (AutocompleteSupportFragment)
-                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment2);
-
-        autocompleteFragment2.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
-
-        autocompleteFragment2.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                endPoint = place.getName();
-                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
-            }
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-                Log.i(TAG, "An error occurred: " + status);
-            }
-        });
-*/
-
 
         startTxt.setAdapter(new PlaceAutoSuggestAdapter(AddActivity.this, android.R.layout.simple_list_item_1));
-
-        startTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               /* Log.d("Address : ", startTxt.getText().toString());
-                LatLng latLng = getLatLngFromAddress(startTxt.getText().toString());
-                if (latLng != null) {
-                    Log.d("Lat Lng : ", " " + latLng.latitude + " " + latLng.longitude);
-                    Address address = getAddressFromLatLng(latLng);
-                    if (address != null) {
-                        Log.d("Address : ", "" + address.toString());
-                        Log.d("Address Line : ", "" + address.getAddressLine(0));
-                        Log.d("Phone : ", "" + address.getPhone());
-                        Log.d("Pin Code : ", "" + address.getPostalCode());
-                        Log.d("Feature : ", "" + address.getFeatureName());
-                        Log.d("More : ", "" + address.getLocality());
-                    } else {
-                        Log.d("Adddress", "Address Not Found");
-                    }
-                } else {
-                    Log.d("Lat Lng", "Lat Lng Not Found");
-                }*/
-
-            }
-        });
-
-
         endTxt.setAdapter(new PlaceAutoSuggestAdapter(AddActivity.this, android.R.layout.simple_list_item_1));
-
-        endTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-              /*  Log.d("Address : ", endTxt.getText().toString());
-                LatLng latLng = getLatLngFromAddress(endTxt.getText().toString());
-                if (latLng != null) {
-                    Log.d("Lat Lng : ", " " + latLng.latitude + " " + latLng.longitude);
-                    Address address = getAddressFromLatLng(latLng);
-                    if (address != null) {
-                        Log.d("Address : ", "" + address.toString());
-                        Log.d("Address Line : ", "" + address.getAddressLine(0));
-                        Log.d("Phone : ", "" + address.getPhone());
-                        Log.d("Pin Code : ", "" + address.getPostalCode());
-                        Log.d("Feature : ", "" + address.getFeatureName());
-                        Log.d("More : ", "" + address.getLocality());
-                    } else {
-                        Log.d("Adddress", "Address Not Found");
-                    }
-                } else {
-                    Log.d("Lat Lng", "Lat Lng Not Found");
-                }*/
-
-            }
-        });
-
         repeatSpinner = findViewById(R.id.spinner_repeat);
         descSpinner = findViewById(R.id.spinner_desc);
         btnAdd.setOnClickListener(this);
@@ -177,44 +120,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         addPresenter = new AddPresenter(this);
     }
 
-    private LatLng getLatLngFromAddress(String address) {
 
-        Geocoder geocoder = new Geocoder(AddActivity.this);
-        List<Address> addressList;
-
-        try {
-            addressList = geocoder.getFromLocationName(address, 1);
-            if (addressList != null) {
-                Address singleaddress = addressList.get(0);
-                LatLng latLng = new LatLng(singleaddress.getLatitude(), singleaddress.getLongitude());
-                return latLng;
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
-
-    private Address getAddressFromLatLng(LatLng latLng) {
-        Geocoder geocoder = new Geocoder(AddActivity.this);
-        List<Address> addresses;
-        try {
-            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 5);
-            if (addresses != null) {
-                Address address = addresses.get(0);
-                return address;
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
 
     @Override
     public void onClick(View v) {
@@ -278,11 +184,14 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             titleTxt.setError("Enter Title");
             titleTxt.requestFocus();
         }
-        if (startTxt.toString().trim().isEmpty()) {
-            flag = false;
-            startTxt.setError("Enter Start Point");
-            //Toast.makeText(this,"Please Enter Start Point",Toast.LENGTH_LONG).show();
-            startTxt.requestFocus();
+        if(loc.isEmpty())
+        {
+            if (startTxt.toString().trim().isEmpty()) {
+                flag = false;
+                startTxt.setError("Enter Start Point");
+                //Toast.makeText(this,"Please Enter Start Point",Toast.LENGTH_LONG).show();
+                startTxt.requestFocus();
+            }
         }
 
         if (endTxt.toString().trim().isEmpty()) {
@@ -300,34 +209,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             Toast.makeText(this, "Please Select Time", Toast.LENGTH_LONG).show();
         }
 
-       /* try {
 
-            List<Address> addresses= null; // get the found Address Objects
-            addresses = gc2.getFromLocationName(startTxt.toString(), 5);
-            if( addresses.size()==0){
-                    Toast.makeText(this,"Please Enter  valid Start Point",Toast.LENGTH_LONG).show();
-                    startTxt.requestFocus();
-                    flag = false;
-
-                }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            List<Address> addresses2= null; // get the found Address Objects
-            addresses2 = gc2.getFromLocationName(endTxt.toString(), 5);
-            if( addresses2.size()==0)
-            {
-                Toast.makeText(this,"Please Enter valid End Point",Toast.LENGTH_LONG).show();
-                endTxt.requestFocus();
-                flag = false;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
         return flag;
     }
 
@@ -335,7 +217,15 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         Trip trip = new Trip();
         trip.setUserId(userID);
         trip.setTripName(titleTxt.getText().toString());
-        trip.setStartPoint(startTxt.getText().toString());
+        if(loc.isEmpty())
+        {
+            trip.setStartPoint(startTxt.getText().toString());
+        }
+        else
+        {
+            trip.setStartPoint(loc);
+        }
+
         trip.setDestination(endTxt.getText().toString());
         trip.setDate(txtDate.getText().toString());
         trip.setTime(txtTime.getText().toString());
@@ -357,5 +247,100 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     @Override
     public void gotoHome() {
         finish();
+    }
+
+    public void getLoc()
+    {
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+                mFusedLocationClient.getLastLocation().addOnCompleteListener(
+                        new OnCompleteListener<Location>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Location> task) {
+                                Location location = task.getResult();
+                                if (location == null) {
+                                    requestNewLocationData();
+                                } else {
+                                    Lon =location.getLatitude()+"";
+                                    lat = location.getLongitude()+"";
+                                    try {
+                                        addresses =  geocoder.getFromLocation(
+                                                location.getLatitude(),
+                                                location.getLongitude(),
+                                                1);
+                                        Address address = addresses.get(0);
+                                        loc = address.getLocality();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+                                }
+                            }
+                        }
+                );
+            } else {
+                Toast.makeText(AddActivity.this, "Turn on location", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        } else {
+            requestPermissions();
+        }
+
+
+    }
+    private boolean isLocationEnabled() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+                LocationManager.NETWORK_PROVIDER
+        );
+    }
+    private boolean checkPermissions() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        return false;
+    }
+
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                REQUEST_CODE_PERMISSION
+        );
+    }
+    private void requestNewLocationData(){
+
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(0);
+        mLocationRequest.setFastestInterval(0);
+        mLocationRequest.setNumUpdates(1);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient.requestLocationUpdates(
+                mLocationRequest, mLocationCallback,
+                Looper.myLooper()
+        );
+
+    }
+
+    private LocationCallback mLocationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            Location mLastLocation = locationResult.getLastLocation();
+
+        }
+    };
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_PERMISSION ) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Toast.makeText(MainActivity.this," yalaa ya ahble", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
