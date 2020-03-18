@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             myIntent.setData(Uri.parse("package:" + getPackageName()));
             startActivityForResult(myIntent, REQUEST_CODE);
         }
-        FireBaseCreator.getInstance();
+        FireBaseCreator.setPresistence();
         Toolbar toolbar = findViewById(R.id.toolbar);
         pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         editor = pref.edit();

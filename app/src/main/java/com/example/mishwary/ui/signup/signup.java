@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mishwary.R;
 import com.example.mishwary.Models.User;
 import com.example.mishwary.ui.login.login;
-
+import com.facebook.login.Login;
 
 
 public class signup extends AppCompatActivity implements View.OnClickListener,SignUpContract.SignupView{
@@ -88,10 +88,11 @@ public class signup extends AppCompatActivity implements View.OnClickListener,Si
     public void goToLogin(User user) {
 
         Intent replyIntent = new Intent();
-        replyIntent.putExtra("email",user.getEmail());
-        replyIntent.putExtra("pass",user.getPassword());
-
-        setResult(-1, replyIntent);
+        if(user != null) {
+            replyIntent.putExtra("email", user.getEmail());
+            replyIntent.putExtra("pass", user.getPassword());
+        }
+        setResult(RESULT_OK, replyIntent);
         finish();
 
     }
