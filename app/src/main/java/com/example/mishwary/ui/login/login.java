@@ -283,13 +283,13 @@ public class login extends Activity implements LoginContract.LoginView {
         intentp.putExtra("id",user.getId());
         intentp.putExtra("name",user.getName());
         intentp.putExtra("email",user.getEmail());
-
         startActivity(intentp );
         finish();
     }
 
     @Override
     public void showError() {
+        _loginButton.setEnabled(true);
         Toast.makeText(this,"Invalid UserName or Password",Toast.LENGTH_LONG).show();
     }
 }
