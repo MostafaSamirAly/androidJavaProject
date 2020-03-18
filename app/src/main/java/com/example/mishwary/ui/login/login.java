@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.mishwary.Models.FireBaseCreator;
 import com.example.mishwary.main.MainActivity;
 import com.example.mishwary.Models.User;
 import com.example.mishwary.R;
@@ -63,7 +64,7 @@ public class login extends Activity implements LoginContract.LoginView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-
+        FireBaseCreator.setPresistence();
         _emailText = findViewById(R.id.user);
         _passwordText = findViewById(R.id.input_password);
         _loginButton = findViewById(R.id.btn_login);

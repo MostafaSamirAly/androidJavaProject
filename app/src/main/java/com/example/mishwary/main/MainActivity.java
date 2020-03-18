@@ -52,19 +52,16 @@ public class MainActivity extends AppCompatActivity {
             myIntent.setData(Uri.parse("package:" + getPackageName()));
             startActivityForResult(myIntent, REQUEST_CODE);
         }
-        FireBaseCreator.setPresistence();
         Toolbar toolbar = findViewById(R.id.toolbar);
         pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         editor = pref.edit();
         setSupportActionBar(toolbar);
-
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle
                 (this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
