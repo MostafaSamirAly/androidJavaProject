@@ -64,5 +64,5 @@
     <string name="showmap">الخريطة</string>
     <string name="EnterEmail">ادخل البريد الالكتورني</string>
     <string name="HaveAcount">بالفعل لديك حساب ؟</string>
-    <string name="Current_Location">الموقع عند البداية</string>
+    <string name="Current_Location">لموقع الحالي</string>
 </resources>

@@ -45,8 +45,11 @@ public class HistoryMap extends FragmentActivity implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         Intent intent =getIntent();
-        StartPoints= intent.getStringArrayListExtra("startPoints");
-        EndPoints= intent.getStringArrayListExtra("endPoints");
+        if(intent!=null)
+        {
+            StartPoints= intent.getStringArrayListExtra("startPoints");
+            EndPoints= intent.getStringArrayListExtra("endPoints");
+        }
         mapFragment.getMapAsync(this);
     }
 

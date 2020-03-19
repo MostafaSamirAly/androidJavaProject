@@ -73,6 +73,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     List<Address> addresses;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,7 +128,11 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         addPresenter = new AddPresenter(this);
     }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GetLoc();
+    }
 
     @Override
     public void onClick(View v) {
