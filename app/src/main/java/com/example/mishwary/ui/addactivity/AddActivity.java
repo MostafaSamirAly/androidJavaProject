@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -65,7 +66,8 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     private ArrayAdapter<CharSequence> repeatAdapter, descAdapter;
     private String startPoint = "At Start Location";
     private boolean currntIsChecked = false;
-    CheckBox CurrentLoc;
+    private boolean StartIsChecked = false;
+   CheckBox CurrentLoc,startPointCheckBox;
     private static final int REQUEST_CODE_PERMISSION = 44;
     FusedLocationProviderClient mFusedLocationClient;
     String Lon,lat,loc = " ";
@@ -93,20 +95,40 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         geocoder = new Geocoder(this, Locale.getDefault());
         CurrentLoc = findViewById(R.id.currentLocation);
+        startPointCheckBox =findViewById(R.id.startPoint);
         CurrentLoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(CurrentLoc.isChecked())
                 {
                     startTxt.setVisibility(View.GONE);
-                   // GetLoc();
-
                     currntIsChecked = true;
+                    startPointCheckBox .setChecked(false);
+                    StartIsChecked = false;
                 }
                 else
                 {
+                    CurrentLoc.setChecked(false);
                     startTxt.setVisibility(View.VISIBLE);
                     currntIsChecked = false;
+                }
+            }
+        });
+        startPointCheckBox .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(startPointCheckBox.isChecked())
+                {
+                    startTxt.setVisibility(View.GONE);
+                    StartIsChecked = true;
+                    CurrentLoc.setChecked(false);
+                    currntIsChecked = false;
+                }
+                else
+                {
+                    startPointCheckBox.setChecked(false);
+                    startTxt.setVisibility(View.VISIBLE);
+                    StartIsChecked= false;
                 }
             }
         });
@@ -128,7 +150,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onStart() {
         super.onStart();
-        //GetLoc();
+        GetLoc();
     }
 
     @Override
@@ -217,13 +239,16 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         Trip trip = new Trip();
         trip.setUserId(userID);
         trip.setTripName(titleTxt.getText().toString());
-        if(currntIsChecked){
-            if(!loc.trim().isEmpty())
-            {
+        if(currntIsChecked) {
+            if (!loc.trim().isEmpty()) {
                 startPoint = loc;
             }
             trip.setStartPoint(startPoint);
-        }else {
+        }
+        else if( StartIsChecked )
+        {
+            trip.setStartPoint(startPoint);
+        }else  {
             trip.setStartPoint(startTxt.getText().toString());
         }
         trip.setDestination(endTxt.getText().toString());
@@ -248,5 +273,103 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     public void gotoHome() {
         finish();
     }
+    public void GetLoc()
+    {
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+                mFusedLocationClient.getLastLocation().addOnCompleteListener(
+                        new OnCompleteListener<Location>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Location> task) {
+                                Location location = task.getResult();
+                                if (location == null) {
+                                    requestNewLocationData();
+                                } else {
+                                    Lon =location.getLatitude()+"";
+                                    lat = location.getLongitude()+"";
+                                    try {
+                                        addresses =  geocoder.getFromLocation(
+                                                location.getLatitude(),
+                                                location.getLongitude(),
+                                                1);
+
+                                        Address address = addresses.get(0);
+                                        loc = address.getAddressLine(0);
+                                        // loc =.getAddressLine(0);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+                                }
+                            }
+                        }
+                );
+            } else {
+                Toast.makeText(AddActivity.this, "Turn on location", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        } else {
+            requestPermissions();
+        }
+
+    }
+
+
+    private boolean isLocationEnabled() {
+        LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+                LocationManager.NETWORK_PROVIDER
+        );
+    }
+    private boolean checkPermissions() {
+        if (ActivityCompat.checkSelfPermission(AddActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(AddActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        return false;
+    }
+
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                REQUEST_CODE_PERMISSION
+        );
+    }
+    private void requestNewLocationData(){
+
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(0);
+        mLocationRequest.setFastestInterval(0);
+        mLocationRequest.setNumUpdates(1);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(AddActivity.this);
+        mFusedLocationClient.requestLocationUpdates(
+                mLocationRequest, mLocationCallback,
+                Looper.myLooper()
+        );
+
+    }
+
+    private LocationCallback mLocationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            Location mLastLocation = locationResult.getLastLocation();
+
+        }
+    };
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_PERMISSION ) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Toast.makeText(MainActivity.this," yalaa ya ahble", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
 
 }

@@ -65,4 +65,5 @@
     <string name="EnterEmail">Enter Email</string>
     <string name="HaveAcount">ALREADY HAVE AN ACCOUNT ?</string>
     <string name="Current_Location">Current Location</string>
+    <string name="yourLocation">Your Location When You Start Trip </string>
 </resources>

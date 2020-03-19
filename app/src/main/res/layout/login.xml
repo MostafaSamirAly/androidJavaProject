@@ -41,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="100dp"
         android:textColorHint="#6C6C6C"
         android:layout_gravity="center"
         app:passwordToggleEnabled="true"
@@ -72,17 +73,7 @@
         android:text="@string/Login"
         android:textColor="#FF2600" />
 
-        <TextView
-        android:id="@+id/textView3"
-        android:layout_width="248dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:text="@string/OR"
-        android:textColor="#6C6C6C" />
-
-    <Button
+        <Button
         android:id="@+id/link_signup"
         android:layout_width="fill_parent"
         android:layout_height="55dp"

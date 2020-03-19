@@ -65,4 +65,6 @@
     <string name="EnterEmail">ادخل البريد الالكتورني</string>
     <string name="HaveAcount">بالفعل لديك حساب ؟</string>
     <string name="Current_Location">لموقع الحالي</string>
+    <string name="yourLocation">موقعك عند وقت بداية الرحلة </string>
+
 </resources>

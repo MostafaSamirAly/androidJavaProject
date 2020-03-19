@@ -31,14 +31,14 @@
             android:id="@+id/user"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
             android:layout_marginEnd="63dp"
             android:layout_marginRight="63dp"
-            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:hint="@string/EnterEmail"
             android:inputType="textEmailAddress"
-            android:text="@string/EnterEmail"
             android:textColor="#6C6C6C"
             android:textColorHint="#4C4C4C" />
 
