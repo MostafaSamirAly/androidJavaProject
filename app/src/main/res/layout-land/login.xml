@@ -42,35 +42,40 @@
             android:textColor="#6C6C6C"
             android:textColorHint="#4C4C4C" />
 
-        <EditText
-            android:id="@+id/input_password"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
             android:layout_weight="1"
+            android:textColorHint="#6C6C6C"
             android:layout_gravity="center_vertical"
-            android:hint="@string/enter_Password"
-            android:inputType="textPassword"
-            android:textColor="#6C6C6C" />
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="#6C6C6C"
+          >
+
+
+            <EditText
+                android:id="@+id/input_password"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="@string/enter_Password"
+                android:inputType="textPassword"
+                android:textColor="#6C6C6C"
+                tools:layout_editor_absoluteX="70dp"
+                tools:layout_editor_absoluteY="192dp" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
     </LinearLayout>
 
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="24dp"
-        android:textColorHint="#6C6C6C"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="#6C6C6C">
 
-
-    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_login"
