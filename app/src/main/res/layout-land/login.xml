@@ -40,7 +40,7 @@
             android:hint="@string/EnterEmail"
             android:inputType="textEmailAddress"
             android:textColor="#6C6C6C"
-            android:textColorHint="#4C4C4C" />
+            android:textColorHint="#6C6C6C" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"

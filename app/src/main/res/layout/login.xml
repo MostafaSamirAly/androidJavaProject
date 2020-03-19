@@ -34,7 +34,7 @@
         android:inputType="textEmailAddress"
         android:textColor="#6C6C6C"
         android:layout_gravity="center"
-        android:textColorHint="#4C4C4C" />
+        android:textColorHint="#6C6C6C" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
