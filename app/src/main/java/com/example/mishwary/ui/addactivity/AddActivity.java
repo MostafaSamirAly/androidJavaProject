@@ -99,11 +99,8 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 if(CurrentLoc.isChecked())
                 {
                     startTxt.setVisibility(View.GONE);
-                    GetLoc();
-                    if(!loc.trim().isEmpty())
-                    {
-                        startPoint = loc;
-                    }
+                   // GetLoc();
+
                     currntIsChecked = true;
                 }
                 else
@@ -221,6 +218,10 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         trip.setUserId(userID);
         trip.setTripName(titleTxt.getText().toString());
         if(currntIsChecked){
+            if(!loc.trim().isEmpty())
+            {
+                startPoint = loc;
+            }
             trip.setStartPoint(startPoint);
         }else {
             trip.setStartPoint(startTxt.getText().toString());
@@ -268,7 +269,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                                                 1);
 
                                         Address address = addresses.get(0);
-                                        loc =address.getCountryName()+" " +address.getLocality();
+                                        loc =address.getLocality();
                                         // loc =.getAddressLine(0);
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -332,8 +333,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
-            Toast.makeText(AddActivity.this,mLastLocation.getLatitude()+"", Toast.LENGTH_LONG).show();
-            Toast.makeText(AddActivity.this,mLastLocation.getLongitude()+"", Toast.LENGTH_LONG).show();
+
         }
     };
     @Override
