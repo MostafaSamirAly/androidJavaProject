@@ -85,7 +85,6 @@ public class signup extends AppCompatActivity implements View.OnClickListener,Si
 
     @Override
     public void goToLogin(User user) {
-        Toast.makeText(this,"User Registered Successfully",Toast.LENGTH_LONG).show();
         Intent replyIntent = new Intent();
         if(user != null) {
             replyIntent.putExtra("email", user.getEmail());

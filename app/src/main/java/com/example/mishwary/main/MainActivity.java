@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_logout:
                         logout();
-                        Toast.makeText(MainActivity.this, "Log Out", Toast.LENGTH_LONG).show();
                         break;
                     case R.id.nav_home:
                         Bundle bundle = new Bundle();
