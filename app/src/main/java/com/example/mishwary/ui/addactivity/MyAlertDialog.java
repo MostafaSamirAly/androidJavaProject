@@ -71,7 +71,7 @@ public class MyAlertDialog extends Activity {
                 addToHistory();
                 //floating icon
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (!Settings.canDrawOverlays(context)) {
+                    if (Settings.canDrawOverlays(context)) {
                         startFloatingWidgetService();
                     }
                 }

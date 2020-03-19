@@ -72,7 +72,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
                 notificationManager.cancelAll();
                 //floating icon
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (!Settings.canDrawOverlays(context)) {
+                    if (Settings.canDrawOverlays(context)) {
                         startFloatingWidgetService(position);
                     }
                 }

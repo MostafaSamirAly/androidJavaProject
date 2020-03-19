@@ -85,7 +85,7 @@ public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapte
                 } else
                     //If permission is granted start floating widget service
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (!Settings.canDrawOverlays(context)) {
+                        if (Settings.canDrawOverlays(context)) {
                             startFloatingWidgetService(position);
                         }
                     }
