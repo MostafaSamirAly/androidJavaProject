@@ -51,7 +51,7 @@
     </string-array>
     <string name="create_floating_widget">Create Floating Widget</string>
     <string name="floating_widget_details">Notes:</string>
-    <string name="draw_other_app_permission_denied">Draw over other app permission not available. App won\'t work without permission. Please try again.</string>
+    <string name="draw_other_app_permission_denied">Draw over other app permission not available. Some App won\'t work without permission. Please  grant the permission.</string>
 
     <string name="Trip_Name">Trip Name</string>
     <string name="Start_Point">Start Point</string>

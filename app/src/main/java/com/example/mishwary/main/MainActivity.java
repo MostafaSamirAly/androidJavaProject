@@ -34,7 +34,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.widget.Toast;
 
-import static com.example.mishwary.ui.home.HomeFragment.DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE;
 
 public class MainActivity extends AppCompatActivity {
     String id, name, email;
@@ -110,13 +109,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE) {
+        if (requestCode == 101) {
             //Check if the permission is granted or not.
-            if (resultCode == RESULT_OK)
-                //If permission granted start floating widget service
-                startFloatingWidgetService();
+            if(Settings.canDrawOverlays(this))
+                Toast.makeText(this,
+                        "Permission Granted",Toast.LENGTH_LONG).show();
             else
                 //Permission is not available then display toast
                 Toast.makeText(this,
@@ -128,10 +128,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void startFloatingWidgetService() {
-        startService(new Intent(MainActivity.this, FloatingWidgetService.class));
-        finish();
-    }
 
     private void logout() {
         //SharedPrefManger.getInstance(this).clear();
