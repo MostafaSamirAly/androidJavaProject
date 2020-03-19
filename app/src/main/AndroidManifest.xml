@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.mishwary">
+    package="com.iti.mishwary">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -21,11 +21,13 @@
 
     <application
         android:allowBackup="true"
+        android:debuggable="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="HardcodedDebugMode">
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -40,28 +42,28 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ui.history_map.HistoryMap"
+            android:name="com.iti.mishwary.ui.history_map.HistoryMap"
             android:label="@string/title_activity_history_map"></activity>
-        <activity android:name=".ui.edittrip.EditTrip" />
+        <activity android:name="com.iti.mishwary.ui.edittrip.EditTrip" />
         <activity
-            android:name=".main.MainActivity"
+            android:name="com.iti.mishwary.main.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.splash.splash">
+        <activity android:name="com.iti.mishwary.ui.splash.splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.login.login" />
-        <activity android:name=".ui.signup.signup" />
-        <activity android:name=".ui.addactivity.AddActivity" />
-        <activity android:name=".ui.addactivity.MyAlertDialog" />
-        <activity android:name=".ui.notes.AddNote" />
+        <activity android:name="com.iti.mishwary.ui.login.login" />
+        <activity android:name="com.iti.mishwary.ui.signup.signup" />
+        <activity android:name="com.iti.mishwary.ui.addactivity.AddActivity" />
+        <activity android:name="com.iti.mishwary.ui.addactivity.MyAlertDialog" />
+        <activity android:name="com.iti.mishwary.ui.notes.AddNote" />
 
         <service
-            android:name=".ui.floatingwidget.FloatingWidgetService"
+            android:name="com.iti.mishwary.ui.floatingwidget.FloatingWidgetService"
             android:enabled="true"
             android:exported="false" />
 
@@ -88,7 +90,7 @@
         </activity>
 
         <receiver
-            android:name=".ui.addactivity.AlertReceiver"
+            android:name="com.iti.mishwary.ui.addactivity.AlertReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
