@@ -1,9 +1,11 @@
 package com.example.mishwary.ui.home;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -67,8 +69,14 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
                 //floating icon
                 startFloatingWidgetService(position);
                 // open google maps with start and destination provided with the path
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+upcomingTrips.get(position).getStartPoint()+"&daddr="+upcomingTrips.get(position).getDestination()));
-                context.startActivity(intent);
+                if(upcomingTrips.get(position).getStartPoint().equals("At Start Location")){
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+"&daddr="+upcomingTrips.get(position).getDestination()));
+                    context.startActivity(intent);
+                }else{
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+upcomingTrips.get(position).getStartPoint()+"&daddr="+upcomingTrips.get(position).getDestination()));
+                    context.startActivity(intent);
+                }
+
             }
         });
 
@@ -82,8 +90,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.delete_item:
-                                deleteTrip(upcomingTrips.get(position));
-                                cancelAlarm(position);
+                                showDeleteAlert(position);
                                 return true;
                             case R.id.edit_item:
                                 Intent intent = new Intent(context, EditTrip.class);
@@ -127,6 +134,31 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         });
 
     }
+
+    private void showDeleteAlert(final int pos) {
+        AlertDialog.Builder alertdialog=new AlertDialog.Builder(context);
+        alertdialog.setTitle("Warning");
+        alertdialog.setMessage("Are you sure you Want to delete "+upcomingTrips.get(pos).getTripName()+" ???");
+        alertdialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteTrip(upcomingTrips.get(pos));
+                cancelAlarm(pos);
+            }
+        });
+
+        alertdialog.setNegativeButton("No", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alert=alertdialog.create();
+        alertdialog.show();
+
+    }
+
 
     private void startFloatingWidgetService(int position) {
         Intent intent = new Intent(context, FloatingWidgetService.class);

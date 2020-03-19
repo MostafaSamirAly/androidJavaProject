@@ -13,7 +13,6 @@ public class SignupPresenter implements SignUpContract.SignupPresenter{
     @Override
     public void addUser(User user) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseDatabase.setPersistenceEnabled(true);
         DatabaseReference reference = firebaseDatabase.getReference("user");
         String id = reference.push().getKey();
         user.setId(id);

@@ -1,6 +1,7 @@
 package com.example.mishwary.ui.addactivity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
@@ -62,11 +63,12 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     private String userID,tripId;
     private Spinner repeatSpinner, descSpinner;
     private ArrayAdapter<CharSequence> repeatAdapter, descAdapter;
-    String StartPoint;
+    private String startPoint = "At Start Location";
+    private boolean currntIsChecked = false;
     CheckBox CurrentLoc;
     private static final int REQUEST_CODE_PERMISSION = 44;
     FusedLocationProviderClient mFusedLocationClient;
-    String Lon,lat,loc = "";
+    String Lon,lat,loc = " ";
     Geocoder geocoder;
     List<Address> addresses;
 
@@ -96,12 +98,17 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 if(CurrentLoc.isChecked())
                 {
                     startTxt.setVisibility(View.GONE);
-                    getLoc();
+                    GetLoc();
+                    if(!loc.trim().isEmpty())
+                    {
+                        startPoint = loc;
+                    }
+                    currntIsChecked = true;
                 }
                 else
                 {
-                    loc="";
                     startTxt.setVisibility(View.VISIBLE);
+                    currntIsChecked = false;
                 }
             }
         });
@@ -184,15 +191,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             titleTxt.setError("Enter Title");
             titleTxt.requestFocus();
         }
-        if(loc.isEmpty())
-        {
-            if (startTxt.toString().trim().isEmpty()) {
-                flag = false;
-                startTxt.setError("Enter Start Point");
-                //Toast.makeText(this,"Please Enter Start Point",Toast.LENGTH_LONG).show();
-                startTxt.requestFocus();
-            }
-        }
 
         if (endTxt.toString().trim().isEmpty()) {
             flag = false;
@@ -217,15 +215,11 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         Trip trip = new Trip();
         trip.setUserId(userID);
         trip.setTripName(titleTxt.getText().toString());
-        if(loc.isEmpty())
-        {
+        if(currntIsChecked){
+            trip.setStartPoint(startPoint);
+        }else {
             trip.setStartPoint(startTxt.getText().toString());
         }
-        else
-        {
-            trip.setStartPoint(loc);
-        }
-
         trip.setDestination(endTxt.getText().toString());
         trip.setDate(txtDate.getText().toString());
         trip.setTime(txtTime.getText().toString());
@@ -248,8 +242,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     public void gotoHome() {
         finish();
     }
-
-    public void getLoc()
+    public void GetLoc()
     {
         if (checkPermissions()) {
             if (isLocationEnabled()) {
@@ -268,8 +261,10 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                                                 location.getLatitude(),
                                                 location.getLongitude(),
                                                 1);
+
                                         Address address = addresses.get(0);
-                                        loc = address.getLocality();
+                                        loc =address.getCountryName()+" " +address.getLocality();
+                                        // loc =.getAddressLine(0);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -288,17 +283,18 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             requestPermissions();
         }
 
-
     }
+
+
     private boolean isLocationEnabled() {
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
                 LocationManager.NETWORK_PROVIDER
         );
     }
     private boolean checkPermissions() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(AddActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(AddActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             return true;
         }
         return false;
@@ -319,7 +315,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         mLocationRequest.setFastestInterval(0);
         mLocationRequest.setNumUpdates(1);
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(AddActivity.this);
         mFusedLocationClient.requestLocationUpdates(
                 mLocationRequest, mLocationCallback,
                 Looper.myLooper()
@@ -331,7 +327,8 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
-
+            Toast.makeText(AddActivity.this,mLastLocation.getLatitude()+"", Toast.LENGTH_LONG).show();
+            Toast.makeText(AddActivity.this,mLastLocation.getLongitude()+"", Toast.LENGTH_LONG).show();
         }
     };
     @Override
@@ -343,4 +340,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
+
+
 }
