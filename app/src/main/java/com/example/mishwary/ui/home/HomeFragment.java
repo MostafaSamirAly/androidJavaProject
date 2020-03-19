@@ -91,7 +91,7 @@ public class HomeFragment extends Fragment implements HomeContract.HomeView {
         noTrips_layout.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
         fab.setVisibility(View.VISIBLE);
-        adapter = new UpcomingTripsAdapter(getContext(),upcomingTrips);
+        adapter = new UpcomingTripsAdapter(getActivity(),getContext(),upcomingTrips);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         upcomingTrips_recyclerView.setLayoutManager(layoutManager);
         upcomingTrips_recyclerView.setHasFixedSize(true);

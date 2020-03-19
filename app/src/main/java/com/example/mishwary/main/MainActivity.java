@@ -1,7 +1,11 @@
 package com.example.mishwary.main;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +26,7 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
@@ -39,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     String id, name, email;
     SharedPreferences pref; // 0 - for private mode
     SharedPreferences.Editor editor;
+    private int PERMISSION_ID = 50;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -50,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
             Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
             myIntent.setData(Uri.parse("package:" + getPackageName()));
             startActivityForResult(myIntent, REQUEST_CODE);
+        }
+        if (checkPermissions()) {
+            if (!isLocationEnabled()) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        }else {
+            requestPermissions();
         }
         Toolbar toolbar = findViewById(R.id.toolbar);
         pref = getApplicationContext().getSharedPreferences("MyPref", 0);
@@ -114,9 +129,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 101) {
             //Check if the permission is granted or not.
-            if(Settings.canDrawOverlays(this))
+            if (Settings.canDrawOverlays(this))
                 Toast.makeText(this,
-                        "Permission Granted",Toast.LENGTH_LONG).show();
+                        "Permission Granted", Toast.LENGTH_LONG).show();
             else
                 //Permission is not available then display toast
                 Toast.makeText(this,
@@ -131,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void logout() {
         //SharedPrefManger.getInstance(this).clear();
-        new RemoveAlarms(this,id);
+        new RemoveAlarms(this, id);
         FirebaseAuth.getInstance().signOut();
         LoginManager.getInstance().logOut();
         login.mGoogleSignInClient.signOut().addOnCompleteListener(this,
@@ -148,5 +163,38 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                PERMISSION_ID
+        );
+    }
+
+    private boolean isLocationEnabled() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+                LocationManager.NETWORK_PROVIDER
+        );
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_ID) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(MainActivity.this, "Location Accessed", Toast.LENGTH_LONG).show();
+            } else {
+                requestPermissions();
+            }
+        }
+    }
+
+    private boolean checkPermissions() {
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        return false;
+    }
 
 }
