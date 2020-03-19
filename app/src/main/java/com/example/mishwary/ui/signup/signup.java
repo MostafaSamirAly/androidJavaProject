@@ -64,8 +64,7 @@ public class signup extends AppCompatActivity implements View.OnClickListener,Si
         }
         signupPresenter = new SignupPresenter(this);
         User addedUser = new User(null,name,email,password);
-        signupPresenter.addUser(addedUser);
-        Toast.makeText(this,"User Registered Successfully",Toast.LENGTH_LONG).show();
+        signupPresenter.checkMail(addedUser);
     }
 
 
@@ -86,7 +85,7 @@ public class signup extends AppCompatActivity implements View.OnClickListener,Si
 
     @Override
     public void goToLogin(User user) {
-
+        Toast.makeText(this,"User Registered Successfully",Toast.LENGTH_LONG).show();
         Intent replyIntent = new Intent();
         if(user != null) {
             replyIntent.putExtra("email", user.getEmail());
@@ -96,4 +95,15 @@ public class signup extends AppCompatActivity implements View.OnClickListener,Si
         finish();
 
     }
+
+    @Override
+    public void showError() {
+        Toast.makeText(this,"This Email Already Exist",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void registerUser(User user) {
+        signupPresenter.addUser(user);
+    }
+
 }
