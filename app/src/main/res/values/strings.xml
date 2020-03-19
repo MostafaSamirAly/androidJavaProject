@@ -64,5 +64,5 @@
     <string name="showmap">Map</string>
     <string name="EnterEmail">Enter Email</string>
     <string name="HaveAcount">ALREADY HAVE AN ACCOUNT ?</string>
-    <string name="Current_Location">At Start Location</string>
+    <string name="Current_Location">Current Location</string>
 </resources>

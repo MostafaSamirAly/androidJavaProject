@@ -52,6 +52,7 @@
         android:id="@+id/currentLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:text="@string/Current_Location" />
 
     <TextView
@@ -77,7 +78,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="25dp"
         android:orientation="vertical">
 
         <RelativeLayout
