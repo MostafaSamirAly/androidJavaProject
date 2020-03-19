@@ -85,7 +85,7 @@
         android:id="@+id/btn_signup"
         android:layout_width="339dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="52dp"
         android:background="@drawable/line"
         android:padding="12dp"
         android:text="@string/Resister"
@@ -98,18 +98,16 @@
         android:id="@+id/btn_login"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="67dp"
+        android:layout_marginBottom="20dp"
         android:background="@color/cardview_shadow_end_color"
         android:padding="12dp"
         android:text="@string/HaveAcount"
         android:textColor="#ff2600"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_signup"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.73" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
