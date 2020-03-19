@@ -1,83 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mapbg"
+    android:orientation="vertical"
+    android:fillViewport="true"
     android:backgroundTint="#CDFFFFFF"
-    android:backgroundTintMode="src_over"
-    >
+    android:backgroundTintMode="src_over">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="175dp"
+        android:layout_gravity="center_horizontal"
         android:layout_height="101dp"
         android:layout_marginTop="28dp"
         android:src="@drawable/logo"
         app:civ_border_color="#fff"
-        app:civ_border_width="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:civ_border_width="2dp" />
 
 
     <EditText
         android:id="@+id/input_name"
         android:layout_width="302dp"
         android:layout_height="42dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:hint="@string/User_name"
         android:inputType="textPersonName"
         android:textColor="#6C6C6C"
-        android:textColorHint="#6C6C6C"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image" />
-
+        android:textColorHint="#6C6C6C" />
 
 
     <EditText
         android:id="@+id/input_email"
         android:layout_width="304dp"
         android:layout_height="42dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
+        android:layout_gravity="center_horizontal"
         android:hint="@string/Email"
         android:inputType="textEmailAddress"
         android:textColor="#6C6C6C"
-        android:textColorHint="#6C6C6C"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_name" />
+        android:textColorHint="#6C6C6C" />
 
     <EditText
         android:id="@+id/input_password"
         android:layout_width="305dp"
         android:layout_height="42dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
+        android:layout_gravity="center_horizontal"
         android:hint="@string/Password"
         android:inputType="textPassword"
         android:textColor="#6C6C6C"
-        android:textColorHint="#6C6C6C"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_email" />
+        android:textColorHint="#6C6C6C" />
 
     <!-- Password Re-enter Label -->
     <EditText
         android:id="@+id/input_password2"
         android:layout_width="305dp"
         android:layout_height="42dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:hint="@string/Password2"
+        android:layout_gravity="center_horizontal"
         android:inputType="textPassword"
         android:textColor="#6C6C6C"
-        android:textColorHint="#6C6C6C"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_password" />
-
+        android:textColorHint="#6C6C6C" />
 
 
     <!-- Signup Button -->
@@ -87,27 +80,23 @@
         android:layout_width="339dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
+        android:layout_marginTop="38dp"
         android:background="@drawable/line"
         android:padding="12dp"
+        android:layout_gravity="center_horizontal"
         android:text="@string/Resister"
-        android:textColor="#ff2600"
-        app:layout_constraintBottom_toTopOf="@+id/btn_login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textColor="#ff2600" />
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="76dp"
+        android:layout_marginTop="32dp"
         android:background="@color/cardview_shadow_end_color"
         android:padding="12dp"
-        android:textColor="#ff2600"
+        android:layout_gravity="center_horizontal"
         android:text="@string/HaveAcount"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textColor="#ff2600" />
+    </LinearLayout>
+</ScrollView>
 
