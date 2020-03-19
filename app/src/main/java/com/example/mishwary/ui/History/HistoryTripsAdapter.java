@@ -84,7 +84,11 @@ public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapte
                     ((MainActivity) context).startActivityForResult(intent, UpcomingTripsAdapter.DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE);
                 } else
                     //If permission is granted start floating widget service
-                    startFloatingWidgetService(position);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (!Settings.canDrawOverlays(context)) {
+                            startFloatingWidgetService(position);
+                        }
+                    }
                 // open google maps with start and destination provided with the path
                 if(historyTrips.get(position).getStartPoint().equals("At Start Location")){
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+"&daddr="+historyTrips.get(position).getDestination()));

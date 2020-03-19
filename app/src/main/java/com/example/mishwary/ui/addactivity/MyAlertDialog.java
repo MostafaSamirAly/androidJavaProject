@@ -70,10 +70,19 @@ public class MyAlertDialog extends Activity {
                 removeFromUpcoming();
                 addToHistory();
                 //floating icon
-                startFloatingWidgetService();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (!Settings.canDrawOverlays(context)) {
+                        startFloatingWidgetService();
+                    }
+                }
                 // open google maps with start and destination provided with the path
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + mTrip.getStartPoint() + "&daddr=" + mTrip.getDestination()));
-                startActivity(intent);
+                if(mTrip.getStartPoint().equals("At Start Location")){
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+"&daddr="+mTrip.getDestination()));
+                    context.startActivity(intent);
+                }else{
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+mTrip.getStartPoint()+"&daddr="+mTrip.getDestination()));
+                    context.startActivity(intent);
+                }
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.cancelAll();
                 cancelAlarm();
