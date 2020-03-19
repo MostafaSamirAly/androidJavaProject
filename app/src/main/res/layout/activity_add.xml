@@ -48,12 +48,36 @@
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
         />-->
 
-    <CheckBox
-        android:id="@+id/currentLocation"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/Current_Location" />
+        android:orientation="vertical"
+        android:weightSum="2">
+
+            <CheckBox
+                android:id="@+id/currentLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="@string/Current_Location"
+                android:textSize="12sp">
+
+            </CheckBox>
+            <CheckBox
+                android:id="@+id/startPoint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_weight="2"
+                android:padding="10dp"
+                android:text="@string/yourLocation"
+                android:textSize="12sp" />
+
+
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
