@@ -28,7 +28,6 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
     private HistoryPresenter historyPresenter;
     private HistoryTripsAdapter adapter;
     private ProgressBar progressBar;
-   // private Button showMap;
     String id;
     private FloatingActionButton showMap;
     public  List<String>StartPoints;

@@ -47,8 +47,6 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
 
     private int x_init_cord, y_init_cord, x_init_margin, y_init_margin;
 
-    //Variable to check if the Floating widget view is on left side or in right side
-    // initially we are displaying Floating widget view to Left side so set it to true
     private boolean isLeft = true;
     private LayoutInflater inflater;
 
@@ -82,12 +80,9 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
         return super.onStartCommand(intent, flags, startId);
     }
 
-    /*  Add Remove View to Window Manager  */
     private View addRemoveView(LayoutInflater inflater) {
-        //Inflate the removing view layout we created
         removeFloatingWidgetView = inflater.inflate(R.layout.remove_floating_widget_layout, null);
 
-        //Add the view to the window.
         WindowManager.LayoutParams paramRemove = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -96,24 +91,18 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
                 PixelFormat.TRANSLUCENT);
 
 
-        //Specify the view position
         paramRemove.gravity = Gravity.TOP | Gravity.LEFT;
 
-        //Initially the Removing widget view is not visible, so set visibility to GONE
         removeFloatingWidgetView.setVisibility(View.GONE);
         remove_image_view = (ImageView) removeFloatingWidgetView.findViewById(R.id.remove_img);
 
-        //Add the view to the window
         mWindowManager.addView(removeFloatingWidgetView, paramRemove);
         return remove_image_view;
     }
 
-    /*  Add Floating Widget View to Window Manager  */
     private void addFloatingWidgetView(LayoutInflater inflater) {
-        //Inflate the floating view layout we created
         mFloatingWidgetView = inflater.inflate(R.layout.floating_widget_layout, null);
 
-        //Add the view to the window.
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -121,20 +110,15 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
 
-        //Specify the view position
         params.gravity = Gravity.TOP | Gravity.LEFT;
 
-        //Initially view will be added to top-left corner, you change x-y coordinates according to your need
         params.x = 0;
         params.y = 100;
 
-        //Add the view to the window
         mWindowManager.addView(mFloatingWidgetView, params);
 
-        //find id of collapsed view layout
         collapsedView = mFloatingWidgetView.findViewById(R.id.collapse_view);
 
-        //find id of the expanded view layout
         expandedView = mFloatingWidgetView.findViewById(R.id.expanded_container);
         floatingNotesRecycler = expandedView.findViewById(R.id.floating_widget_recycler);
         title = expandedView.findViewById(R.id.floating_widget_title_label);
@@ -186,10 +170,8 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
         }
     }
 
-    /*  Implement Touch Listener to Floating Widget Root View  */
     private void implementTouchListenerToFloatingWidgetView()
     {
-        //Drag and move floating view using user's touch action.
         mFloatingWidgetView.findViewById(R.id.root_container).setOnTouchListener(new View.OnTouchListener() {
 
             long time_start = 0, time_end = 0;

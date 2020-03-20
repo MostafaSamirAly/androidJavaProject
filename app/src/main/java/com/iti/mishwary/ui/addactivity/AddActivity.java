@@ -172,11 +172,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         }
         if (v == btnTimePicker) {
 
-            // Get Current Time
             mHour = c.get(Calendar.HOUR_OF_DAY);
             mMinute = c.get(Calendar.MINUTE);
 
-            // Launch Time Picker Dialog
             TimePickerDialog timePickerDialog = new TimePickerDialog(this,
                     new TimePickerDialog.OnTimeSetListener() {
 
@@ -210,7 +208,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
 
         if (endTxt.toString().trim().isEmpty()) {
             flag = false;
-            //Toast.makeText(this,"Please Enter the Destination",Toast.LENGTH_LONG).show();
             endTxt.setError("Enter Destination");
             endTxt.requestFocus();
         }
@@ -287,7 +284,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
 
                                         Address address = addresses.get(0);
                                         loc = address.getAddressLine(0);
-                                        // loc =.getAddressLine(0);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -358,7 +354,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_PERMISSION ) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //Toast.makeText(MainActivity.this," yalaa ya ahble", Toast.LENGTH_LONG).show();
             }
         }
     }

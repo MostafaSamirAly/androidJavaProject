@@ -128,11 +128,5 @@ public class Trip {
         this.time = time;
     }
 
-    /* public ArrayList<String> getNotes() {
-        return notes;
-    }*/
 
-   /* public void setNotes(ArrayList<String> notes) {
-        this.notes = notes;
-    }*/
 }
