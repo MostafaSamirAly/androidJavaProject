@@ -76,9 +76,11 @@ public class MyAlertDialog extends Activity {
                 // open google maps with start and destination provided with the path
                 if(mTrip.getStartPoint().equals("At Start Location")){
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+"&daddr="+mTrip.getDestination()));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }else{
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+mTrip.getStartPoint()+"&daddr="+mTrip.getDestination()));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
