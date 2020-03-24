@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.iti.mishwary.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -96,7 +97,8 @@ public class HistoryMap extends FragmentActivity implements OnMapReadyCallback {
             }
 
         } catch (IOException e) {
-            // handle the exception
+            Toast.makeText(this, "Undefined", Toast.LENGTH_LONG).show();
+
         }
 
 

@@ -75,7 +75,6 @@ public class signup extends AppCompatActivity implements View.OnClickListener,Si
                 break;
 
             case R.id.btn_login :
-                // Finish the registration screen and return to the Login activity
                 goToLogin(null);
                 break;
         }

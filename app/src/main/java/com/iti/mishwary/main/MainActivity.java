@@ -40,7 +40,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     String id, name, email;
-    SharedPreferences pref; // 0 - for private mode
+    SharedPreferences pref;
     SharedPreferences.Editor editor;
     private int PERMISSION_ID = 50;
 
@@ -125,12 +125,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 101) {
-            //Check if the permission is granted or not.
             if (Settings.canDrawOverlays(this))
                 Toast.makeText(this,
                         "Permission Granted", Toast.LENGTH_LONG).show();
             else
-                //Permission is not available then display toast
                 Toast.makeText(this,
                         getResources().getString(R.string.draw_other_app_permission_denied),
                         Toast.LENGTH_LONG).show();
@@ -142,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void logout() {
-        //SharedPrefManger.getInstance(this).clear();
         new RemoveAlarms(this, id);
         FirebaseAuth.getInstance().signOut();
         LoginManager.getInstance().logOut();

@@ -68,6 +68,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "487146135126-u8heufrgc4ascn2qjno3opl191n061qg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iti.mishwary",
+            "certificate_hash": "2635efa87ebd26731aa3d989178f09ffae39c126"
+          }
+        },
+        {
+          "client_id": "487146135126-s6206ctbeotmb9usbnpu2t2j09kos2sg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iti.mishwary",
+            "certificate_hash": "8552354c04d61b430b4f807d801a84d51b651632"
+          }
+        },
+        {
           "client_id": "487146135126-qag1u8hd6o5c0etqic1jklts47pkv0lk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

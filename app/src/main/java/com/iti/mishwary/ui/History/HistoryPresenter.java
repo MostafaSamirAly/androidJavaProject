@@ -58,43 +58,5 @@ public class HistoryPresenter implements HistoryContract.HistoryPresenter {
         historyFragment = null;
     }
 
-    /*
-    private HomeContract.HomeView homeFragment;
-    private DatabaseReference firebaseReference;
-    public HomePresenter(HomeContract.HomeView ref) {
-        homeFragment = ref;
-    }
 
-    @Override
-    public void getUpcomingTrips() {
-        System.out.println("getUpcomingTrips");
-        final List<Trip> upcomingTrips = new ArrayList<>();
-        firebaseReference = FirebaseDatabase.getInstance().getReference("upcoming_trips");
-        firebaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                upcomingTrips.clear();
-                for (DataSnapshot trip : dataSnapshot.getChildren()){
-                    Trip upcoming = trip.getValue(Trip.class);
-                    upcomingTrips.add(upcoming);
-                }
-                if (upcomingTrips.size()>0){
-                    homeFragment.displayTrips(upcomingTrips);
-                }else{
-                    homeFragment.displayNoTrips();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    @Override
-    public void stop() {
-        homeFragment = null;
-    }
-    */
 }

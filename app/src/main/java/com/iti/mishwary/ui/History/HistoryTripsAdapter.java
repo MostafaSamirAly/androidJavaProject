@@ -75,21 +75,17 @@ public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapte
         holder.startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //floating icon
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays((context))) {
-                    //If the draw over permission is not available open the settings screen
-                    //to grant the permission.
+
                     Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                             Uri.parse("package:" + (context).getPackageName()));
                     ((MainActivity) context).startActivityForResult(intent, UpcomingTripsAdapter.DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE);
                 } else
-                    //If permission is granted start floating widget service
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         if (Settings.canDrawOverlays(context)) {
                             startFloatingWidgetService(position);
                         }
                     }
-                // open google maps with start and destination provided with the path
                 if(historyTrips.get(position).getStartPoint().equals("At Start Location")){
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+"&daddr="+historyTrips.get(position).getDestination()));
                     context.startActivity(intent);
@@ -102,7 +98,6 @@ public class HistoryTripsAdapter extends RecyclerView.Adapter<HistoryTripsAdapte
         holder.notesImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // open new activity to add notes to the trip
                 Intent Noteintent = new Intent(context, AddNote.class);
                 Noteintent.putExtra("tripId",historyTrips.get(position).getId());
                 context.startActivity(Noteintent);

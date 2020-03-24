@@ -13,43 +13,13 @@ import com.iti.mishwary.ui.login.login;
 public class splash extends Activity {
     private ProgressBar progressBar;
     protected boolean _active = true;
-    protected int _splashTime = 3000; // time to display the splash screen in ms
-    // 85:52:35:4C:04:D6:1B:43:0B:4F:80:7D:80:1A:84:D5:1B:65:16:32
-
-
+    protected int _splashTime = 3000;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splashscreen);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
-
-      /* try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    getPackageName(),
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest messageDigest = MessageDigest.getInstance("SHA");
-                messageDigest.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
-            }
-        }
-        catch (PackageManager.NameNotFoundException e) {
-            // T75Ykj3C83LZgScbTD7tqG1IQzc=
-            //yT6KBfyKhcfob0Tua6a+6KzdQbE=
-            //JjXvqH69JnMao9mJF48J/645wSY=
-            Log.d("KeyHash:", e.toString());
-
-     //hVI1TATWG0MLT4B9gBqE1RtlFjI=
-        }
-        //
-        catch (NoSuchAlgorithmException e) {
-            Log.d("KeyHash:", e.toString());
-
-
-        }*/
-
 
         Thread splashTread = new Thread() {
             @Override

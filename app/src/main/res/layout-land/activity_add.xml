@@ -42,11 +42,6 @@
         android:drawableEnd="@drawable/quantum_ic_search_grey600_24"
         android:drawableRight="@drawable/quantum_ic_search_grey600_24" />
 
-    <!--<fragment android:id="@+id/autocomplete_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        />-->
 
     <CheckBox
         android:id="@+id/currentLocation"
@@ -67,12 +62,6 @@
         android:layout_height="wrap_content"
         android:drawableEnd="@drawable/quantum_ic_search_grey600_24"
         android:drawableRight="@drawable/quantum_ic_search_grey600_24" />
-
-    <!--<fragment android:id="@+id/autocomplete_fragment2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        />-->
 
     <LinearLayout
         android:layout_width="match_parent"
