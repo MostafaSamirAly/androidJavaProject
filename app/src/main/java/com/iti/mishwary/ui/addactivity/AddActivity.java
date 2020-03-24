@@ -1,7 +1,9 @@
 package com.iti.mishwary.ui.addactivity;
 
 import android.Manifest;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -122,6 +124,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                     startTxt.setVisibility(View.VISIBLE);
                     StartIsChecked= false;
                 }
+
             }
         });
 
@@ -137,8 +140,35 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         descAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         descSpinner.setAdapter(descAdapter);
         addPresenter = new AddPresenter(this);
+        if(intent.getStringExtra("type").equalsIgnoreCase("edit")){
+            setupEditView(intent);
+            btnAdd.setText("Save Changes");
+        }
     }
 
+    private void setupEditView(Intent intent) {
+        titleTxt.setText(intent.getStringExtra("title"));
+        txtDate.setText(intent.getStringExtra("date"));
+        txtTime.setText(intent.getStringExtra("time"));
+        startTxt.setText(intent.getStringExtra("start"));
+        endTxt.setText(intent.getStringExtra("dest"));
+        if(intent.getStringExtra("repeat").equals("No Repeat")){
+            repeatSpinner.setSelection(0);
+        }else if(intent.getStringExtra("repeat").equals("daily")) {
+            repeatSpinner.setSelection(1);
+        }else if(intent.getStringExtra("repeat").equals("Weekly")){
+            repeatSpinner.setSelection(2);
+        }else{
+            repeatSpinner.setSelection(3);
+        }
+        if(intent.getStringExtra("desc").equals("One Way Trip")){
+            descSpinner.setSelection(0);
+        }else{
+            descSpinner.setSelection(1);
+        }
+
+        tripId = intent.getStringExtra("tripId");
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -191,7 +221,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
 
         if (v == btnAdd) {
             if (validateInputs()) {
-                addTriptoFireBase();
+                SendTriptoFireBase();
                 btnAdd.setEnabled(false);
             }
 
@@ -224,7 +254,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         return flag;
     }
 
-    private void addTriptoFireBase() {
+    private void SendTriptoFireBase() {
         Trip trip = new Trip();
         trip.setUserId(userID);
         trip.setTripName(titleTxt.getText().toString());
@@ -250,7 +280,14 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         trip.setMonths(selectedMonth+1);
         trip.setRepeat(repeatSpinner.getSelectedItem().toString());
         trip.setDescription(descSpinner.getSelectedItem().toString());
-        addPresenter.addTrip(trip);
+        if(btnAdd.getText().equals("Save Changes")){
+            trip.setId(tripId);
+            addPresenter.editTrip(trip);
+        }else{
+            addPresenter.addTrip(trip);
+        }
+
+
     }
 
     @Override

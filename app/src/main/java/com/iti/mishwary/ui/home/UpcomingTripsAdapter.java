@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.iti.mishwary.Models.Trip;
 import com.iti.mishwary.R;
+import com.iti.mishwary.ui.addactivity.AddActivity;
 import com.iti.mishwary.ui.addactivity.AlertReceiver;
 import com.iti.mishwary.ui.edittrip.EditTrip;
 import com.iti.mishwary.ui.floatingwidget.FloatingWidgetService;
@@ -129,7 +130,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
                                 showDeleteAlert(position);
                                 return true;
                             case R.id.edit_item:
-                                Intent intent = new Intent(context, EditTrip.class);
+                                Intent intent = new Intent(context, AddActivity.class);
                                 intent.putExtra("id", upcomingTrips.get(position).getUserId());
                                 intent.putExtra("title", upcomingTrips.get(position).getTripName());
                                 intent.putExtra("date", upcomingTrips.get(position).getDate());
@@ -139,6 +140,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
                                 intent.putExtra("tripId", upcomingTrips.get(position).getId());
                                 intent.putExtra("repeat", upcomingTrips.get(position).getRepeat());
                                 intent.putExtra("time", upcomingTrips.get(position).getTime());
+                                intent.putExtra("type", "edit");
                                 context.startActivity(intent);
                                 return true;
                             case R.id.cancel_item:

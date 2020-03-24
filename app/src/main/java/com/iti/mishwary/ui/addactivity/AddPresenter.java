@@ -7,7 +7,6 @@ import com.google.firebase.database.FirebaseDatabase;
 public class AddPresenter implements AddContract.AddPresenter
 {
     private AddContract.AddView addView;
-    private Trip rtnTrip;
     public AddPresenter(AddContract.AddView addView) {
         this.addView = addView;
     }

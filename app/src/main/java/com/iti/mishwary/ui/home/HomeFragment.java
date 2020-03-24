@@ -56,6 +56,7 @@ public class HomeFragment extends Fragment implements HomeContract.HomeView {
                 fab.setEnabled(false);
                 Intent intent = new Intent(getActivity().getApplicationContext(), AddActivity.class);
                 intent.putExtra("id",id);
+                intent.putExtra("type","add");
                 startActivity(intent);
             }
         });
@@ -124,22 +125,23 @@ public class HomeFragment extends Fragment implements HomeContract.HomeView {
         c.set(Calendar.MONTH, trip.getMonths()-1);
         c.set(Calendar.DAY_OF_MONTH, trip.getDayOfMnoth());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), trip.getId().hashCode(), intent, 0);
-        if (c.before(Calendar.getInstance())) {
-            c.add(Calendar.DATE, 1);
-        }
-        if (trip.getRepeat().equals("No Repeat")) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+        if (c.after(Calendar.getInstance())) {
+            c.add(Calendar.DATE, 0);
+            if (trip.getRepeat().equals("No Repeat")) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+                } else {
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+                }
+            } else if (trip.getRepeat().equals("daily")) {
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pendingIntent);
+            } else if (trip.getRepeat().equals("Weekly")) {
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),AlarmManager.INTERVAL_DAY*7, pendingIntent);
             } else {
-                alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),AlarmManager.INTERVAL_DAY*30, pendingIntent);
             }
-        } else if (trip.getRepeat().equals("daily")) {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pendingIntent);
-        } else if (trip.getRepeat().equals("Weekly")) {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),AlarmManager.INTERVAL_DAY*7, pendingIntent);
-        } else {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),AlarmManager.INTERVAL_DAY*30, pendingIntent);
         }
+
 
     }
 }
