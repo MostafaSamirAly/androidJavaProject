@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.iti.mishwary">
+    package="com.iti.mishwary"
+    android:versionCode="2">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -31,7 +32,6 @@
         <activity
             android:name="com.iti.mishwary.ui.history_map.HistoryMap"
             android:label="@string/title_activity_history_map"></activity>
-        <activity android:name="com.iti.mishwary.ui.edittrip.EditTrip" />
         <activity
             android:name="com.iti.mishwary.main.MainActivity"
             android:label="@string/app_name"
