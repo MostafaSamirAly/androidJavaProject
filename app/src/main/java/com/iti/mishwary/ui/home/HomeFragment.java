@@ -124,7 +124,7 @@ public class HomeFragment extends Fragment implements HomeContract.HomeView {
         c.set(Calendar.YEAR, trip.getYear());
         c.set(Calendar.MONTH, trip.getMonths()-1);
         c.set(Calendar.DAY_OF_MONTH, trip.getDayOfMnoth());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), trip.getId().hashCode(), intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), trip.getId().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         if (c.after(Calendar.getInstance())) {
             c.add(Calendar.DATE, 0);
             if (trip.getRepeat().equals("No Repeat")) {
