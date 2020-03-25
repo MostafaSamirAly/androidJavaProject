@@ -235,8 +235,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             titleTxt.setError("Enter Title");
             titleTxt.requestFocus();
         }
-
-        if (endTxt.toString().trim().isEmpty()) {
+        if (endTxt.getText().toString().trim().isEmpty()) {
             flag = false;
             endTxt.setError("Enter Destination");
             endTxt.requestFocus();
