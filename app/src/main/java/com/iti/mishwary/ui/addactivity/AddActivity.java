@@ -263,11 +263,19 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             }
             trip.setStartPoint(startPoint);
         }
-        else if( StartIsChecked )
+        else if(StartIsChecked )
         {
             trip.setStartPoint(startPoint);
         }else  {
-            trip.setStartPoint(startTxt.getText().toString());
+            if(startTxt.getText().toString().trim().isEmpty())
+            {
+                trip.setStartPoint(startPoint);
+            }
+            else
+            {
+                trip.setStartPoint(startTxt.getText().toString());
+            }
+
         }
         trip.setDestination(endTxt.getText().toString());
         trip.setDate(txtDate.getText().toString());
