@@ -62,21 +62,29 @@ public class HistoryMap extends FragmentActivity implements OnMapReadyCallback {
             {
                 String location1 = StartPoints.get(i);
                 Geocoder gc1 = new Geocoder(this);
-                List<Address> addresses1= gc1.getFromLocationName(location1, 5); // get the found Address Objects
+                if(location1!=null)
+                {
+                    List<Address> addresses1= gc1.getFromLocationName(location1, 5); // get the found Address Objects
 
-                for(Address a : addresses1){
-                    if(a.hasLatitude() && a.hasLongitude()){
-                        Loc1 = new LatLng(a.getLatitude(), a.getLongitude());
+                    for(Address a : addresses1){
+                        if(a.hasLatitude() && a.hasLongitude()){
+                            Loc1 = new LatLng(a.getLatitude(), a.getLongitude());
+                        }
                     }
                 }
+
                 String location2 = EndPoints.get(i);
                 Geocoder gc2 = new Geocoder(this);
-                List<Address> addresses2= gc2.getFromLocationName(location2, 5); // get the found Address Objects
-                for(Address a : addresses2){
-                    if(a.hasLatitude() && a.hasLongitude()){
-                       Loc2 = new LatLng(a.getLatitude(), a.getLongitude());
+                if(location2!=null)
+                {
+                    List<Address> addresses2= gc2.getFromLocationName(location2, 5); // get the found Address Objects
+                    for(Address a : addresses2){
+                        if(a.hasLatitude() && a.hasLongitude()){
+                            Loc2 = new LatLng(a.getLatitude(), a.getLongitude());
+                        }
                     }
                 }
+
                 if(Loc1!= null&&Loc2!=null)
                 {
                     mMap.addMarker(new MarkerOptions().position(Loc1).title("Start Point"));

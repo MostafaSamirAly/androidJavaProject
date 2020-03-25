@@ -34,7 +34,6 @@ import com.iti.mishwary.Models.Trip;
 import com.iti.mishwary.R;
 import com.iti.mishwary.ui.addactivity.AddActivity;
 import com.iti.mishwary.ui.addactivity.AlertReceiver;
-import com.iti.mishwary.ui.edittrip.EditTrip;
 import com.iti.mishwary.ui.floatingwidget.FloatingWidgetService;
 import com.iti.mishwary.ui.notes.AddNote;
 import com.google.android.gms.location.FusedLocationProviderClient;
